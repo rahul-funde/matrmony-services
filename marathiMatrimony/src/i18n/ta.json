@@ -1,0 +1,20 @@
+{
+  "NAV": {
+    "HOME": "முகப்பு",
+    "ABOUT": "எங்களைப் பற்றி",
+    "SERVICES": "சேவைகள்",
+    "CONTACT": "தொடர்பு"
+  },
+  "AUTH": {
+    "LOGIN": "உள்நுழை",
+    "REGISTER": "பதிவு"
+  },
+  "APP": {
+    "THEME_LIGHT": "ஒளி",
+    "THEME_DARK": "இருள்",
+    "LANGUAGE": "மொழி"
+  },
+  "app": {
+    "language": "மொழி"
+  }
+}

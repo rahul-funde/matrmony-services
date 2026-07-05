@@ -1,21 +1,19 @@
-<div class="login-dialog">
-  <!-- Header -->
+<div class="login-dialog" role="dialog" aria-modal="true" aria-labelledby="login-dialog-title">
   <div class="login-header">
-    <h2>Welcome Back</h2>
+    <h2 id="login-dialog-title">Welcome Back</h2>
     <p>Please login to continue</p>
   </div>
 
-  <!-- Content -->
   <div class="login-content">
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email or Mobile</mat-label>
-        <input matInput formControlName="identifier">
+        <input matInput formControlName="identifier" autocomplete="username" required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password">
+        <input matInput type="password" formControlName="password" autocomplete="current-password" required>
       </mat-form-field>
 
       <div class="forgot">
@@ -24,12 +22,11 @@
 
       <div class="actions">
         <button mat-raised-button color="primary" type="submit" class="full-width">Login</button>
-        <button mat-button type="button" class="full-width" (click)="close()">Cancel</button>
+        <button mat-button type="button" class="full-width secondary-action" (click)="close()">Cancel</button>
       </div>
     </form>
   </div>
 
-  <!-- Footer -->
   <div class="login-footer">
     <p>Don’t have an account? <a href="#">Sign Up</a></p>
   </div>

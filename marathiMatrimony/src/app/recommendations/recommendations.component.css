@@ -27,10 +27,11 @@ body {
 
 /* ==================== CARD ==================== */
 .card {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  background: var(--app-color-surface);
+  border-radius: var(--app-radius-xl);
+  box-shadow: var(--app-shadow-sm);
   overflow: hidden;
+  border: 1px solid var(--app-color-border);
 }
 
 .card-body {

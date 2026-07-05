@@ -1,76 +1,107 @@
-<div class="container dashboard-container">
-    <div class="row">
-      <div class="row g-3">
-      <!-- Left Column -->
-      <div class="col-lg-4 col-md-12">
-        <app-profile-summary></app-profile-summary>
-        <!-- <div>advertisement</div> -->
+<div class="dashboard-shell">
+  <section class="hero-card">
+    <div class="hero-copy">
+      <p class="eyebrow">Your match dashboard</p>
+      <h1>Welcome back, {{ userName }}</h1>
+      <p class="hero-description">
+        Use this page to quickly check your profile, see who may be a good match, and take the next step without confusion.
+      </p>
+      <div class="hero-actions">
+        <button type="button" class="action-btn action-btn-primary">Improve my profile</button>
+        <button type="button" class="action-btn action-btn-secondary">See my plan</button>
       </div>
+    </div>
 
-      <!-- Right Column -->
-      <div class="col-lg-8 col-md-12">
-        <app-recommendations></app-recommendations>
+    <div class="hero-metrics">
+      <div class="metric-card" *ngFor="let stat of heroStats">
+        <span class="metric-value">{{ stat.value }}</span>
+        <span class="metric-label">{{ stat.label }}</span>
+        <small>{{ stat.hint }}</small>
       </div>
     </div>
-<div class="row">
- <!-- Column 1: LEFT -->
-    <div class="col-lg-12 col-md-12">
-        <app-interests></app-interests>
+  </section>
+
+  <section class="insight-strip">
+    <div class="insight-card profile-progress">
+      <div class="card-title-row">
+        <span class="chip">Profile progress</span>
+        <strong>{{ profileCompletion }}%</strong>
+      </div>
+      <div class="progress-bar"><span [style.width.%]="profileCompletion"></span></div>
+      <p>You are close to being fully ready. A small update can make your profile feel more welcoming and help you receive better matches.</p>
     </div>
-    <!-- Column 2: Right -->
-    <div class="col-lg-6 col-md-12 "  style="display: none;">
-      <div class="card messages-card h-100">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">Messages</h5>
-          <a href="#" class="small fw-semibold text-primary">View all</a>
+
+    <div class="insight-card">
+      <div class="card-title-row">
+        <span class="chip chip-soft">Simple guidance</span>
+      </div>
+      <h3>Take the next step with ease</h3>
+      <p>Start with one small step today. A calm and simple approach usually works best.</p>
+    </div>
+
+    <div class="insight-card">
+      <div class="card-title-row">
+        <span class="chip chip-soft">Helpful reminders</span>
+      </div>
+      <ul class="check-list">
+        <li>Use a recent and clear photo</li>
+        <li>Keep your preferences simple</li>
+        <li>Reply to genuine interests</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="content-grid">
+    <div class="panel-card panel-large">
+      <div class="panel-header">
+        <div>
+          <p class="panel-kicker">Profile overview</p>
+          <h3>Your profile overview</h3>
         </div>
-      
-        <ul class="list-group list-group-flush message-list">
-          <li class="list-group-item message-item" *ngFor="let msg of messages">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Avatar">
-                <div class="text-truncate-container">
-                  <div class="d-flex align-items-center">
-                    <strong class="me-1">{{ msg.name }}</strong>
-                    <span *ngIf="msg.unread" class="unread-indicator"></span>
-                  </div>
-                  
-                  <!-- Tooltip added here -->
-                  <small 
-                    class="text-muted text-truncate" 
-                    [matTooltip]="msg.message" 
-                    matTooltipPosition="above">
-                    {{ msg.message }}
-                  </small>
-      
-                </div>
-              </div>
-              <small class="text-muted ms-2">{{ msg.time }}</small>
-            </div>
-          </li>
-        </ul>
+        <button type="button" class="panel-link">Edit details</button>
       </div>
-      
-      <div class="card mb-3 interest-card text-center">
-        <div class="card-body d-flex justify-content-around align-items-center">
-          <div class="interest-stat flex-fill">
-            <strong>15</strong>
-            <p>Interests Sent</p>
-          </div>
-      
-          <div class="vertical-divider"></div> <!-- Separator line -->
-      
-          <div class="interest-stat flex-fill">
-            <strong>8</strong>
-            <p>Interests Received</p>
+      <app-profile-summary></app-profile-summary>
+    </div>
+
+    <div class="panel-card panel-large">
+      <div class="panel-header">
+        <div>
+          <p class="panel-kicker">Recommended for you</p>
+          <h3>People you may like</h3>
+        </div>
+        <button type="button" class="panel-link">See more</button>
+      </div>
+      <app-recommendations></app-recommendations>
+    </div>
+  </section>
+
+  <section class="content-grid content-grid-stack">
+    <div class="panel-card panel-wide">
+      <div class="panel-header">
+        <div>
+          <p class="panel-kicker">Interests & activity</p>
+          <h3>See who is already interested in you</h3>
+        </div>
+      </div>
+      <app-interests></app-interests>
+    </div>
+
+    <div class="panel-card panel-wide">
+      <div class="panel-header">
+        <div>
+          <p class="panel-kicker">Helpful next actions</p>
+          <h3>Simple steps to begin</h3>
+        </div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card" *ngFor="let step of nextSteps">
+          <div class="step-icon">{{ step.icon }}</div>
+          <div>
+            <h4>{{ step.title }}</h4>
+            <p>{{ step.description }}</p>
           </div>
         </div>
       </div>
-      
-
     </div>
-
-  </div>
-
+  </section>
 </div>

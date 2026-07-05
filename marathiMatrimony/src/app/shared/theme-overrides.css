@@ -1,0 +1,15 @@
+:root {
+  --app-color-primary: #1565C0;
+  --app-color-secondary: #42A5F5;
+  --app-color-bg: #F8FAFC;
+  --app-color-surface: #FFFFFF;
+  --app-color-text: #1F2937;
+  --app-color-muted: #64748B;
+  --app-color-border: #E2E8F0;
+  --app-color-border-strong: #CBD5E1;
+  --app-color-primary-soft: #E3F2FD;
+  --app-color-accent: #42A5F5;
+  --app-color-accent-soft: #EAF6FF;
+  --app-shadow-sm: 0 8px 24px rgba(21, 101, 192, 0.10);
+  --app-shadow-md: 0 16px 40px rgba(21, 101, 192, 0.16);
+}

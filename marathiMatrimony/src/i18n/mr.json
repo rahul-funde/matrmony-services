@@ -8,5 +8,13 @@
   "AUTH": {
     "LOGIN": "Login",
     "REGISTER": "Register"
+  },
+  "APP": {
+    "THEME_LIGHT": "प्रकाश",
+    "THEME_DARK": "गडद",
+    "LANGUAGE": "भाषा"
+  },
+  "app": {
+    "language": "भाषा"
   }
 }

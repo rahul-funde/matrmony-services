@@ -1,0 +1,20 @@
+{
+  "NAV": {
+    "HOME": "ਮੁੱਖ ਪੰਨਾ",
+    "ABOUT": "ਸਾਡੇ ਬਾਰੇ",
+    "SERVICES": "ਸੇਵਾਵਾਂ",
+    "CONTACT": "ਸੰਪਰਕ"
+  },
+  "AUTH": {
+    "LOGIN": "ਲੌਗ ਇਨ",
+    "REGISTER": "ਰਜਿਸਟਰ"
+  },
+  "APP": {
+    "THEME_LIGHT": "ਹਲਕਾ",
+    "THEME_DARK": "ਗੂੜ੍ਹਾ",
+    "LANGUAGE": "ਭਾਸ਼ਾ"
+  },
+  "app": {
+    "language": "ਭਾਸ਼ਾ"
+  }
+}

@@ -24,12 +24,12 @@
 
   background: linear-gradient(
   90deg,
-  #ffffff,
-  #f7e7b4,
-  #c13946,
-  #8b0000
+  rgba(255,255,255,0.98),
+  rgba(227,242,253,0.95),
+  rgba(21,101,192,0.96),
+  rgba(66,165,245,0.96)
 );
-  border-bottom: 2px solid #1e88e5;
+  border-bottom: 2px solid var(--app-color-primary);
   padding: 0 16px;
   transition: all 0.3s ease;
   display: flex;
@@ -39,7 +39,8 @@
 
 .btn-filter{
   color: white;
-  background: #1e88e5;
+  background: var(--app-color-primary);
+  border-radius: 999px;
 }
 
 
@@ -78,7 +79,7 @@
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
-  color: #1e88e5;
+  color: var(--app-color-primary);
 }
 
 
@@ -86,34 +87,37 @@
    BUTTONS
 ================================ */
 .btn-outline-primary {
-  border-color: #1e88e5;
+  border-color: var(--app-color-primary);
   color: #ffffff;
   transition: all 0.3s ease;
-  background: #1e88e5;
+  background: var(--app-color-primary);
+  border-radius: 999px;
 }
 
 .btn-outline-primary:hover {
-  background: #1e88e5;
+  background: var(--app-color-primary-hover);
   color: #fff;
 }
 
 .btn-pink {
-  background: #e91e63;
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-secondary));
   color: #fff;
   border: none;
   transition: all 0.3s ease;
+  border-radius: 999px;
 }
 
 .btn-pink:hover {
-  background: #d81b60;
+  background: linear-gradient(135deg, var(--app-color-primary-hover), var(--app-color-secondary));
 }
 
 .btn-lang {
-  border: 1px solid #ffffff66;
-  color: #fff;
+  border: 1px solid rgba(255,255,255,0.7);
+  color: var(--app-color-primary);
   font-size: 14px;
-  background: transparent;
+  background: rgba(255,255,255,0.9);
   transition: all 0.3s ease;
+  border-radius: 999px;
 }
 
 

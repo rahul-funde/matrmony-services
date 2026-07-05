@@ -9,7 +9,7 @@
   
   /*.custom-sidenav {
     width: 250px;
-    z-index: 1000; /* Ensures the sidenav overlays other content */
+    z-index: 1000;
   }*/
   /* Make dialog take full width/height */
 .full-width-dialog .mat-dialog-container {
@@ -25,13 +25,14 @@
 .custom-dialog {
   width: 100%;
   max-width: 420px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  background: var(--app-color-surface);
+  border-radius: var(--app-radius-xl);
+  box-shadow: var(--app-shadow-md);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  border: 1px solid var(--app-color-border);
 }
 
 /* HEADER */
@@ -49,7 +50,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-secondary));
   color: white;
   padding: 15px 20px;
   border-top-left-radius: 6px;
@@ -122,7 +123,7 @@
 /* FOOTER */
 .dialog-footer {
   padding: 16px 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--app-color-border);
   display: flex;
   justify-content: center;
 }
@@ -139,7 +140,7 @@
 }
 
 .dialog-footer button:hover {
-  background-color: #bbdefb;
+  background-color: rgba(21, 101, 192, 0.16);
 }
 
 .dialog-footer {
@@ -148,7 +149,7 @@
   justify-content: space-between;
   gap: 14px;
   padding-top: 16px;
-  border-top: 1px solid #e6e6e6;
+  border-top: 1px solid var(--app-color-border);
 }
 
 /* OK button */

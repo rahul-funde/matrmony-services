@@ -146,5 +146,3 @@ npx nodemon src/index.js
 🔜 **Google & Facebook OAuth Login**
 
 🚀 Happy Coding! 🎉
-
-Hello

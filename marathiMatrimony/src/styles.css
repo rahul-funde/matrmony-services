@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/shared/theme-overrides.css';
 
 /* ==========================================================
    Enterprise Theme Foundation
@@ -112,6 +113,40 @@
 
   --mat-sys-on-primary: #2e0715;
   --mat-sys-on-primary-container: #ffdce6;
+}
+
+.app-surface-card {
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-xl);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.app-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.app-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.app-input {
+  width: 100%;
+  border: 1px solid var(--app-color-border);
+  border-radius: 999px;
+  padding: 0.7rem 0.9rem;
+  background: var(--app-color-surface);
+  color: var(--app-color-text);
+}
+
+.app-input:focus-visible {
+  border-color: var(--app-color-primary);
+  outline: 2px solid rgba(21, 101, 192, 0.16);
+  outline-offset: 2px;
 }
 
 html {

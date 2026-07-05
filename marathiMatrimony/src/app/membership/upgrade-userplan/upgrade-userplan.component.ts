@@ -136,8 +136,10 @@ ngOnInit() {
       currentPlanEnd > now &&
       this.currentPlan?.contactRemaining > 0
     ) {
+      const remainingContacts = this.currentPlan.contactRemaining;
+      const contactLabel = remainingContacts === 1 ? 'contact' : 'contacts';
       const proceed = confirm(
-        `Your current plan still has ${this.currentPlan.contactRemaining} contacts remaining. Do you want to proceed with purchasing a new plan?`
+        `You still have ${remainingContacts} ${contactLabel} left in your current plan. Would you like to continue with a new plan?`
       );
       if (!proceed) return; // user cancelled
     }

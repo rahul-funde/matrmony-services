@@ -5,22 +5,23 @@
   z-index: 2000;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.75rem;
   color: var(--app-color-text);
+  padding: 0.35rem;
 }
 
 .app-language-switcher,
 .app-theme-toggle {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  background: var(--app-color-surface);
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid var(--app-color-border);
-  border-radius: var(--app-radius-md);
+  border-radius: 999px;
   box-shadow: var(--app-shadow-sm);
   color: var(--app-color-text);
-  font-size: 13px;
+  font-size: 0.85rem;
 }
 
 .app-language-switcher label {
@@ -31,14 +32,20 @@
 .app-language-switcher select {
   min-width: 104px;
   border: 1px solid var(--app-color-border-strong);
-  border-radius: var(--app-radius-sm);
+  border-radius: 999px;
   background: var(--app-color-surface);
   color: var(--app-color-text);
-  padding: 4px 6px;
+  padding: 0.35rem 0.6rem;
+}
+
+.app-language-switcher select:focus-visible,
+.app-theme-toggle:focus-visible {
+  outline: 3px solid rgba(21, 101, 192, 0.2);
+  outline-offset: 2px;
 }
 
 .app-theme-toggle {
-  min-height: 32px;
+  min-height: 2.25rem;
   cursor: pointer;
   font-weight: 700;
 }
@@ -50,14 +57,17 @@
 
 @media (max-width: 600px) {
   .app-global-controls {
-    top: 72px;
-    right: 8px;
-    align-items: flex-end;
+    top: 0.75rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    align-items: stretch;
     flex-direction: column;
+    padding: 0;
   }
 
   .app-language-switcher,
   .app-theme-toggle {
-    font-size: 12px;
+    font-size: 0.8rem;
+    justify-content: center;
   }
 }

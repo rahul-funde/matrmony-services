@@ -1,6 +1,149 @@
 /* =========================
-   Layout & Forms
+   Profile Builder Refresh
 ========================= */
+.profile-builder {
+  padding: 0.75rem 0 2rem;
+}
+
+.profile-builder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.05));
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.profile-builder-kicker {
+  margin: 0 0 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--app-color-primary);
+}
+
+.profile-builder-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.profile-builder-subtitle {
+  margin: 0.35rem 0 0;
+  color: #475569;
+  max-width: 680px;
+}
+
+.profile-builder-summary {
+  min-width: 240px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 0.85rem 0.95rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.profile-builder-summary span {
+  display: block;
+  font-size: 0.84rem;
+  color: #64748b;
+}
+
+.profile-builder-summary strong {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.profile-progress-track {
+  width: 100%;
+  height: 8px;
+  margin-top: 0.6rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.profile-progress-value {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--app-color-primary), #7c3aed);
+  transition: width 0.25s ease;
+}
+
+.profile-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: 18px;
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.profile-section-eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.profile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.profile-warning-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.09);
+  color: #1d4ed8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.app-secondary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--app-color-primary);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.step-section {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
 .container {
   width: 100%;
   max-width: 1400px;
@@ -1221,8 +1364,8 @@ mark {
 /* Title */
 .annual-income-box .income-title {
   font-size: 14px;
-  font-weight: 600;
-  color: #444;
+  font-weight: 700;
+  color: #334155;
 }
 
 
@@ -1622,6 +1765,7 @@ mark {
   width: 100%;
   align-items: stretch;
   padding: var(--app-space-5);
+  gap: var(--app-space-4);
 }
 
 .draft-status {
@@ -1646,6 +1790,19 @@ mark {
   width: 100%;
 }
 
+.step-section mat-form-field .mat-mdc-text-field-wrapper {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.step-section mat-form-field .mdc-notched-outline {
+  border-radius: 14px;
+}
+
+.step-section mat-form-field .mat-mdc-form-field-focus-overlay {
+  border-radius: 14px;
+}
+
 .step-section textarea {
   min-height: 96px;
 }
@@ -1660,9 +1817,10 @@ mark {
 .uploaded-images {
   grid-column: 1 / -1;
   padding: var(--app-space-4);
-  background: color-mix(in srgb, var(--app-color-bg) 68%, var(--app-color-surface));
-  border: 1px solid var(--app-color-border);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--app-color-bg) 70%, var(--app-color-surface)), color-mix(in srgb, var(--app-color-primary) 6%, var(--app-color-surface)));
+  border: 1px solid color-mix(in srgb, var(--app-color-border) 85%, var(--app-color-primary));
   border-radius: var(--app-radius-md);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 .annual-income-box .income-row {
@@ -1672,12 +1830,14 @@ mark {
 .form-actions {
   margin: var(--app-space-5) calc(var(--app-space-5) * -1) calc(var(--app-space-5) * -1);
   padding: var(--app-space-4) var(--app-space-5);
-  background: color-mix(in srgb, var(--app-color-surface) 94%, var(--app-color-bg));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--app-color-surface) 94%, var(--app-color-bg)), color-mix(in srgb, var(--app-color-primary) 6%, var(--app-color-surface)));
   border-top: 1px solid var(--app-color-border);
 }
 
 .form-actions button {
   min-width: 124px;
+  border-radius: 999px;
+  font-weight: 700;
 }
 
 @media (max-width: 1100px) {

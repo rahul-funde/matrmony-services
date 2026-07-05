@@ -8,36 +8,37 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  border-radius: 10px;
+  border-radius: 999px;
   font-size: 14px;
-  font-weight: 500;
-  background: #fff;
-  border: 1.5px solid #cfd6e0;
-  color: #4b5563;
+  font-weight: 600;
+  background: var(--app-color-surface);
+  border: 1.5px solid var(--app-color-border);
+  color: var(--app-color-text);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 /* Primary (Advance Filters) */
 .filter-btn.primary {
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: var(--app-color-primary);
+  color: var(--app-color-primary);
+  background: var(--app-color-primary-soft);
 }
 
 .filter-btn.primary mat-icon {
   font-size: 18px;
-  color: #2563eb;
+  color: var(--app-color-primary);
 }
 
 /* Hover effect */
 .filter-btn:hover {
-  background: #f8fafc;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background: var(--app-color-primary-soft);
+  box-shadow: var(--app-shadow-sm);
 }
 
 /* Primary hover */
 .filter-btn.primary:hover {
-  background: rgba(37, 99, 235, 0.05);
+  background: rgba(21, 101, 192, 0.12);
 }
 
 /* Disabled state */
@@ -55,9 +56,11 @@
   width: 100%;
   max-width: 900px;
   max-height: 90vh;
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--app-color-surface);
+  border-radius: var(--app-radius-xl);
   overflow: hidden;
+  border: 1px solid var(--app-color-border);
+  box-shadow: var(--app-shadow-md);
 }
 
 /* ================= HEADER ================= */
@@ -69,8 +72,8 @@
   font-size: 16px;
   font-weight: 600;
   /*background: #f9fafb;*/
-  border-bottom: 1px solid #e5e7eb;
-  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  border-bottom: 1px solid var(--app-color-border);
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-secondary));
   color: #fff;
 }
 
@@ -140,7 +143,7 @@
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-  background: #ffffff;
+  background: var(--app-color-surface);
 }
 
 /* ================= ACCORDION ================= */
@@ -150,8 +153,8 @@
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: #eef2ff;
-  color: #1e3a8a;
+  background-color: var(--app-color-primary-soft);
+  color: var(--app-color-primary);
 }
 
 .accordion-body {
@@ -168,17 +171,26 @@
   display: inline-block;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;          /* neutral dark */
+  color: var(--app-color-text);
   margin-bottom: 6px;
   letter-spacing: 0.02em;
   line-height: 1.2;
 }
 
-
 .form-control,
 .form-select {
   font-size: 14px;
   min-height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--app-color-border);
+  background-color: var(--app-color-surface);
+  color: var(--app-color-text);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--app-color-primary);
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.16);
 }
 
 /* ================= STICKY FOOTER ================= */
@@ -190,9 +202,9 @@
   align-items: center;
   gap: 10px;
   padding: 12px 16px;
-  background: #ffffff;
-  border-top: 1px solid #e5e7eb;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.06);
+  background: var(--app-color-surface);
+  border-top: 1px solid var(--app-color-border);
+  box-shadow: var(--app-shadow-xs);
 }
 
 /* ================= FOOTER BUTTONS ================= */
@@ -246,9 +258,10 @@
 /* ================= SEARCH HEADER ================= */
 .search-header {
   padding: 10px 12px;
-  background: #ffffff;
-  background: linear-gradient(135deg, #f8f9fa, #ffffff);
-  border-radius: 10px;
+  background: var(--app-color-surface);
+  background: linear-gradient(135deg, var(--app-color-surface), var(--app-color-primary-soft));
+  border-radius: var(--app-radius-xl);
+  border: 1px solid var(--app-color-border);
 }
 
 /* ================= TITLE ================= */
@@ -259,14 +272,14 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #111827;
+  color: var(--app-color-text);
 }
 
 /* Result count */
 .search-count {
   font-size: 14px;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--app-color-muted);
 }
 
 /* ================= SAVED BUTTON ================= */
@@ -278,9 +291,9 @@
   font-size: 14px;
   font-weight: 500;
   border-radius: 999px; /* pill */
-  border: 1.5px solid #ec4899;
-  color: #ec4899;
-  background: #ffffff;
+  border: 1.5px solid var(--app-color-primary);
+  color: var(--app-color-primary);
+  background: var(--app-color-surface);
   transition: all 0.2s ease;
 }
 
@@ -291,7 +304,7 @@
 
 /* Hover */
 .saved-btn:hover {
-  background: rgba(236, 72, 153, 0.08);
+  background: var(--app-color-primary-soft);
 }
 
 /* ================= MOBILE RESPONSIVE ================= */
@@ -314,7 +327,7 @@
 }
 
 .saved-btn.active {
-  background: #ec4899;
+  background: var(--app-color-primary);
   color: #fff;
 }
 
@@ -325,19 +338,19 @@
 
 /* ================= CARD ================= */
 .profile-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-xl);
   padding: 18px 16px 16px;
   text-align: center;
   height: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--app-shadow-sm);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .profile-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--app-shadow-md);
 }
 
 /* ================= HEADER ================= */
@@ -345,7 +358,7 @@
   background: transparent;
   border: none;
   padding: 0;
-  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  background: linear-gradient(135deg, var(--app-color-primary-soft), var(--app-color-surface));
 }
 
 /* ================= IMAGE ================= */

@@ -1,112 +1,87 @@
-/* Container for login form */
-.login-container {
-  width: 100%;
-  max-width: 380px;
-  padding: 24px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.login-dialog {
+  width: min(100%, 420px);
+  padding: 1.5rem;
+  background: var(--app-color-surface);
+  color: var(--app-color-text);
+  border-radius: var(--app-radius-xl);
+  box-shadow: var(--app-shadow-md);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  box-sizing: border-box;
-  margin: auto; /* keeps it centered */
+  gap: 1rem;
 }
 
-/* Center dialog on screen */
 ::ng-deep .cdk-overlay-pane {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Dialog box animation */
 ::ng-deep .mat-dialog-container {
-  animation: slideIn 0.4s ease-out;
-  border-radius: 12px !important;
-  padding: 0 !important; /* so only .login-container handles spacing */
+  border-radius: var(--app-radius-xl) !important;
+  padding: 0 !important;
   overflow: hidden;
-  max-width: 95vw; /* prevents cutoff on small screens */
+  max-width: 95vw;
   max-height: 95vh;
 }
 
-/* Slide from top */
-@keyframes slideIn {
-  from {
-    transform: translateY(-60px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Title */
-.login-container h2 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 12px 0;
+.login-header {
   text-align: center;
 }
 
-/* Input fields */
-.login-container .mat-form-field {
+.login-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--app-color-text);
+}
+
+.login-header p {
+  margin: 0.35rem 0 0;
+  color: var(--app-color-muted);
+}
+
+.login-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.full-width {
   width: 100%;
 }
 
-/* Buttons */
-.login-container .mat-raised-button {
-  width: 100%;
-  border-radius: 8px;
-  font-weight: 500;
-  text-transform: none;
-  padding: 10px 0;
-  transition: all 0.2s ease-in-out;
+.forgot {
+  text-align: right;
 }
 
-.login-container .mat-raised-button.mat-primary {
-  background: linear-gradient(135deg, #4a90e2, #357abd);
-  color: #fff;
-}
-
-.login-container .mat-raised-button.mat-primary:hover {
-  background: linear-gradient(135deg, #357abd, #2a5e99);
-}
-
-/* Secondary link (like "Forgot password") */
-.login-container .link {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.login-container .link a {
-  color: #4a90e2;
+.forgot a,
+.login-footer a {
+  color: var(--app-color-primary);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.login-container .link a:hover {
-  text-decoration: underline;
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-/* 📱 Responsive Adjustments */
+.actions button {
+  border-radius: 999px;
+}
+
+.secondary-action {
+  color: var(--app-color-primary);
+}
+
+.login-footer {
+  text-align: center;
+  color: var(--app-color-muted);
+  font-size: 0.95rem;
+}
+
 @media (max-width: 600px) {
-  .login-container {
-    max-width: 90vw;
-    padding: 16px;
-    gap: 12px;
-  }
-
-  .login-container h2 {
-    font-size: 1.2rem;
-  }
-
-  .login-container .mat-raised-button {
-    padding: 8px 0;
-    font-size: 0.95rem;
+  .login-dialog {
+    padding: 1.1rem;
   }
 }

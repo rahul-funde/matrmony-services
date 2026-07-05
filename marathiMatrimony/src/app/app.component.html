@@ -1,4 +1,4 @@
-<div class="app-global-controls" aria-label="Application preferences">
+<div class="app-global-controls app-surface-card" role="group" aria-label="Application preferences">
   <div class="app-language-switcher">
     <label for="appLanguage">{{ 'app.language' | translate }}</label>
     <select
@@ -15,15 +15,15 @@
     </select>
   </div>
 
-  <button
+  <app-primary-button
     class="app-theme-toggle"
+    [label]="themeService.currentTheme === 'dark' ? ('APP.THEME_LIGHT' | translate) : ('APP.THEME_DARK' | translate)"
     type="button"
+    variant="ghost"
+    [ariaPressed]="themeService.currentTheme === 'dark'"
+    [ariaLabel]="themeService.currentTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
     (click)="toggleTheme()"
-    [attr.aria-pressed]="themeService.currentTheme === 'dark'"
-    [attr.aria-label]="themeService.currentTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
-  >
-    {{ themeService.currentTheme === 'dark' ? 'Light' : 'Dark' }}
-  </button>
+  ></app-primary-button>
 </div>
 
 <router-outlet></router-outlet>

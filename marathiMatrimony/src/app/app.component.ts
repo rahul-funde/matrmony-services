@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from './services/language.service';
 import { ThemeService } from './services/theme.service';
+import { PrimaryButtonComponent } from './shared/primary-button/primary-button.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, FormsModule, TranslatePipe],
+  imports: [CommonModule, RouterOutlet, FormsModule, TranslatePipe, PrimaryButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

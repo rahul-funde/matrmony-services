@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../material.module';
-
 
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
   styleUrls: ['./login-dialog.component.css'],
-  imports:[CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, MaterialModule, RouterModule]
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, MaterialModule, RouterModule]
 })
 export class LoginDialogComponent {
   loginForm: FormGroup;

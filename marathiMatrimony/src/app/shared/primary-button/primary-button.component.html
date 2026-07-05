@@ -1,0 +1,15 @@
+<button
+  class="primary-button"
+  [class.primary-button--secondary]="variant === 'secondary'"
+  [class.primary-button--ghost]="variant === 'ghost'"
+  [attr.type]="type"
+  [disabled]="disabled || loading"
+  [attr.aria-label]="ariaLabel || label"
+  [attr.aria-busy]="loading ? 'true' : null"
+  [attr.aria-pressed]="ariaPressed"
+>
+  <span class="primary-button__content" [class.is-loading]="loading">
+    <span *ngIf="loading" class="primary-button__spinner" aria-hidden="true"></span>
+    <span>{{ label }}</span>
+  </span>
+</button>

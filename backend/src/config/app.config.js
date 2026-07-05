@@ -49,6 +49,7 @@ module.exports = {
   port: process.env.PORT || 5000,
   allowedOrigins: readCsvEnv("ALLOWED_ORIGINS", [
     "http://localhost:4200",
+    "http://127.0.0.1:4200",
     "http://147.79.70.252:8080",
     "https://sushilmaratha.in",
     "https://www.sushilmaratha.in",
