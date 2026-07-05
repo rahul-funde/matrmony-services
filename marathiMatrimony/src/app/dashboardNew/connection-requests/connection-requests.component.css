@@ -1,0 +1,246 @@
+/* ===== Container Styling ===== */
+.glass-container {
+  position: relative;
+  margin: 1.5rem auto;
+  width: 90%;
+  max-width: 1150px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* ===== Tabs ===== */
+::ng-deep .mat-mdc-tab-group {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+::ng-deep .mat-mdc-tab-labels {
+  display: flex;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+::ng-deep .mat-mdc-tab-label {
+  font-weight: 600;
+  color: #1e1e1e;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .mat-mdc-tab-label-active {
+  color: #ff4081 !important;
+  text-shadow: 0 0 10px rgba(255, 64, 129, 0.6);
+}
+
+/* ===== Scroll Arrows ===== */
+.scroll-btn {
+  position: absolute;
+  top: 55%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scroll-btn mat-icon {
+  font-size: 28px;
+  color: #ff4081;
+}
+
+.scroll-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  background: #ff4081;
+}
+
+.scroll-btn:hover mat-icon {
+  color: #fff;
+}
+
+.scroll-left {
+  left: 10px;
+}
+
+.scroll-right {
+  right: 10px;
+}
+
+/* ===== Scrollable Grid ===== */
+.request-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #ff4081 rgba(0, 0, 0, 0.1);
+}
+
+.request-grid::-webkit-scrollbar {
+  height: 10px;
+}
+.request-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #ff4081, #ffb74d);
+  border-radius: 8px;
+}
+.request-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Glass Card ===== */
+.glass-card {
+  flex: 0 0 280px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 18px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(255, 64, 129, 0.35);
+}
+
+/* ===== Profile Image ===== */
+.photo-wrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.glass-card:hover .profile-photo {
+  transform: scale(1.08);
+}
+
+/* ===== Status Chip ===== */
+.status-chip {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  text-transform: capitalize;
+}
+
+.status-chip.pending {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+.status-chip.sent {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+.status-chip.connected {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+/* ===== Info Section ===== */
+.info {
+  text-align: center;
+  padding: 1rem 0.8rem 0.5rem;
+}
+
+.info h3 {
+  margin: 0;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.info p {
+  margin: 0.3rem 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* ===== Buttons ===== */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0 1rem 1rem;
+  flex-wrap: wrap;
+}
+
+button[mat-raised-button],
+button[mat-stroked-button] {
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+/* Gradient Buttons */
+button[color='primary'] {
+  background: linear-gradient(90deg, #42a5f5, #1e88e5);
+  color: white;
+}
+button[color='primary']:hover {
+  background: linear-gradient(90deg, #64b5f6, #42a5f5);
+}
+
+button[color='accent'] {
+  background: linear-gradient(90deg, #ff4081, #f50057);
+  color: white;
+}
+button[color='accent']:hover {
+  background: linear-gradient(90deg, #ff6fa3, #ff4081);
+}
+
+button[color='warn'] {
+  background: transparent;
+  color: #e53935;
+  border: 1px solid #e53935;
+}
+button[color='warn']:hover {
+  background: #e53935;
+  color: #fff;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+  .glass-card {
+    flex: 0 0 240px;
+  }
+}
+@media (max-width: 768px) {
+  .glass-card {
+    flex: 0 0 200px;
+  }
+  .photo-wrapper {
+    height: 180px;
+  }
+}
+@media (max-width: 480px) {
+  .glass-card {
+    flex: 0 0 160px;
+  }
+  .photo-wrapper {
+    height: 150px;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "app": { "name": "সুশীল মারাঠা", "language": "ভাষা" },
+  "auth": {
+    "login": { "title": "লগইন", "failed": "লগইন ব্যর্থ হয়েছে." },
+    "passwordReset": { "success": "পাসওয়ার্ড সফলভাবে রিসেট হয়েছে!", "failed": "পাসওয়ার্ড রিসেট ব্যর্থ হয়েছে." }
+  },
+  "common": { "close": "বন্ধ করুন", "save": "সংরক্ষণ করুন", "cancel": "বাতিল", "search": "অনুসন্ধান", "loading": "লোড হচ্ছে..." },
+  "profile": { "basicDetails": "প্রাথমিক তথ্য", "photos": "ছবি", "contactDetails": "যোগাযোগের তথ্য" },
+  "membership": { "upgradePlan": "প্ল্যান আপগ্রেড করুন", "currentPlan": "বর্তমান প্ল্যান", "contactsRemaining": "অবশিষ্ট যোগাযোগ" },
+  "admin": { "dashboard": "ড্যাশবোর্ড", "users": "ব্যবহারকারী", "plans": "প্ল্যান", "payments": "পেমেন্ট" }
+}

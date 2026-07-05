@@ -1,0 +1,24 @@
+.verification-card {
+max-width: 800px;
+margin: 16px auto;
+padding: 16px;
+}
+
+.upload-form .row {
+display: flex;
+gap: 12px;
+align-items: center;
+flex-wrap: wrap;
+}
+
+
+.doc-type { flex: 1 1 200px; }
+.file-input { flex: 1 1 300px; }
+
+
+.existing-docs { margin-top: 16px; }
+.status { margin-left: 12px; font-weight: 600; }
+.status.pending { color: #ff9800; }
+.status.approved { color: #4caf50; }
+.status.rejected { color: #f44336; }
+.muted { color: rgba(0,0,0,0.6); }

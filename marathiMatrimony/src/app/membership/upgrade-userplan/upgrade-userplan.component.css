@@ -1,0 +1,801 @@
+/* =========================
+   MERGED PREMIUM + ORIGINAL
+   (Drop-in replacement)
+   ========================= */
+
+/* ---------- base / host ---------- */
+:host {
+  display: block;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #0f1724;
+  position: relative;
+}
+
+/* ---------- theme toggle (kept) ---------- */
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 60;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 18px rgba(2,6,23,0.25);
+  cursor: pointer;
+  transition: transform .18s ease, background .2s ease;
+}
+.theme-toggle:hover { transform: translateY(-2px); }
+
+/* ---------- section titles ---------- */
+.section-title {
+  font-size: 1.35rem;
+  margin-bottom: .6rem;
+  font-weight: 600;
+  color: #071431;
+  border-bottom: 1px solid rgba(7,20,49,0.06);
+  padding-bottom: .6rem;
+}
+
+/* ---------- glass card base (merged styles) ---------- */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.65), rgba(255,255,255,0.55));
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 8px 30px rgba(8,23,43,0.08);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s, border-color .2s;
+}
+
+/* Slight lift on hover for any glass card */
+.glass-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(8,23,43,0.12); }
+
+/* ---------- current plan styles ---------- */
+.current-card, .current-plan-box, .current-card .current-header {
+  /* keep original look but improved */
+}
+.current-card {
+  border-left: 4px solid #ffcc00; /* gold accent kept */
+  padding: 20px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.current-header {
+  background: linear-gradient(90deg,#0d6efd,#6610f2);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 -6px 18px rgba(0,0,0,0.06);
+}
+.current-body { padding: 8px 4px; color: #07203a; }
+
+/* ---------- plan card layout & core ---------- */
+.plan-card, .plan-card-premium {
+  min-height: 360px; /* baseline, responsive reduced below */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  overflow: visible;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.35);
+  transition: .35s ease;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+
+/* Equal height enforcement when using grid columns (Bootstrap d-flex on column element) */
+.plan-card.d-flex, .plan-card-premium.d-flex {
+  height: 100%;
+}
+
+/* Hover premium */
+.plan-card:hover, .plan-card-premium:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 42px rgba(0,0,0,0.18);
+  border-color: #ff3d4a;
+}
+
+/* ---------- head, name, duration, price ---------- */
+.plan-head { display:flex; align-items: baseline; justify-content: space-between; gap:8px; width:100%; }
+.plan-name { font-size: 1.05rem; font-weight:700; color:#051427; margin:0; }
+.plan-duration { color: #51606a; font-size: .85rem; }
+.plan-price {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 8px 0;
+  background: linear-gradient(90deg,#007bff,#00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+/* ---------- separator ---------- */
+.card-sep { border: none; border-top: 1px dashed rgba(7,20,49,0.06); margin: 10px 0; }
+
+/* ---------- badges ---------- */
+.badge-recommend, .badge-premium {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  background: linear-gradient(90deg,#ffb347,#ffcc33);
+  color: #102027;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  box-shadow: 0 6px 20px rgba(255,179,71,0.14);
+  z-index: 5;
+}
+.ribbon-discount {
+  position: absolute;
+  top: 12px;
+  right: -18px;
+  background: #e91e63;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  transform: rotate(45deg);
+  box-shadow: 0 8px 20px rgba(233,30,99,0.12);
+  z-index: 5;
+}
+
+/* ---------- features area (restored + enhanced) ---------- */
+/* Two variants: .features-list (legacy) and .features (upgraded). Both supported. */
+
+.features-title { font-size: .95rem; margin: 6px 0; color:#073045; }
+
+/* Legacy list (if used in markup) */
+.features-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  max-height: 120px;      /* control card height */
+  overflow-y: auto;       /* scroll when long */
+  padding-right: 6px;
+}
+
+/* Upgraded semantic class */
+.features {
+  list-style: none;
+  padding: 0;
+  margin-top: 8px;
+  max-height: 120px;
+  overflow-y: auto;
+  transition: max-height .28s ease;
+}
+
+/* Collapsible state: when collapsed, show only small area */
+.features.collapsed, .features-list.collapsed {
+  max-height: 100px; /* smaller */
+}
+
+/* Expanded state for show-more: (set via JS/class binding) */
+.features.expanded, .features-list.expanded {
+  max-height: 420px; /* large enough to show all */
+}
+
+/* Each feature */
+.feature-item, .features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #213643;
+  padding: 4px 0;
+}
+
+/* Icon in feature */
+.features mat-icon, .feature-item mat-icon {
+  font-size: 18px;
+  color: #4caf50;
+  margin-right: 6px;
+}
+
+/* Scrollbar styling (thin premium) */
+.features::-webkit-scrollbar, .features-list::-webkit-scrollbar {
+  width: 6px;
+}
+.features::-webkit-scrollbar-thumb, .features-list::-webkit-scrollbar-thumb {
+  background: #ffb300;
+  border-radius: 10px;
+}
+
+/* ---------- contact limit ---------- */
+.contact-limit { color:#234; font-size:.92rem; margin-top:8px; }
+
+/* ---------- show more button (kept + styled) ---------- */
+.toggle-btn, .show-more-btn {
+  background: none;
+  border: none;
+  color: #ffcc00;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 8px;
+  padding: 4px 0;
+  align-self: flex-start;
+}
+
+/* ---------- action buttons area ---------- */
+.btn-area, .button-row {
+  margin-top: 12px;
+  display:flex;
+  gap:8px;
+  flex-direction: column;
+}
+
+/* Primary look: keep both original and upgraded classes */
+.btn-primary, .purchaseplan-btn {
+  background: linear-gradient(90deg,#0d6efd,#6610f2);
+  color: #fff;
+  border-radius: 10px;
+  padding: .55rem .75rem;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(13,110,253,0.12);
+  transition: transform .15s ease, box-shadow .2s ease;
+  border: none;
+}
+.purchaseplan-btn {
+  background: linear-gradient(90deg, #dc3545, #ff4d4f);
+  box-shadow: 0 6px 18px rgba(220, 53, 69, 0.3);
+}
+.purchaseplan-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(220, 53, 69, 0.4); }
+
+.btn-outline-light, .btn-outline-warning, button.mat-stroked-button {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #071431;
+  border-radius: 10px;
+  padding: .5rem .65rem;
+  transition: transform .15s ease, background .18s ease;
+}
+.btn-outline-warning {
+  border:1px solid #ffcc00;
+  color:#ffcc00;
+}
+.btn-outline-warning:hover{
+  background:#ffcc00;color:#000;
+}
+
+/* ---------- special plan states ---------- */
+.active-plan {
+  border: 2px solid rgba(13,110,253,0.12);
+  box-shadow: 0 10px 30px rgba(13,110,253,0.06);
+}
+.lower-plan {
+  opacity: .6;
+  filter: grayscale(.6);
+}
+
+/* ---------- offline payment collapsible block (restored & upgraded) ---------- */
+.offline-payment-section {
+  margin-top: 14px;
+  border-radius: 12px;
+  padding: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.42));
+  border: 1px solid rgba(255,255,255,0.48);
+  box-shadow: 0 6px 18px rgba(4,12,30,0.06);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .45s cubic-bezier(.2,.9,.2,1), padding .28s;
+}
+.offline-payment-section.active {
+  padding: 14px;
+  max-height: 520px; /* large enough to show image + upload */
+}
+.qr-frame {
+  display:flex;justify-content:center;align-items:center;padding:8px;border-radius:10px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.2);
+  margin-bottom: 8px;
+}
+.qr-code {
+  width:160px;height:160px;object-fit:cover;border-radius:8px;box-shadow:0 6px 18px rgba(4,12,30,0.12);
+}
+
+/* upload input */
+.form-control-sm {
+  border-radius: 8px;
+  background: rgba(255,255,255,0.9);
+}
+
+/* receipt preview */
+.receipt-preview {
+  width:100%;border-radius:6px;margin-top:8px;max-height:160px;object-fit:contain;
+  box-shadow: 0 6px 24px rgba(2,8,23,0.12);
+}
+
+/* offline buttons */
+.offline-payment-section .btn {
+  border-radius: 10px;
+}
+
+/* small titles inside QR area */
+.qr-title { font-weight:600;margin-bottom:6px;color:#07203a; }
+
+/* ---------- QR modal popup ---------- */
+.qr-modal {
+  position: fixed;
+  top: 0; left: 0; right:0; bottom:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  z-index: 999;
+}
+.qr-modal.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.qr-modal-content {
+  max-width: 420px;
+  width: 95%;
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  background: linear-gradient(180deg,#fff,#f8fafc);
+  box-shadow: 0 12px 36px rgba(2,6,23,0.24);
+}
+.close-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.qr-img {
+  width: 180px;
+  height: 180px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* ---------- loading text ---------- */
+.loading-text { color: #0b1b2b; font-weight: 600; }
+
+/* ---------- small utilities & responsive ---------- */
+@media (max-width: 1199px) {
+  .plan-card { min-height: 340px; }
+  .qr-code { width: 140px; height: 140px; }
+}
+@media (max-width: 991px) {
+  .plans-container { padding: 12px; }
+  .plan-card { min-height: 320px; }
+  .badge-recommend { top: 10px; left: 10px; padding: 5px 8px; font-size: 11px; }
+}
+@media (max-width: 575px) {
+  .theme-toggle { top: .6rem; right: .6rem; padding: 6px 8px; }
+  .glass-card { padding: 14px; border-radius: 12px; }
+  .plan-card { min-height: auto; }
+  .plan-price { font-size: 1.15rem; }
+  .qr-code { width: 120px; height: 120px; }
+  .offline-payment-section.active { max-height: 420px; }
+  .button-row { gap: 10px; }
+  .btn-primary, .btn-outline-light { padding: .48rem .6rem; font-size: .95rem; }
+}
+
+/* ---------- minor animation & snackbar ---------- */
+.snackbar-error-animated { background: #d32f2f !important; color: #fff !important; font-weight: 500; border-radius: 6px !important; animation: slideDownFade .4s ease-out; }
+@keyframes slideDownFade {
+  0% { transform: translateY(-30px); opacity: 0; }
+  60% { transform: translateY(10px); opacity: 1; }
+  100% { transform: translateY(0); }
+}
+
+/* ---------- added helpers for "Show More" pattern (JS toggles class) ---------- */
+/* You can toggle .expanded or .collapsed on .features via component code: plan.showMore ? 'expanded' : 'collapsed' */
+.features.show-more-hidden { max-height: 110px; overflow: hidden; }
+.features.show-more-visible { max-height: 420px; overflow-y: auto; }
+
+/* end merged stylesheet */
+
+
+.purchaseplan-btn:disabled,
+.purchaseplan-btn {
+  filter: blur(1px);
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none; /* ensures click disabled */
+}
+
+
+/* Modal background */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s ease;
+  z-index: 2000;
+}
+
+/* Active modal */
+.qr-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Card popup */
+.qr-modal-content {
+  width: 400px;
+  max-width: 92%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 0 40px rgba(255,0,0,0.3);
+  padding: 25px;
+  position: relative;
+  color: #fff;
+  transform: scale(.8);
+  animation: popUp .35s ease forwards;
+}
+
+/* Popup animation */
+@keyframes popUp {
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 10px; right: 12px;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  cursor: pointer;
+}
+
+/* Scroll section */
+.qr-scroll {
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Custom Scrollbar */
+.qr-scroll::-webkit-scrollbar { width: 6px; }
+.qr-scroll::-webkit-scrollbar-thumb {
+  background: #ff4b4b;
+  border-radius: 10px;
+}
+
+/* QR Image styling */
+.qr-img {
+  width: 200px;
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,.4);
+}
+
+/* Receipt preview */
+.receipt-preview {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 2px solid #fff3;
+}
+
+/* Action button group */
+.qr-actions button {
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.contact-policy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  position: relative;
+}
+
+/* Info icon wrapper */
+.info-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Icon */
+.info-icon {
+  font-size: 18px;
+  cursor: pointer;
+  color: #1976d2;
+}
+
+/* Tooltip box */
+.policy-tooltip {
+  position: absolute;
+  top: 135%;
+  right: 0;
+  width: 320px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  font-size: 13px;
+  line-height: 1.5;
+  z-index: 1000;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: all 0.2s ease;
+}
+
+/* Arrow */
+.policy-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent #ffffff transparent;
+}
+
+/* Show on hover (desktop) */
+.info-wrapper:hover .policy-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Tooltip content */
+.tooltip-title {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.policy-tooltip ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.policy-tooltip li {
+  margin-bottom: 6px;
+}
+
+/* 📱 Mobile support (tap) */
+@media (hover: none) {
+  .info-wrapper:active .policy-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+
+.contact-policy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* Info icon wrapper */
+.info-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Info icon */
+.info-icon {
+  font-size: 18px;
+  cursor: pointer;
+  color: #1976d2;
+}
+
+/* Tooltip container */
+.policy-tooltip {
+  position: absolute;
+  top: 135%;
+  right: 0;
+  width: 340px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  font-size: 13px;
+  line-height: 1.5;
+  z-index: 1000;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: all 0.2s ease;
+}
+
+/* Arrow */
+.policy-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent #ffffff transparent;
+}
+
+/* Show tooltip on hover */
+.info-wrapper:hover .policy-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Tooltip title */
+.tooltip-title {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+/* Tooltip list */
+.policy-tooltip ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.policy-tooltip li {
+  margin-bottom: 6px;
+}
+
+/* Example text */
+.example-text {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ddd;
+  font-size: 13px;
+}
+
+/* Highlight important numbers */
+.policy-tooltip strong {
+  color: #1976d2;
+}
+/* ---------- Feature / Info List ---------- */
+.guideline-tooltip {
+  list-style-type: disc;       /* regular bullets */
+  padding-left: 20px;          /* indent for bullets */
+  margin: 8px 0;               /* spacing between list items */
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1a2432;
+}
+
+.guideline-tooltip li {
+  margin-bottom: 6px;          /* spacing between items */
+      color: #bd1f34;
+    font-family: ui-sans-serif;
+    font-style: italic;
+}
+
+.guideline-tooltip li strong {
+  color: #0d6efd;              /* highlight important label */
+  font-weight: 600;
+  margin-right: 4px;           /* small spacing after label */
+}
+
+/* ================= Theme Upgrade ================= */
+:host {
+  color: var(--app-color-text);
+  font-family: var(--app-font-ui);
+}
+
+.glass-card,
+.plan-card,
+.plan-card-premium,
+.current-card,
+.current-plan-box {
+  background: var(--app-color-surface);
+  color: var(--app-color-text);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-xs);
+}
+
+.glass-card:hover,
+.plan-card:hover,
+.plan-card-premium:hover {
+  border-color: var(--app-color-primary);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.section-title,
+.plan-name,
+.features-title,
+.contact-limit,
+.current-body,
+.guideline-tooltip {
+  color: var(--app-color-text);
+}
+
+.plan-duration,
+.features li,
+.feature-item {
+  color: var(--app-color-muted);
+}
+
+.current-header {
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-accent));
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.plan-price {
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge-recommend,
+.badge-premium {
+  background: var(--app-color-accent-soft);
+  color: var(--app-color-warning);
+  border: 1px solid color-mix(in srgb, var(--app-color-warning) 25%, transparent);
+  box-shadow: var(--app-shadow-xs);
+}
+
+.ribbon-discount {
+  background: var(--app-color-primary);
+}
+
+.features mat-icon,
+.feature-item mat-icon {
+  color: var(--app-color-success);
+}
+
+.features::-webkit-scrollbar-thumb,
+.features-list::-webkit-scrollbar-thumb {
+  background: var(--app-color-primary);
+}
+
+.toggle-btn,
+.show-more-btn,
+.guideline-tooltip li strong,
+.policy-tooltip strong {
+  color: var(--app-color-primary);
+}
+
+.policy-tooltip {
+  background: var(--app-color-surface);
+  color: var(--app-color-text);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.policy-tooltip::before {
+  border-color: transparent transparent var(--app-color-surface) transparent;
+}
+
+.guideline-tooltip li {
+  color: var(--app-color-primary);
+}

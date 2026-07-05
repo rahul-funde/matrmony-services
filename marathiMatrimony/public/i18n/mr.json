@@ -1,0 +1,39 @@
+{
+  "app": {
+    "name": "सुशील मराठा",
+    "language": "भाषा"
+  },
+  "auth": {
+    "login": {
+      "title": "लॉगिन",
+      "failed": "लॉगिन अयशस्वी झाले."
+    },
+    "passwordReset": {
+      "success": "पासवर्ड यशस्वीरित्या रीसेट झाला!",
+      "failed": "पासवर्ड रीसेट अयशस्वी झाले."
+    }
+  },
+  "common": {
+    "close": "बंद करा",
+    "save": "जतन करा",
+    "cancel": "रद्द करा",
+    "search": "शोधा",
+    "loading": "लोड होत आहे..."
+  },
+  "profile": {
+    "basicDetails": "मूलभूत माहिती",
+    "photos": "फोटो",
+    "contactDetails": "संपर्क माहिती"
+  },
+  "membership": {
+    "upgradePlan": "योजना अपग्रेड करा",
+    "currentPlan": "सध्याची योजना",
+    "contactsRemaining": "उर्वरित संपर्क"
+  },
+  "admin": {
+    "dashboard": "डॅशबोर्ड",
+    "users": "वापरकर्ते",
+    "plans": "योजना",
+    "payments": "पेमेंट्स"
+  }
+}

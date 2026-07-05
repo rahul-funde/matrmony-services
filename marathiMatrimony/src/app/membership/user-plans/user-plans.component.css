@@ -1,0 +1,481 @@
+/* =======================
+   GLASS + ANIMATIONS THEME
+======================= */
+
+/* Base fonts & body adjustments (component scoped) */
+:host {
+  display: block;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #0f1724;
+}
+
+/* ===== Theme Toggle ===== */
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 60;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 18px rgba(2,6,23,0.25);
+  cursor: pointer;
+  transition: transform .18s ease, background .2s ease;
+}
+.theme-toggle:hover { transform: translateY(-2px); }
+
+/* ===== Section Titles ===== */
+.section-title {
+  font-size: 1.35rem;
+  margin-bottom: .6rem;
+  font-weight: 600;
+  color: #071431;
+  border-bottom: 1px solid rgba(7,20,49,0.06);
+  padding-bottom: .6rem;
+}
+
+/* ====================================================
+   GLASS CARD (reused for current card + plan cards)
+   ==================================================== */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.65), rgba(255,255,255,0.55));
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 8px 30px rgba(8,23,43,0.08);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s, border-color .2s;
+}
+
+/* Slight lift on hover */
+.glass-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(8,23,43,0.12); }
+
+/* Current Plan card specific */
+.current-card { overflow: hidden; }
+.current-header {
+  background: linear-gradient(90deg,#0d6efd,#6610f2);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 -6px 18px rgba(0,0,0,0.06);
+}
+.current-body { padding: 8px 4px; color: #07203a; }
+
+/* ===== Plan Card layout ===== */
+.plan-card {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  overflow: visible;
+}
+
+/* Recommended badge & discount ribbon */
+.badge-recommend {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(90deg,#ffb347,#ffcc33);
+  color: #102027;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  box-shadow: 0 6px 20px rgba(255,179,71,0.14);
+  z-index: 5;
+}
+
+.ribbon-discount {
+  position: absolute;
+  top: 12px;
+  right: -18px;
+  background: #e91e63;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  transform: rotate(45deg);
+  box-shadow: 0 8px 20px rgba(233,30,99,0.12);
+  z-index: 5;
+}
+
+/* Plan header */
+.plan-head { display:flex; align-items: baseline; justify-content: space-between; gap:8px; }
+.plan-name { font-size: 1.05rem; font-weight:700; color:#051427; margin:0; }
+.plan-duration { color: #51606a; font-size: .85rem; }
+
+/* Price styling */
+.plan-price {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-top: 10px;
+  background: linear-gradient(90deg,#007bff,#00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* separator */
+.card-sep { border: none; border-top: 1px dashed rgba(7,20,49,0.06); margin: 10px 0; }
+
+/* Features */
+.features-title { font-size: .95rem; margin: 6px 0; color:#073045; }
+.features-list { margin: 0; padding-left: 0; list-style: none; }
+.feature-item {
+  padding: 6px 2px;
+  font-size: .92rem;
+  color: #213643;
+  display: flex;
+  align-items: center;
+}
+
+/* contact limit */
+.contact-limit { color:#234; font-size:.92rem; }
+
+/* Buttons row */
+.button-row { margin-top: 12px; display:flex; gap:8px; flex-direction: column; }
+.btn-primary {
+  --bs-btn-bg: linear-gradient(90deg,#0d6efd,#6610f2);
+  color: #fff;
+  border-radius: 10px;
+  padding: .55rem .75rem;
+  box-shadow: 0 8px 22px rgba(13,110,253,0.12);
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.btn-outline-light {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #071431;
+  border-radius: 10px;
+  padding: .5rem .65rem;
+  transition: transform .15s ease, background .18s ease;
+}
+.btn-primary:hover, .btn-outline-light:hover { transform: translateY(-4px); }
+
+/* Active plan highlight */
+.active-plan {
+  border: 1px solid rgba(13,110,253,0.12);
+  box-shadow: 0 10px 30px rgba(13,110,253,0.06);
+}
+
+/* =========================================================
+   Offline QR Payment collapsible glass section
+   ========================================================= */
+.offline-payment-section {
+  margin-top: 14px;
+  border-radius: 12px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.42));
+  border: 1px solid rgba(255,255,255,0.48);
+  box-shadow: 0 6px 18px rgba(4,12,30,0.06);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .45s cubic-bezier(.2,.9,.2,1), padding .28s;
+}
+
+/* when active open and reveal contents */
+.offline-payment-section.active {
+  padding: 14px;
+  max-height: 520px; /* large enough to show image + upload */
+}
+
+/* QR frame */
+.qr-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.2);
+  margin-bottom: 8px;
+}
+.qr-code {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(4,12,30,0.12);
+}
+
+/* upload input */
+.form-control-sm {
+  border-radius: 8px;
+  background: rgba(255,255,255,0.9);
+}
+
+/* receipt preview */
+.receipt-preview {
+  margin-top: 8px;
+  width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 24px rgba(2,8,23,0.12);
+}
+
+/* offline buttons row */
+.offline-payment-section .btn {
+  border-radius: 10px;
+}
+
+/* small title inside QR */
+.qr-title { font-weight: 600; margin-bottom: 6px; color: #07203a; }
+
+/* Loading */
+.loading-text { color: #0b1b2b; font-weight: 600; }
+
+/* =========================================================
+   QR Modal Popup
+========================================================= */
+.qr-modal {
+  position: fixed;
+  top: 0; left: 0; right:0; bottom:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  z-index: 999;
+}
+
+.qr-modal.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.qr-modal-content {
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.qr-img {
+  width: 180px;
+  height: 180px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* =========================================================
+   Utility Responsive Rules
+========================================================= */
+@media (max-width: 1199px) {
+  .plan-card { min-height: 340px; }
+  .qr-code { width: 140px; height: 140px; }
+}
+
+@media (max-width: 991px) {
+  .plans-container { padding: 12px; }
+  .plan-card { min-height: 320px; }
+  .badge-recommend { top: 10px; left: 10px; padding: 5px 8px; font-size: 11px; }
+}
+
+@media (max-width: 575px) {
+  .theme-toggle { top: .6rem; right: .6rem; padding: 6px 8px; }
+  .glass-card { padding: 14px; border-radius: 12px; }
+  .plan-card { min-height: auto; }
+  .plan-price { font-size: 1.15rem; }
+  .qr-code { width: 120px; height: 120px; }
+  .offline-payment-section.active { max-height: 420px; }
+  .button-row { gap: 10px; }
+  .btn-primary, .btn-outline-light { padding: .48rem .6rem; font-size: .95rem; }
+}
+    
+
+/* ==============================
+   Plan Card Button Styles
+============================== */
+
+/* Online Payment Button */
+.purchaseplan-btn {
+  background: linear-gradient(90deg, #dc3545, #ff4d4f); /* red gradient */
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.55rem 1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 18px rgba(220, 53, 69, 0.3);
+}
+
+.purchaseplan-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(220, 53, 69, 0.4);
+  color: #fff;
+}
+
+/* QR Payment Button */
+.button-row button.mat-stroked-button {
+  background: rgba(255, 255, 255, 0.08); /* glass effect */
+  border: 1px solid rgba(220, 53, 69, 0.6); /* red border */
+  color: #dc3545;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-row button.mat-stroked-button:hover {
+  transform: translateY(-3px);
+  background: rgba(220, 53, 69, 0.08);
+  box-shadow: 0 6px 18px rgba(220, 53, 69, 0.25);
+  color: #dc3545;
+}
+
+
+/* Features */
+.features {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+}
+
+.features li {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  padding: 4px 0;
+  color: #444;
+  transition: 0.2s ease;
+}
+
+.features li:hover {
+  padding-left: 3px;
+  color: #000;
+}
+
+.features mat-icon {
+  font-size: 18px;
+  color: #4caf50;
+  margin-right: 5px;
+}
+
+/* =========================================================
+   Theme Upgrade
+========================================================= */
+:host {
+  color: var(--app-color-text);
+  background: var(--app-color-bg);
+}
+
+.section-title {
+  color: var(--app-color-text);
+  border-bottom-color: var(--app-color-border);
+}
+
+.glass-card,
+.offline-payment-section,
+.left-column,
+.right-column,
+.qr-modal-content {
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-md);
+  color: var(--app-color-text);
+}
+
+.glass-card:hover,
+.plan-card:hover {
+  box-shadow: var(--app-shadow-lg);
+  border-color: color-mix(in srgb, var(--app-color-primary) 28%, var(--app-color-border));
+}
+
+.current-header {
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-primary-strong));
+  border-radius: var(--app-radius-md);
+}
+
+.current-body,
+.plan-name,
+.qr-title,
+.loading-text,
+.features-title,
+.contact-limit,
+.features li {
+  color: var(--app-color-text);
+}
+
+.plan-duration,
+.hint-text {
+  color: var(--app-color-muted);
+}
+
+.plan-price {
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.card-sep {
+  border-top-color: var(--app-color-border);
+}
+
+.badge-recommend {
+  background: linear-gradient(135deg, var(--app-color-accent), #ffe8a3);
+  color: #351b02;
+}
+
+.ribbon-discount,
+.purchaseplan-btn {
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-primary-strong));
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--app-color-primary) 28%, transparent);
+}
+
+.purchaseplan-btn:hover {
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--app-color-primary) 36%, transparent);
+}
+
+.button-row button.mat-stroked-button,
+.btn-outline-light {
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  color: var(--app-color-primary);
+}
+
+.button-row button.mat-stroked-button:hover,
+.btn-outline-light:hover {
+  background: color-mix(in srgb, var(--app-color-primary) 8%, var(--app-color-surface));
+  color: var(--app-color-primary-strong);
+}
+
+.active-plan {
+  border-color: color-mix(in srgb, var(--app-color-primary) 38%, var(--app-color-border));
+  box-shadow: 0 16px 38px color-mix(in srgb, var(--app-color-primary) 14%, transparent);
+}
+
+.qr-frame,
+.form-control-sm {
+  background: var(--app-color-bg);
+  border-color: var(--app-color-border);
+  color: var(--app-color-text);
+}
+
+.features mat-icon {
+  color: var(--app-color-success);
+}
+
+.qr-modal {
+  background: rgb(15 23 42 / 68%);
+  backdrop-filter: blur(6px);
+}

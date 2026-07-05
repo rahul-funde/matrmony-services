@@ -1,0 +1,104 @@
+/*.chart-card {
+  background: #fff;
+  height: 260px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}*/
+
+/* ================= C H A R T  C A R D ================= */
+.chart-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  height: 100%;
+}
+
+/* ================= H E A D E R ================= */
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.chart-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+/* ================= T O G G L E ================= */
+.chart-actions {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.chart-actions button {
+  border: none;
+  background: transparent;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chart-actions button:hover {
+  color: #2563eb;
+}
+
+.chart-actions button.active {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+}
+
+/* ================= B O D Y ================= */
+.chart-body {
+  height: 260px;
+  position: relative;
+}
+
+/* =========================================================
+   Theme Upgrade
+========================================================= */
+.chart-card {
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-sm);
+  color: var(--app-color-text);
+}
+
+.chart-header h3 {
+  color: var(--app-color-primary);
+}
+
+.chart-actions {
+  background: var(--app-color-bg);
+  border: 1px solid var(--app-color-border);
+}
+
+.chart-actions button {
+  color: var(--app-color-muted);
+}
+
+.chart-actions button:hover {
+  color: var(--app-color-primary);
+}
+
+.chart-actions button.active {
+  background: var(--app-color-primary);
+  color: #fff;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--app-color-primary) 28%, transparent);
+}
+

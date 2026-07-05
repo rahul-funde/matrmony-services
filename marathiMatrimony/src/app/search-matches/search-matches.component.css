@@ -1,0 +1,23 @@
+.card-img-top {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .modal {
+    display: block;
+  }
+  
+  .modal-dialog {
+    margin-top: 10vh;
+  }
+  
+  @media (max-width: 768px) {
+    .col-md-3 {
+      order: 2;
+    }
+    .col-md-9 {
+      order: 1;
+    }
+  }
+  

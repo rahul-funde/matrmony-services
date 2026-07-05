@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "30033f36-f8a0-4fca-906c-7f840a2b6615",
+		"name": "MAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43133842",
+		"_collection_link": "https://api666-6975.postman.co/workspace/MarathiMatrimony~87448d8f-68c4-46ac-91a8-658929a4afe5/collection/43133842-30033f36-f8a0-4fca-906c-7f840a2b6615?action=share&source=collection_link&creator=43133842"
+	},
+	"item": [
+		{
+			"name": "userRegistration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"John\",\r\n    \"middlename\": \"A.\",\r\n    \"surname\": \"Doe\",\r\n    \"dob\": \"1995-08-20\",\r\n    \"gender\": \"Male\",\r\n    \"mobileno\": \"97302848064\",\r\n    \"email\": \"rahul@gmail.com\",\r\n    \"password\": \"SecurePassword\",\r\n    \"confirmPassword\": \"SecurePassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					],
+					"query": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userLogin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"identifier\": \"rahul@gmail.com\",\r\n  \"password\": \"Rahul@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhaHVsMTIzZnVuZGVAZ21haWwuY29tIiwiaWF0IjoxNzQyNTY3MDg2LCJleHAiOjE3NDI1NzA2ODZ9.joKvhDp9HMHTR7f6Qb7eQI2rJ8jq88ub5N35dkn2Soo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhaHVsMTIzZnVuZGVAZ21haWwuY29tIiwiaWF0IjoxNzQyNTY3MDg2LCJleHAiOjE3NDI1NzA2ODZ9.joKvhDp9HMHTR7f6Qb7eQI2rJ8jq88ub5N35dkn2Soo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"identifier\": \"rahul123funde@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/forgot-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"forgot-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhaHVsMTIzZnVuZGVAZ21haWwuY29tIiwiaWF0IjoxNzQyNTY3MDg2LCJleHAiOjE3NDI1NzA2ODZ9.joKvhDp9HMHTR7f6Qb7eQI2rJ8jq88ub5N35dkn2Soo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhaHVsQGdtYWlsLmNvbSIsImlkIjoidXNlcjo6MGY4MTQwZTMtZGY1Ny00NTI2LThjMzItZmEzZTliZjFkMTcxIiwiaWF0IjoxNzQzMjMyMzA5LCJleHAiOjE3NDMyMzU5MDl9.ELS5L43kIK_1URXfo7PxD8NFeVpJr-uH_RT9OlAOJxw\",\r\n  \"newPassword\": \"NewSecurePassword123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/reset-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhaHVsQGdtYWlsLmNvbSIsImlkIjoidXNlcjo6MWRlNWFmMzktNjk3OS00MDg0LWI1NGQtZmE3YmYwOGUwNTVkIiwiaWF0IjoxNzQ0MTM4MzM1LCJleHAiOjE3NDQxNDE5MzV9.GLUYvhDknyRpmEl2jR0w1KTYEryMH9Bt65YgTsozAn8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"personalDetails\": {\r\n    \"firstName\": \"Rahul\",\r\n    \"middleName\": \"Kumar\",\r\n    \"lastName\": \"Sharma\",\r\n    \"dateOfBirth\": \"1995-06-15\",\r\n    \"age\": \"29\",\r\n    \"gender\": \"Male\",\r\n    \"religion\": \"Hindu\",\r\n    \"caste\": \"Brahmin\",\r\n    \"subCaste\": \"Deshastha\",\r\n    \"maritalStatus\": \"Single\",\r\n    \"height\": \"5'9\\\"\",\r\n    \"complexion\": \"Fair\",\r\n    \"physicalDisability\": \"No\",\r\n    \"weight\": \"70\",\r\n    \"bloodGroup\": \"B+\",\r\n    \"languagesSpoken\": \"Marathi, Hindi\",\r\n    \"diet\": \"Vegetarian\",\r\n    \"spectacles\": \"No\",\r\n    \"lens\": \"No\"\r\n  },\r\n  \"horoscopeDetails\": {\r\n    \"rashi\": \"Kumbh\",\r\n    \"nakshatra\": \"Shatabhisha\",\r\n    \"charan\": \"2\",\r\n    \"nadi\": \"Madhya\",\r\n    \"gan\": \"Dev\",\r\n    \"mangal\": \"No\",\r\n    \"birthTime\": \"05:30 AM\",\r\n    \"birthPlace\": \"Pune\",\r\n    \"deva\": \"Vishnu\"\r\n  },\r\n  \"familyDetails\": {\r\n    \"father\": \"Alive\",\r\n    \"mother\": \"Alive\",\r\n    \"nativeDistrict\": \"Pune\",\r\n    \"intercasteMarriage\": \"No\",\r\n    \"familyType\": \"Nuclear\"\r\n  },\r\n  \"educationDetails\": {\r\n    \"highestQualification\": \"BE\",\r\n    \"collegeName\": \"MIT Pune\",\r\n    \"yearOfCompletion\": \"2016\",\r\n    \"educationType\": \"Full-time\"\r\n  },\r\n  \"careerDetails\": {\r\n    \"occupation\": \"Software Engineer\",\r\n    \"jobTitle\": \"Senior Developer\",\r\n    \"companyName\": \"Infosys\",\r\n    \"annualIncome\": \"1200000\",\r\n    \"workLocationCity\": \"Bangalore\",\r\n    \"workLocationCountry\": \"India\",\r\n    \"employmentType\": \"Full-time\"\r\n  },\r\n  \"lifestyleDetails\": {\r\n    \"diet\": \"Vegetarian\",\r\n    \"smoking\": \"No\",\r\n    \"drinking\": \"No\"\r\n  },\r\n  \"partnerPreferencesDetails\": {\r\n    \"heightPreference\": \"5'4\\\" to 5'8\\\"\"\r\n  },\r\n  \"contactDetails\": {\r\n    \"emailAddress\": \"rahul.sharma@example.com\",\r\n    \"phoneNumber\": \"9876543210\",\r\n    \"city\": \"Pune\",\r\n    \"state\": \"Maharashtra\",\r\n    \"country\": \"India\"\r\n  },\r\n  \"photoDetails\": {\r\n    \"profilePicture\": \"base64string\"\r\n  },\r\n  \"additionalInfoDetails\": {\r\n    \"personalDescription\": \"I am a software engineer who loves music and travel.\",\r\n    \"reasonForPartner\": \"Looking for a caring and understanding life partner.\",\r\n    \"partnerExpectations\": \"Educated, kind and respectful person.\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/home/updateProfile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"home",
+						"updateProfile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

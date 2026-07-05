@@ -1,0 +1,40 @@
+.dashboard-container {
+  height: 89vh;
+  margin-top: 64px; /* Assuming fixed top nav */
+  position: relative;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 60px;
+}
+
+.custom-sidenav {
+  width: 250px;
+  z-index: 1001;
+  background-color: white;
+}
+
+/* Optional: dark overlay effect when sidenav is open */
+.dashboard-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+:host-context(.sidenav-open) .dashboard-container::after {
+  opacity: 1;
+  pointer-events: auto;
+}

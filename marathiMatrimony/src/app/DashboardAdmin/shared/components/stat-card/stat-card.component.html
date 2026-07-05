@@ -1,0 +1,7 @@
+<div class="stat-card">
+  <div class="title">{{ title }}</div>
+  <div class="value">{{ value }}</div>
+  <div class="growth" [class.negative]="growth < 0">
+    {{ growth }}%
+  </div>
+</div>

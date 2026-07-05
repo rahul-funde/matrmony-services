@@ -1,0 +1,171 @@
+<!-- ================= TOP NAV ================= -->
+<app-top-nav (toggleSidenav)="sidenav.toggle()"></app-top-nav>
+
+<mat-sidenav-container class="dashboard-container" style="margin-top: 4%">
+
+  <!-- ================= SIDENAV ================= -->
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    class="custom-sidenav"
+    (openedChange)="onSidenavToggle($event)">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <mat-sidenav-content class="main-content">
+
+    <form
+      class="plan-form"
+      [formGroup]="planForm"
+      (ngSubmit)="onSubmit()">
+
+      <div class="form-sections">
+
+        <!-- =================================================
+             BASIC PLAN DETAILS
+        ================================================== -->
+        <div class="form-section">
+          <h3>Plan Details</h3>
+          <div class="grid-container">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Plan Name</mat-label>
+              <input matInput formControlName="name" />
+              <mat-error *ngIf="hasError('name', 'required')">
+                Plan name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Duration (Months)</mat-label>
+              <mat-select formControlName="duration" matTooltip="Changing duration recalculates contact limits">
+                <mat-option *ngFor="let month of months" [value]="month">
+                  {{ month }} Month{{ month > 1 ? 's' : '' }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('duration', 'required')">
+                Duration is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Price (₹)</mat-label>
+              <input matInput type="number" formControlName="price" />
+              <mat-error *ngIf="hasError('price', 'required')">
+                Price is required
+              </mat-error>
+              <mat-error *ngIf="hasError('price', 'min')">
+                Price cannot be negative
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Total Subscriptions</mat-label>
+              <input matInput type="number" formControlName="users" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Priority</mat-label>
+              <input matInput type="number" formControlName="priority" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="planstatus">
+                <mat-option value="Active">Active</mat-option>
+                <mat-option value="Inactive">Inactive</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Total Contacts</mat-label>
+              <input matInput type="number" formControlName="totalLimit" matTooltip="Changing total contacts recalculates daily, weekly, monthly limits" />
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <!-- =================================================
+             CONTACT POLICY
+        ================================================== -->
+        <div class="form-section">
+          <h3>Contact Policy</h3>
+          <div class="grid-container">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Limit Type</mat-label>
+              <mat-select formControlName="contactLimitType" matTooltip="Type determines how limits are calculated">
+                <mat-option value="WEEKLY">Weekly Limit</mat-option>
+                <mat-option value="MONTHLY">Monthly Limit</mat-option>
+                <mat-option value="TOTAL">Total Limit</mat-option>
+                <mat-option value="UNLIMITED">Unlimited</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Contacts Per Week</mat-label>
+              <input matInput type="number" formControlName="weeklyLimit" matTooltip="Auto-calculated based on total contacts & duration" />
+              <mat-hint>Calculated automatically</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Contacts Per Month</mat-label>
+              <input matInput type="number" formControlName="monthlyLimit" matTooltip="Auto-calculated based on total contacts & duration" />
+              <mat-hint>Calculated automatically</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Daily Limit (Optional)</mat-label>
+              <input matInput type="number" formControlName="dailyLimit" matTooltip="Auto-calculated based on total contacts & duration" />
+              <mat-hint>Calculated automatically</mat-hint>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="carryForward" matTooltip="Allow unused contacts to carry forward to next period">
+              Carry forward unused contacts
+            </mat-checkbox>
+
+          </div>
+        </div>
+
+        <!-- =================================================
+             FEATURES
+        ================================================== -->
+        <div class="form-section">
+          <h3>Included Features</h3>
+          <div class="features-section grid-container">
+            <mat-checkbox
+              *ngFor="let feature of featuresList"
+              [checked]="isFeatureChecked(feature.value)"
+              (change)="toggleFeature(feature.value, $event.checked)">
+              {{ feature.label }}
+            </mat-checkbox>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= ACTION BUTTONS ================= -->
+      <div class="form-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="planForm.invalid || isSubmitting">
+          {{ isEditMode ? 'Update Plan' : 'Create Plan' }}
+        </button>
+
+        <button
+          *ngIf="isEditMode"
+          mat-stroked-button
+          color="warn"
+          type="button"
+          (click)="deletePlan()">
+          Delete Plan
+        </button>
+      </div>
+
+    </form>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

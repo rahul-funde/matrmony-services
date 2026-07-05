@@ -1,0 +1,9 @@
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+input, select, button {
+  padding: 8px;
+}

@@ -1,0 +1,61 @@
+<div class="otp-dialog">
+
+  <!-- ===== HEADER ===== -->
+  <div class="otp-header">
+    <span class="otp-title">
+      {{ currentLang === 'मराठी' ? 'OTP पडताळणी' : 'OTP Verification' }}
+    </span>
+    <span class="close-btn" (click)="closeDialog(false)">×</span>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="otp-main">
+
+    <p class="otp-subtitle">
+      {{ currentLang === 'मराठी' 
+         ? 'तुमच्या नोंदणीकृत मोबाईल नंबर व Email Id वर पाठवलेला 6-अंकी OTP प्रविष्ट करा' 
+         : 'Enter the 6-digit OTP sent to your registered mobile number Or Email Id' }}
+    </p>
+
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" class="otp-form">
+      <input
+        type="text"
+        formControlName="otp"
+        maxlength="6"
+        [placeholder]="currentLang === 'मराठी' ? 'OTP प्रविष्ट करा' : 'Enter OTP'"
+        [class.invalid]="f['otp'].invalid && f['otp'].touched"
+      />
+      <div class="error" *ngIf="f['otp'].invalid && f['otp'].touched">
+        {{ currentLang === 'मराठी' ? 'OTP 6 अंकी असणे आवश्यक आहे' : 'OTP must be 6 digits' }}
+      </div>
+
+      <button type="submit" [disabled]="isLoading" class="btn-verify">
+        {{ isLoading 
+           ? (currentLang === 'मराठी' ? 'चेक करत आहे...' : 'Verifying...') 
+           : (currentLang === 'मराठी' ? 'OTP पडताळणी करा' : 'Verify OTP') }}
+      </button>
+    </form>
+
+    <!-- Inline message -->
+    <p class="message" *ngIf="message">{{ message }}</p>
+
+    <!-- Resend OTP -->
+    <button
+      *ngIf="showResendOption"
+      (click)="resendOtp()"
+      [disabled]="isLoading"
+      class="btn-resend"
+    >
+      {{ currentLang === 'मराठी' ? 'पुन्हा पाठवा' : 'Resend OTP' }}
+    </button>
+      OTP = {{otp}}
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="otp-footer">
+    <button class="btn-close" (click)="closeDialog(false)">
+      {{ currentLang === 'मराठी' ? 'Close' : 'Close' }}
+    </button>
+  </div>
+
+</div>

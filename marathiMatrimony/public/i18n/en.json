@@ -1,0 +1,39 @@
+{
+  "app": {
+    "name": "Sushil Maratha",
+    "language": "Language"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "failed": "Login failed."
+    },
+    "passwordReset": {
+      "success": "Password reset successful!",
+      "failed": "Password reset failed."
+    }
+  },
+  "common": {
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "search": "Search",
+    "loading": "Loading..."
+  },
+  "profile": {
+    "basicDetails": "Basic details",
+    "photos": "Photos",
+    "contactDetails": "Contact details"
+  },
+  "membership": {
+    "upgradePlan": "Upgrade plan",
+    "currentPlan": "Current plan",
+    "contactsRemaining": "Contacts remaining"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "plans": "Plans",
+    "payments": "Payments"
+  }
+}

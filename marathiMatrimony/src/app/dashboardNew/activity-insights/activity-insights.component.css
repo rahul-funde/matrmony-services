@@ -1,0 +1,58 @@
+.insights-card {
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.insights-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.header h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.header .subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.chart-container {
+  position: relative;
+  height: 340px;
+  width: 100%;
+}
+
+/* 🌙 Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .insights-card {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .header h3 {
+    color: #f9fafb;
+  }
+  .header .subtitle {
+    color: #9ca3af;
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 240px;
+  }
+}

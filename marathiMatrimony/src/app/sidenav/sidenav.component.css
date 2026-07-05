@@ -1,0 +1,194 @@
+/* ===============================
+   BACKDROP (MOBILE ONLY)
+================================ */
+.sidenav-backdrop {
+  position: fixed;
+  top: var(--header-height-desktop);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 998;
+}
+
+/* ===============================
+   SIDENAV BASE
+================================ */
+.sidenav {
+  position: fixed;
+  top: var(--header-height-desktop);
+  left: 0;
+  height: calc(100vh - var(--header-height-desktop));
+
+  width: var(--sidenav-width);
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  z-index: 999;
+
+  transform: translateX(-100%);
+  transition:
+    transform 0.3s ease,
+    width 0.25s ease;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Open state */
+.sidenav.open {
+  transform: translateX(0);
+}
+
+/* ===============================
+   COLLAPSED (DESKTOP)
+================================ */
+.sidenav.collapsed {
+  width: var(--sidenav-collapsed-width);
+}
+
+/* Hover expand */
+/*.sidenav.collapsed:hover {
+  width: var(--sidenav-width);
+}*/
+
+/* ===============================
+   ROUTE MICRO ANIMATION
+================================ */
+.sidenav.route-changing {
+  animation: routePulse 0.25s ease;
+}
+
+@keyframes routePulse {
+  from { opacity: 0.9; }
+  to   { opacity: 1; }
+}
+
+/* ===============================
+   MENU LIST
+================================ */
+.sidenav ul {
+  list-style: none;
+  padding: 12px 0;
+  margin: 0;
+  flex: 1;
+}
+
+.sidenav li {
+  margin: 4px 8px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ===============================
+   SECTION HEADERS
+================================ */
+.section-title {
+  padding: 8px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ===============================
+   MENU LINKS
+================================ */
+.sidenav a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #374151;
+  border-radius: 10px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.sidenav a:hover {
+  background: #f3f4f6;
+  transform: translateX(2px);
+}
+
+.sidenav li.active a {
+  background: #eef2ff;
+  color: #4338ca;
+  font-weight: 600;
+}
+
+.sidenav mat-icon {
+  font-size: 22px;
+  min-width: 22px;
+}
+
+.sidenav span {
+  white-space: nowrap;
+}
+
+/* ===============================
+   PREMIUM LOCK
+================================ */
+.lock-icon {
+  margin-left: auto;
+  font-size: 18px;
+  color: #f59e0b;
+}
+
+/* ===============================
+   COLLAPSE BUTTON
+================================ */
+.collapse-btn {
+  border: none;
+  background: transparent;
+  padding: 12px;
+  cursor: pointer;
+  border-top: 1px solid #e5e7eb;
+}
+
+.collapse-btn mat-icon {
+  transition: transform 0.25s ease;
+}
+
+.collapse-btn mat-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* ===============================
+   MOBILE OVERRIDES
+================================ */
+@media (max-width: 768px) {
+  .sidenav {
+    width: var(--sidenav-width);
+    transform: translateX(-100%);
+  }
+
+  .sidenav.open {
+    transform: translateX(0);
+  }
+
+  .sidenav.collapsed {
+    width: var(--sidenav-width);
+  }
+
+  .collapse-btn {
+    display: none;
+  }
+}
+
+/* ===============================
+   MOBILE HEADER HEIGHT SYNC
+================================ */
+@media (max-width: 600px) {
+  .sidenav {
+    top: var(--header-height-mobile);
+    height: calc(100vh - var(--header-height-mobile));
+  }
+
+  .sidenav-backdrop {
+    top: var(--header-height-mobile);
+  }
+}

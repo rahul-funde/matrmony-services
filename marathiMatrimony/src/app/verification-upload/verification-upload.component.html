@@ -1,0 +1,55 @@
+<mat-card class="verification-card">
+<mat-card-title>My Verification Documents</mat-card-title>
+
+
+<form [formGroup]="uploadForm" class="upload-form" (ngSubmit)="upload()">
+<div class="row">
+<mat-form-field appearance="outline" class="doc-type">
+<mat-label>Document Type</mat-label>
+<mat-select formControlName="doc_type">
+<mat-option *ngFor="let d of docTypes" [value]="d.value">{{ d.label }}</mat-option>
+</mat-select>
+</mat-form-field>
+
+
+<div class="file-input">
+<input type="file" accept="image/*,application/pdf" (change)="onFileSelected($event)" />
+</div>
+
+
+<button mat-raised-button color="primary" type="submit" [disabled]="uploading || uploadForm.invalid">
+{{ uploading ? 'Uploading...' : 'Upload' }}
+</button>
+</div>
+</form>
+
+
+<mat-divider></mat-divider>
+
+
+<div class="existing-docs">
+<h4>My Submitted Documents</h4>
+
+
+<mat-list *ngIf="uploadedDocs?.length; else noDocs">
+<mat-list-item *ngFor="let d of uploadedDocs">
+<div mat-line>
+<strong>{{ d.doc_type | titlecase }}</strong>
+<span class="status" [ngClass]="d.status">{{ d.status }}</span>
+</div>
+<div mat-line class="meta">
+<small>Submitted: {{ d.submitted_at | date:'medium' }}</small>
+<span *ngIf="d.status === 'rejected' && d.remarks"> | Reason: {{ d.remarks }}</span>
+<button mat-icon-button (click)="openPreview(d.doc_url)" matTooltip="Open">
+<mat-icon>open_in_new</mat-icon>
+</button>
+</div>
+</mat-list-item>
+</mat-list>
+
+
+<ng-template #noDocs>
+<p class="muted">No documents submitted yet.</p>
+</ng-template>
+</div>
+</mat-card>

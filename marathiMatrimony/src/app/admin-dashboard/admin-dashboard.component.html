@@ -1,0 +1,20 @@
+<!-- Top Nav stays above everything -->
+<app-top-nav (toggleSidenav)="sidenav.toggle()"></app-top-nav>
+
+<!-- Sidenav overlays main content -->
+<mat-sidenav-container
+  class="dashboard-container"
+  [class.sidenav-open]="isSidenavOpen">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    [opened]="false"
+    (openedChange)="onSidenavToggle($event)"
+    class="custom-sidenav">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <app-main-content></app-main-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

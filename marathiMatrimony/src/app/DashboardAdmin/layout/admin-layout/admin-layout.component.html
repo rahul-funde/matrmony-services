@@ -1,0 +1,48 @@
+<header class="header">
+  <img src="images/smLogo.png" class="logo" />
+
+  <div class="header-right">
+    <button type="button" class="icon-btn menu-btn" (click)="toggleSidenav()">☰</button>
+
+    <button type="button" class="icon-btn">
+      🔔
+      <span class="badge" *ngIf="notificationsCount">{{ notificationsCount }}</span>
+    </button>
+
+    <div class="profile-wrapper">
+      <button type="button" class="icon-btn" (click)="toggleProfileDropdown()">👤</button>
+      <div class="profile-dropdown" [class.show]="profileDropdownOpen">
+        <a href="#" (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Overlay -->
+<div class="overlay" [class.show]="sidenavOpen" (click)="closeSidenav()"></div>
+
+<!-- Sidebar -->
+<aside class="sidenav" [class.open]="sidenavOpen">
+  <nav>
+    <a *ngFor="let item of menu" 
+       [routerLink]="item.route" 
+       routerLinkActive="active" 
+       (click)="closeSidenav()">
+      <span class="icon">{{ item.icon }}</span>
+      <span class="label">{{ item.label }}</span>
+    </a>
+  </nav>
+</aside>
+
+<!-- Main content -->
+<main class="content" [class.sidenav-open]="sidenavOpen">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Bottom nav (optional for mobile) -->
+<!-- <div class="bottom-nav">
+  <a href="#"><span>🏠</span>Home</a>
+  <a href="#"><span>🔔</span>Alerts</a>
+  <a href="#"><span>👤</span>Profile</a>
+</div>
+ -->

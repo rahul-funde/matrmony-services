@@ -1,0 +1,76 @@
+<div class="container dashboard-container">
+    <div class="row">
+      <div class="row g-3">
+      <!-- Left Column -->
+      <div class="col-lg-4 col-md-12">
+        <app-profile-summary></app-profile-summary>
+        <!-- <div>advertisement</div> -->
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-lg-8 col-md-12">
+        <app-recommendations></app-recommendations>
+      </div>
+    </div>
+<div class="row">
+ <!-- Column 1: LEFT -->
+    <div class="col-lg-12 col-md-12">
+        <app-interests></app-interests>
+    </div>
+    <!-- Column 2: Right -->
+    <div class="col-lg-6 col-md-12 "  style="display: none;">
+      <div class="card messages-card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Messages</h5>
+          <a href="#" class="small fw-semibold text-primary">View all</a>
+        </div>
+      
+        <ul class="list-group list-group-flush message-list">
+          <li class="list-group-item message-item" *ngFor="let msg of messages">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Avatar">
+                <div class="text-truncate-container">
+                  <div class="d-flex align-items-center">
+                    <strong class="me-1">{{ msg.name }}</strong>
+                    <span *ngIf="msg.unread" class="unread-indicator"></span>
+                  </div>
+                  
+                  <!-- Tooltip added here -->
+                  <small 
+                    class="text-muted text-truncate" 
+                    [matTooltip]="msg.message" 
+                    matTooltipPosition="above">
+                    {{ msg.message }}
+                  </small>
+      
+                </div>
+              </div>
+              <small class="text-muted ms-2">{{ msg.time }}</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="card mb-3 interest-card text-center">
+        <div class="card-body d-flex justify-content-around align-items-center">
+          <div class="interest-stat flex-fill">
+            <strong>15</strong>
+            <p>Interests Sent</p>
+          </div>
+      
+          <div class="vertical-divider"></div> <!-- Separator line -->
+      
+          <div class="interest-stat flex-fill">
+            <strong>8</strong>
+            <p>Interests Received</p>
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+
+  </div>
+
+</div>

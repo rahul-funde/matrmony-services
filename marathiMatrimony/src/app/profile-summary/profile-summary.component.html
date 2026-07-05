@@ -1,0 +1,24 @@
+<mat-card class="profile-card" *ngIf="user.name">
+  <div class="head">
+    <img [src]="user.photo" alt="user" class="avatar"/>
+    <div class="meta">
+      <h3>{{user.name}} <small class="verified">Verified</small></h3>
+      <p>{{user.age}} yrs • {{user.city}}</p>
+      <p class="job">{{user.profession}}</p>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="label">Profile completeness</div>
+    <mat-progress-bar [value]="user.completeness" mode="determinate"></mat-progress-bar>
+    <div class="actions">
+      <button mat-stroked-button color="primary">Edit</button>
+      <button mat-flat-button color="accent">Preview</button>
+    </div>
+  </div>
+
+  <div class="links">
+    <button mat-button>Who viewed ({{stats.views || 0}})</button>
+    <button mat-button>Verify Photo</button>
+  </div>
+</mat-card>

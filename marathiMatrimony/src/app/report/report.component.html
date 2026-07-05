@@ -1,0 +1,246 @@
+<div class="container mt-4">
+
+  <!-- ================= TITLE ================= -->
+  <h2 class="mb-3">Financial Reports</h2>
+
+  <!-- ================= FILTERS ================= -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-3">
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="fromDate"
+        (change)="onDateChange()" />
+    </div>
+
+    <div class="col-md-3">
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="toDate"
+        (change)="onDateChange()" />
+    </div>
+
+    <div class="col-md-3">
+      <select
+        class="form-select"
+        [(ngModel)]="groupBy"
+        (change)="onGroupByChange(groupBy)">
+        <option value="month">Month</option>
+        <option value="week">Week</option>
+        <option value="day">Day</option>
+        <option value="plan">Plan</option>
+        <option value="paymentMode">Payment Mode</option>
+      </select>
+    </div>
+        <div class="col-md-3">
+       		<button
+	        	mat-raised-button
+	        	color="primary"
+	        	(click)="exportToExcel()">
+	        	Export Excel
+	      	</button>
+	    </div>
+
+  </div>
+
+  <!-- ================= LOADING ================= -->
+  <div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <!-- ================= ERROR ================= -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- ================= SUMMARY CARDS ================= -->
+  <div class="row mb-4">
+    <div
+      class="col-md-3 col-sm-6"
+      *ngFor="let card of ['totalRevenue','offlineRevenue','onlineRevenue']">
+      <div class="card text-center p-3">
+        <h6 class="text-muted">{{ card | titlecase }}</h6>
+        <h3 class="fw-bold">₹ {{ summaryData[card] || 0 }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TABLE 2 ================= -->
+  <div class="report-card mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-2">
+	      <h4> Revenue by {{ groupBy | titlecase }}</h4>
+	    </div>
+
+
+    <div class="table-wrapper">
+      <table
+        mat-table
+        [dataSource]="periodDataSource"
+        class="mat-elevation-z2">
+
+        <!-- PERIOD (DYNAMIC KEY) -->
+        <ng-container [matColumnDef]="groupBy">
+          <th mat-header-cell *matHeaderCellDef sticky>
+            {{ groupBy | titlecase }}
+          </th>
+          <td mat-cell *matCellDef="let r">
+          {{
+		      groupBy === 'day' ? (r[groupBy] | date:'dd MMM yyyy') :
+		      groupBy === 'week' ? (r.periodStart | date:'dd MMM') + ' → ' + (r.periodEnd | date:'dd MMM') :
+		      groupBy === 'month' ? (r.monthStart | date:'MMM yyyy') :
+		      r[groupBy]
+		    }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky>
+            <strong>Total</strong>
+          </td>
+        </ng-container>
+
+        <!-- REVENUE -->
+        <ng-container matColumnDef="revenue">
+          <th mat-header-cell *matHeaderCellDef sticky>
+            Revenue
+          </th>
+          <td mat-cell *matCellDef="let r">
+            ₹ {{ r.revenue }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky>
+            ₹ {{ totalPeriodRevenue }}
+          </td>
+        </ng-container>
+
+        <!-- TRANSACTIONS -->
+        <ng-container matColumnDef="transactions">
+          <th mat-header-cell *matHeaderCellDef sticky>
+            Transactions
+          </th>
+          <td mat-cell *matCellDef="let r">
+            {{ r.transactions }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky>
+            {{ totalPeriodTransactions }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="periodColumns">
+        </tr>
+
+        <tr mat-row
+            *matRowDef="let row; columns: periodColumns">
+        </tr>
+
+        <tr mat-footer-row
+            *matFooterRowDef="periodColumns">
+        </tr>
+
+      </table>
+    </div>
+
+    <!-- ✅ PERIOD PAGINATOR -->
+    <mat-paginator
+      #periodPaginator
+      [pageSize]="10"
+      [pageSizeOptions]="[5,10,25,50,100,500,1000]"
+      showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+
+  <!-- ================= TABLE 1 ================= -->
+  <div class="report-card mb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h4>Revenue by Plan & Payment Mode</h4>
+      <!-- <button
+        mat-raised-button
+        color="primary"
+        (click)="exportToExcel()">
+        Export Excel
+      </button> -->
+    </div>
+
+    <div class="table-wrapper">
+      <table
+        mat-table
+        [dataSource]="revenueDataSource"
+        matSort
+        class="mat-elevation-z2">
+
+        <!-- PLAN -->
+        <ng-container matColumnDef="plan">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+            Plan
+          </th>
+          <td mat-cell *matCellDef="let r">
+            {{ r.planName }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky>
+            <strong>Total</strong>
+          </td>
+        </ng-container>
+
+        <!-- PAYMENT -->
+        <ng-container matColumnDef="payment">
+          <th mat-header-cell *matHeaderCellDef sticky>
+            Payment Mode
+          </th>
+          <td mat-cell *matCellDef="let r">
+            {{ r.paymentCategory }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky></td>
+        </ng-container>
+
+        <!-- TRANSACTIONS -->
+        <ng-container matColumnDef="transactions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+            Transactions
+          </th>
+          <td mat-cell *matCellDef="let r">
+            {{ r.transactions }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky>
+            {{ totalRevenueTransactions }}
+          </td>
+        </ng-container>
+
+        <!-- REVENUE -->
+        <ng-container matColumnDef="revenue">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+            Revenue
+          </th>
+          <td mat-cell *matCellDef="let r">
+            ₹ {{ r.revenue }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef sticky>
+            ₹ {{ totalRevenueAmount }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="revenueColumns">
+        </tr>
+
+        <tr mat-row
+            *matRowDef="let row; columns: revenueColumns">
+        </tr>
+
+        <tr mat-footer-row
+            *matFooterRowDef="revenueColumns">
+        </tr>
+      </table>
+    </div>
+
+    <!-- ✅ REVENUE PAGINATOR -->
+    <mat-paginator
+      #revenuePaginator
+      [pageSize]="10"
+      [pageSizeOptions]="[5,10,25,50,100,500,1000]"
+      showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+
+
+</div>

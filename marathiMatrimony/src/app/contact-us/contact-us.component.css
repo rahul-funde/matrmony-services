@@ -1,0 +1,193 @@
+/* Overlay */
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+/* Modal */
+.contact-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+}
+
+/* Header */
+.contact-modal-header {
+ display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 22px;
+  background: linear-gradient(135deg, #6a6ee6, #8a8ef2);
+  color: #fff;
+  font-weight: 600;
+}
+
+.contact-modal-header .close-btn {
+ /* background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;*/
+   width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.contact-modal-header .close-btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: rotate(90deg);
+}
+
+/* Body (Scrollable) */
+.contact-modal-body {
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+/* Footer */
+.contact-modal-footer {
+  flex-shrink: 0;
+  padding: 0.75rem 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Social Icons */
+.social-icons a {
+  font-size: 1.5rem;
+  color: #007bff;
+  transition: transform 0.2s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+}
+
+/* WhatsApp Float */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1060;
+  box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.3);
+}
+
+/* Contact Info Icons */
+.contact-info-section i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #007bff;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .contact-modal {
+    max-width: 95%;
+  }
+
+  .map-section iframe {
+    height: 200px !important;
+  }
+}
+
+/* Social Icons in Footer */
+.social-icons a {
+  font-size: 1.5rem;
+  color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #0056b3; /* Darker blue on hover */
+}
+
+/* Input Icons Styling */
+.input-group-text {
+  background-color: #f0f0f0;
+  border-right: 0;
+}
+
+.input-group .form-control {
+  border-left: 0;
+}
+
+/* Rounded Inputs */
+.input-group .form-control,
+.input-group .form-select,
+.input-group textarea {
+  border-radius: 0.25rem;
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .input-group {
+    flex-wrap: nowrap;
+  }
+}
+
+.contact-modal-footer {
+  padding: 1rem 2rem;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+/* Social Icons Styling */
+.social-icons a {
+  font-size: 1.5rem;
+  color: #007bff;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .contact-modal-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,549 @@
+<!-- HEADER -->
+<header>
+  <div class="navbar navbar-expand-lg navbar-dark shadow-sm"
+       style="background: linear-gradient(90deg, #8e0020, #d32f2f); border-bottom: 4px solid #ffd700;">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+
+      <!-- Logo -->
+      <a class="navbar-brand d-flex align-items-center" routerLink="/welcome">
+        <img src="images/smlogo4.png" alt="विवाहबंधन लोगो"
+             class="img-fluid" style="max-height: 70px; width: auto;">
+      </a>
+
+      <!-- Navbar Links -->
+      <div class="d-flex align-items-center flex-grow-1 justify-content-center">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav gap-3 fw-semibold text-center">
+
+            <li class="nav-item">
+              <a class="nav-link text-white active" href="index.html">मुख्यपृष्ठ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="/landing">landing</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="/about-us">आमच्याबद्दल</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="/services">सेवा</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="/contact">संपर्क</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right-aligned Login/Register buttons (always visible) -->
+      <div class="d-flex gap-2 ms-3">
+        <button  color="primary"
+                (click)="openLoginDialog()"
+                class="login-btn">Login</button>
+        <button color="primary"
+                (click)="openRegisterDialog()"
+                class="register-btn">Register</button>
+      </div>
+
+      <!-- Mobile Toggle Button -->
+      <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNav" aria-controls="navbarNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    </div>
+  </div>
+</header>
+
+
+
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+
+
+<!-- HERO SECTION -->
+<section id="hero-banner-search" class="position-relative">
+  <!-- Carousel Background -->
+  <owl-carousel-o [options]="customOptions" class="carousel-bg">
+    <ng-container *ngFor="let slide of slides">
+      <ng-template carouselSlide [id]="slide.id">
+        <img [src]="slide.image" [alt]="slide.title" class="carousel-image" />
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+  <!-- Overlay Content -->
+  <div class="hero-overlay text-center text-white">
+    <h1 class="fw-bold">Find Your Perfect Match</h1>
+    <p class="lead">Trusted by 10,00+ Happy Couples</p>
+  </div>
+  <!-- Search Form Overlay -->
+  <div class="form-overlay-container">
+    <mat-card class="search-card float parallax">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-box">
+        
+       <!--  <mat-form-field appearance="outline"><mat-label>I am</mat-label>
+          <mat-select formControlName="iAm">
+            <mat-option *ngFor="let g of genders" [value]="g">{{ g }}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="outline"><mat-label>Seeking</mat-label>
+          <mat-select formControlName="seeking">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let s of seeking" [value]="s">{{ s }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"><mat-label>From Age</mat-label>
+          <input matInput type="number" formControlName="fromage" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"><mat-label>To Age</mat-label>
+          <input matInput type="number" formControlName="toage" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"><mat-label>Maritial Status</mat-label>
+          <mat-select formControlName="maritialstatus">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let s of maritialstatus" [value]="s">{{ s }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 occupation-modern">
+          <mat-label>Occupation</mat-label>
+
+          <mat-select formControlName="occupationtype" panelClass="occupation-panel">
+                      <mat-option value="">All</mat-option>
+
+            <!-- 🔍 SEARCH INPUT -->
+            <mat-option disableRipple class="occupation-search-option">
+              <div class="search-container">
+                <!-- <span class="search-icon">🔍</span> -->
+                <input
+                  matInput
+                  placeholder="Search occupation..."
+                  [formControl]="occupationSearchCtrl"
+                  (click)="$event.stopPropagation()"
+                  (keydown)="$event.stopPropagation()"
+                />
+                <span
+                  class="clear-icon"
+                  *ngIf="occupationSearchCtrl.value"
+                  (click)="clearSearch($event)"
+                >
+                  ✕
+                </span>
+              </div>
+            </mat-option>
+
+            <!-- OPTIONS -->
+            <mat-optgroup
+              *ngFor="let group of filteredOccupationGroups$ | async"
+              [label]="group.category">
+              
+              <mat-option
+                *ngFor="let option of group.values"
+                [value]="option">
+                {{ option }}
+              </mat-option>
+
+            </mat-optgroup>
+
+          </mat-select>
+        </mat-form-field>
+
+
+
+
+        <mat-form-field appearance="outline"><mat-label>sub-Caste</mat-label>
+          <mat-select formControlName="castes">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let c of castes" [value]="c">{{ c }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" type="submit">Search</button>
+      </form>
+    </mat-card>
+  </div>
+</section>
+
+
+
+<ng-template #loginDialog>
+    <!-- Login Card -->
+    <div class="card login-card shadow-lg p-4 p-md-5" style="max-width: 400px; width: 100%; border-radius: 1rem; position: relative;">
+
+      <!-- Close Button -->
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" (click)="close()"></button>
+
+      <!-- Title -->
+      <h3 class="text-center mb-2">Welcome Back</h3>
+      <p class="subtitle">Login to continue to <strong>Sushil Maratha</strong></p>
+
+      <!-- Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+        <!-- Email / Mobile -->
+        <div class="mb-3">
+          <label for="identifier" class="form-label">Email or Mobile</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+            <input type="text" id="identifier" class="form-control" formControlName="identifier" placeholder="Enter email or mobile">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+            <input [type]="hidePassword ? 'password' : 'text'" id="password" class="form-control" formControlName="password" placeholder="Enter password">
+            <!-- <button class="btn btn-outline-secondary" type="button" (click)="hidePassword = !hidePassword">
+              <i class="bi" [ngClass]="hidePassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+            </button> -->
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-link p-0" (click)="openRegisterDialog()">Create Account</button>
+          <a href="javascript:void(0)" class="text-decoration-none" (click)="goToForgotPassword($event)">Forgot Password?</a>
+        </div>
+
+      </form>
+
+    </div>
+</ng-template>
+
+
+
+
+<div class="container mt-3">
+  <div class="row">
+    
+    <div class="col-md-4 mb-4" *ngFor="let p of profiles">
+      <div class="card shadow">
+
+        <div class="card-body d-flex">
+
+          <!-- PHOTO -->
+          <div class="me-3">
+          <!--   <img
+              [src]="apiUrl + '/uploads/' + p.photoUrl?.[0]?.filename"
+              alt="photo"
+              class="img-fluid rounded"
+              style="width: 90px; height: 90px; object-fit: cover;"
+              (error)="handleImageError($event)"
+            /> -->
+            <img 
+              [src]="apiUrl + '/uploads/' + p?.profilePicture?.[0]?.filename" 
+              class="thumb-img"
+              (click)="openViewer(p?.profilePicture?.[0]?.filename)"
+              (error)="handleImageError($event)"
+            />
+          </div>
+
+          <!-- INFO -->
+          <div class="flex-grow-1">
+
+            <h5 class="mb-1">
+              <small class="text-muted" *ngIf="p.userId">#{{ p.userId }} | {{ p.lastName }}</small><br>
+              
+            </h5>
+
+            <p class="mb-1" *ngIf="p.age"><strong>Age:</strong> {{ p.age }} yrs</p>
+            <p class="mb-1" *ngIf="p.gender"><strong>Gender:</strong> {{ p.gender }}</p>
+            <p class="mb-1" *ngIf="p.highestQualification">
+              <strong>Qualification:</strong> {{ p.highestQualification }}
+            </p>
+            <p class="mb-2" *ngIf="p.occupation || p.jobTitle">
+              <strong>Occupation:</strong> {{ p.occupation }} {{ p.jobTitle }}
+            </p>
+
+            <!-- BUTTONS -->
+            <button class="btn btn-outline-primary btn-sm me-2"
+                    (click)="openProfileDialog(p)">
+              View Full Profile
+            </button>
+
+            <button class="btn btn-warning btn-sm text-white fw-bold"
+                    (click)="openLoginDialog()">
+              View Contact
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<ng-template #profileDialog let-data>
+  <div class="profile-dialog-container">
+
+    <!-- Header with gradient -->
+    <div class="dialog-header premium-header">
+      <h2>{{ data.lastName }}'s Profile ( {{ data.userId }})</h2>
+      <button class="close-btn" mat-icon-button (click)="close()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+<mat-dialog-content class="dialog-content">
+
+  <!-- Profile Image -->
+ <!--  <div class="text-center profile-photo-wrapper mb-4">
+    <img 
+      [src]="apiUrl + '/uploads/' + (data.profilePicture?.[0]?.filename || 'default.jpg')" 
+      alt="Profile Picture"
+      class="dialog-photo shadow-lg"
+      (error)="handleImageError($event)"
+    />
+  </div> -->
+
+  <div class="container py-3 px-0">
+
+    <!-- ================= PERSONAL INFO ================= -->
+    <div class="section-header">Personal Information</div>
+    <div class="tab-grid">
+      <div class="profile-chip" *ngIf="data.userId">User ID: {{ data.userId }}</div>
+      <div class="profile-chip" *ngIf="data.age">🎂 Age: {{ data.age }} yrs</div>
+      <div class="profile-chip" *ngIf="data.gender">⚧ Gender: {{ data.gender }}</div>
+      <div class="profile-chip" *ngIf="data.dateOfBirth">📅 DOB: {{ data.dateOfBirth | date }}</div>
+      <div class="profile-chip" *ngIf="data.height">📏 Height: {{ data.height }} {{ data.heightUnit }}</div>
+      <div class="profile-chip" *ngIf="data.weight">⚖ Weight: {{ data.weight }}</div>
+      <div class="profile-chip" *ngIf="data.bloodGroup">🩸 Blood Group: {{ data.bloodGroup }}</div>
+      <div class="profile-chip" *ngIf="data.religion">Religion: {{ data.religion }}</div>
+      <div class="profile-chip" *ngIf="data.caste">Caste: {{ data.caste }} <span *ngIf="data.subCaste">({{ data.subCaste }})</span></div>
+      <div class="profile-chip" *ngIf="data.complexion">Skin Tone: {{ data.complexion }}</div>
+      <div class="profile-chip" *ngIf="data.maritalStatus">Marital Status: {{ data.maritalStatus }}</div>
+    </div>
+
+
+    <!-- ================= EDUCATION INFO ================= -->
+    <div class="section-header">Education Details</div>
+    <div class="tab-grid">
+      <div class="profile-chip" *ngIf="data.educationDetails?.highestQualification">🎓 Highest Qualification: {{ data.educationDetails.highestQualification }}</div>
+      <div class="profile-chip" *ngIf="data.educationDetails?.educationType">Education Type: {{ data.educationDetails.educationType }}</div>
+      <div class="profile-chip" *ngIf="data.educationDetails?.collegeName">College: {{ data.educationDetails.collegeName }}</div>
+      <div class="profile-chip" *ngIf="data.educationDetails?.yearOfCompletion">Year of Completion: {{ data.educationDetails.yearOfCompletion }}</div>
+      <div class="profile-chip" *ngIf="data.educationDetails?.additionalQualifications">Other Qualification: {{ data.educationDetails.additionalQualifications }}</div>
+    </div>
+
+
+    <!-- ============= PROFESSIONAL DETAILS ============= -->
+    <div class="section-header">Professional & Career</div>
+    <div class="tab-grid">
+      <div class="profile-chip" *ngIf="data.occupation">Occupation: {{ data.occupation }}</div>
+      <div class="profile-chip" *ngIf="data.jobTitle">Job Title: {{ data.jobTitle }}</div>
+      <div class="profile-chip" *ngIf="data.companyName">Company: {{ data.companyName }}</div>
+      <div class="profile-chip" *ngIf="data.annualIncome">💰 Annual Income: ₹{{ data.annualIncome }}</div>
+      <div class="profile-chip" *ngIf="data.employmentType">Employment Type: {{ data.employmentType }}</div>
+      <div class="profile-chip" *ngIf="data.workLocationCity || data.workLocationCountry">
+        Work Location: {{ data.workLocationCity }}, {{ data.workLocationState }}, {{ data.workLocationCountry }}
+      </div>
+    </div>
+
+
+    <!-- ============= LIFESTYLE ============= -->
+    <div class="section-header">Lifestyle</div>
+    <div class="tab-grid">
+      <div class="profile-chip" *ngIf="data.lifestyleDetails?.diet">Diet: {{ data.lifestyleDetails.diet }}</div>
+      <div class="profile-chip" *ngIf="data.lifestyleDetails?.smoking">Smoking: {{ data.lifestyleDetails.smoking }}</div>
+      <div class="profile-chip" *ngIf="data.lifestyleDetails?.drinking">Drinking: {{ data.lifestyleDetails.drinking }}</div>
+      <div class="profile-chip" *ngIf="data.lifestyleDetails?.hobbies">Hobbies: {{ data.lifestyleDetails.hobbies }}</div>
+      <div class="profile-chip" *ngIf="data.spectacles">Spectacles: {{ data.spectacles }}</div>
+    </div>
+
+
+    <!-- ============= FAMILY INFO ============= -->
+    <div class="section-header">Family Information</div>
+    <div class="tab-grid">
+      <div class="profile-grid" *ngIf="data.father">Father: {{ data.father }} ({{ data.fatherOccupation }})</div>
+      <div class="profile-chip" *ngIf="data.mother">Mother: {{ data.mother }} ({{ data.motherOccupation }})</div>
+      <div class="profile-chip" *ngIf="data.familyType">Family Type: {{ data.familyType }}</div>
+      <div class="profile-chip" *ngIf="data.familyWealth">Family Wealth: {{ data.familyWealth }}</div>
+      <div class="profile-chip" *ngIf="data.hasBrothers">Brothers: {{ data.brothersCount }} Married: {{ data.brothersMarriedCount }}</div>
+      <div class="profile-chip" *ngIf="data.hasSisters">Sisters: {{ data.sistersCount }} Married: {{ data.sistersMarriedCount }}</div>
+    </div>
+
+
+    <!-- ============= HOROSCOPE DETAILS ============= -->
+    <div class="section-header">Horoscope Details</div>
+    <div class="tab-grid">
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.birthPlace">Birth Place: {{ data.horoscopeDetails.birthPlace }}</div>
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.birthTime">Birth Time: {{ data.horoscopeDetails.birthTime }}</div>
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.rashi">Rashi: {{ data.horoscopeDetails.rashi }}</div>
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.nakshatra">Nakshatra: {{ data.horoscopeDetails.nakshatra }}</div>
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.gan">Gan: {{ data.horoscopeDetails.gan }}</div>
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.nadi">Nadi: {{ data.horoscopeDetails.nadi }}</div>
+      <div class="profile-chip" *ngIf="data.horoscopeDetails?.mangal">Mangal: {{ data.horoscopeDetails.mangal }}</div>
+    </div>
+
+
+    <!-- ============= PARTNER PREFERENCE ============= -->
+    <div class="section-header">Partner Expectations</div>
+    <div class="tab-grid">
+      <div class="profile-chip" *ngIf="data.additionalInfoDetails?.personalDescription">
+        About Me: {{ data.additionalInfoDetails.personalDescription }}
+      </div>
+      <div class="profile-chip" *ngIf="data.additionalInfoDetails?.partnerExpectations">
+        Expectations: {{ data.additionalInfoDetails.partnerExpectations }}
+      </div>
+      <div class="profile-chip" *ngIf="data.additionalInfoDetails?.reasonForPartner">
+        Partner Reason: {{ data.additionalInfoDetails.reasonForPartner }}
+      </div>
+    </div>
+
+  </div>
+</mat-dialog-content>
+
+
+<!-- <mat-dialog-content class="dialog-content"> -->
+
+  <!-- Profile Image -->
+ <!--  <div class="text-center profile-photo-wrapper mb-4">
+    <img 
+      [src]="apiUrl + '/uploads/' + (data.profilePicture?.[0]?.filename || 'default.jpg')" 
+      alt="Profile Picture"
+      class="dialog-photo shadow-lg"
+      (error)="handleImageError($event)"
+    />
+  </div>
+
+  <div class="container py-3 px-0"> -->
+
+    <!-- ================= PERSONAL INFO ================= -->
+<!--     <div class="section-header">Personal Information</div>
+    <div class="tab-grid">
+      <div class="profile-chip">User ID: {{ data.userId || 'Not Available' }}</div>
+      <div class="profile-chip">🎂 Age: {{ data.age || 'Not Available' }}</div>
+      <div class="profile-chip">⚧ Gender: {{ data.gender || 'Not Available' }}</div>
+      <div class="profile-chip">📅 DOB: {{ data.dateOfBirth ? (data.dateOfBirth | date) : 'Not Available' }}</div>
+      <div class="profile-chip">📏 Height: {{ data.height || 'NA' }} {{ data.heightUnit || '' }}</div>
+      <div class="profile-chip">⚖ Weight: {{ data.weight || 'Not Available' }}</div>
+      <div class="profile-chip">🩸 Blood Group: {{ data.bloodGroup || 'Not Available' }}</div>
+      <div class="profile-chip">Religion: {{ data.religion || 'Not Available' }}</div>
+      <div class="profile-chip">Caste: {{ data.caste || 'Not Available' }} <span *ngIf="data.subCaste">({{ data.subCaste }})</span></div>
+      <div class="profile-chip">Skin Tone: {{ data.complexion || 'Not Available' }}</div>
+      <div class="profile-chip">Marital Status: {{ data.maritalStatus || 'Not Available' }}</div>
+    </div>
+
+ -->
+    <!-- ================= EDUCATION INFO ================= -->
+    <!-- <div class="section-header">Education Details</div>
+    <div class="tab-grid">
+      <div class="profile-chip">🎓 Highest Qualification: {{ data.educationDetails?.highestQualification || 'Not Available' }}</div>
+      <div class="profile-chip">Education Type: {{ data.educationDetails?.educationType || 'Not Available' }}</div>
+      <div class="profile-chip">College: {{ data.educationDetails?.collegeName || 'Not Available' }}</div>
+      <div class="profile-chip">Year of Completion: {{ data.educationDetails?.yearOfCompletion || 'Not Available' }}</div>
+      <div class="profile-chip">Other Qualification: {{ data.educationDetails?.additionalQualifications || 'Not Available' }}</div>
+    </div>
+
+ -->
+    <!-- ============= PROFESSIONAL DETAILS ============= -->
+<!--     <div class="section-header">Professional & Career</div>
+    <div class="tab-grid">
+      <div class="profile-chip">Occupation: {{ data.occupation || 'Not Available' }}</div>
+      <div class="profile-chip">Job Title: {{ data.jobTitle || 'Not Available' }}</div>
+      <div class="profile-chip">Company: {{ data.companyName || 'Not Available' }}</div>
+      <div class="profile-chip">💰 Annual Income: {{ data.annualIncome || 'Not Available' }}</div>
+      <div class="profile-chip">Employment Type: {{ data.employmentType || 'Not Available' }}</div>
+      <div class="profile-chip">Work Location: {{ data.workLocationCity || 'NA' }}, {{ data.workLocationCountry || 'NA' }}</div>
+    </div>
+
+ -->
+    <!-- ============= LIFESTYLE ============= -->
+   <!--  <div class="section-header">Lifestyle</div>
+    <div class="tab-grid">
+      <div class="profile-chip">Diet: {{ data.lifestyleDetails?.diet || 'Not Available' }}</div>
+      <div class="profile-chip">Smoking: {{ data.lifestyleDetails?.smoking || 'Not Available' }}</div>
+      <div class="profile-chip">Drinking: {{ data.lifestyleDetails?.drinking || 'Not Available' }}</div>
+      <div class="profile-chip">Hobbies: {{ data.lifestyleDetails?.hobbies || 'Not Available' }}</div>
+      <div class="profile-chip">Spectacles: {{ data.spectacles || 'Not Available' }}</div>
+    </div>
+
+ -->
+    <!-- ============= FAMILY INFO ============= -->
+    <!-- <div class="section-header">Family Information</div>
+    <div class="tab-grid">
+      <div class="profile-chip">Father: {{ data.father || 'Not Available' }} ({{ data.fatherOccupation || 'No Info' }})</div>
+      <div class="profile-chip">Mother: {{ data.mother || 'Not Available' }} ({{ data.motherOccupation || 'No Info' }})</div>
+      <div class="profile-chip">Family Type: {{ data.familyType || 'Not Available' }}</div>
+      <div class="profile-chip">Family Wealth: {{ data.familyWealth || 'Not Available' }}</div>
+      <div class="profile-chip">Brothers: {{ data.brothersCount || '0' }} Married: {{ data.brothersMarriedCount || '0' }}</div>
+      <div class="profile-chip">Sisters: {{ data.sistersCount || '0' }} Married: {{ data.sistersMarriedCount || '0' }}</div>
+    </div>
+ -->
+
+    <!-- ============= HOROSCOPE DETAILS ============= -->
+   <!--  <div class="section-header">Horoscope Details</div>
+    <div class="tab-grid">
+      <div class="profile-chip">Birth Place: {{ data.horoscopeDetails?.birthPlace || 'Not Available' }}</div>
+      <div class="profile-chip">Birth Time: {{ data.horoscopeDetails?.birthTime || 'Not Available' }}</div>
+      <div class="profile-chip">Rashi: {{ data.horoscopeDetails?.rashi || 'Not Available' }}</div>
+      <div class="profile-chip">Nakshatra: {{ data.horoscopeDetails?.nakshatra || 'Not Available' }}</div>
+      <div class="profile-chip">Gan: {{ data.horoscopeDetails?.gan || 'Not Available' }}</div>
+      <div class="profile-chip">Nadi: {{ data.horoscopeDetails?.nadi || 'Not Available' }}</div>
+      <div class="profile-chip">Mangal: {{ data.horoscopeDetails?.mangal || 'Not Known' }}</div>
+    </div> -->
+
+
+    <!-- ============= PARTNER PREFERENCE ============= -->
+  <!--   <div class="section-header">Partner Expectations</div>
+    <div class="tab-grid">
+      <div class="profile-chip">About Me: {{ data.additionalInfoDetails?.personalDescription || 'Not Provided' }}</div>
+      <div class="profile-chip">Expectations: {{ data.additionalInfoDetails?.partnerExpectations || 'Not Provided' }}</div>
+      <div class="profile-chip">Reason for Partner: {{ data.additionalInfoDetails?.reasonForPartner || 'Not Provided' }}</div>
+    </div>
+
+  </div>
+</mat-dialog-content> -->
+
+  </div>
+</ng-template>
+
+<!-- ================= Full Screen Viewer ================= -->
+<div class="viewer-overlay" *ngIf="viewer.open" (click)="closeViewer()">
+
+  <div class="viewer-content" 
+       (click)="$event.stopPropagation()"
+       (mousedown)="startDrag($event)"
+       (mousemove)="onDrag($event)"
+       (mouseup)="stopDrag()">
+
+    <button class="viewer-close" (click)="closeViewer()">✖</button>
+
+    <!-- Main Image -->
+    <img 
+      [src]="apiUrl + '/uploads/' + viewer.image"
+      [style.transform]="'scale(' + viewer.zoom + ') translate(' + viewer.posX + 'px,' + viewer.posY + 'px)'"
+      class="viewer-img"
+      (wheel)="zoomScroll($event)"
+      draggable="false"
+    />
+
+    <!-- Zoom Controls -->
+    <div class="zoom-controls">
+      <button (click)="zoomIn()">＋</button>
+      <button (click)="zoomOut()">－</button>
+      <button (click)="resetZoom()">Reset</button>
+    </div>
+
+  </div>
+</div>

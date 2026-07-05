@@ -1,0 +1,33 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 250px;
+  background-color: #f9f9f9;
+  padding-top: 20px;
+}
+
+.toolbar {
+  margin-top: 10px;
+  padding: 0 16px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+  padding: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 64px);
+}
+
+.active-link {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.mat-icon {
+  margin-right: 8px;
+}

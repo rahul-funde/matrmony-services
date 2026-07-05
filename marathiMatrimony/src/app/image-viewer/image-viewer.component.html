@@ -1,0 +1,56 @@
+<div class="viewer-overlay"
+     *ngIf="open && (images?.length || 0) > 0"
+     (click)="onClose()">
+
+  <div class="viewer-dialog" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="viewer-header">
+      <span class="viewer-title">Profile Image</span>
+      <button class="viewer-close" (click)="onClose()">×</button>
+    </div>
+
+    <!-- Body -->
+    <div class="viewer-body">
+
+      <!-- Main Image -->
+      <div class="viewer-main-wrapper" *ngIf="currentImage">
+
+        <button
+          class="viewer-nav prev"
+          (click)="prevImage()"
+          [disabled]="(images?.length || 0) <= 1">
+          ‹
+        </button>
+
+        <div class="viewer-main" (click)="toggleZoom()">
+          <img
+            [src]="apiUrl + currentImage"
+            class="viewer-image"
+            [class.zoomed]="zoomed"
+            alt="Profile Image"
+          />
+        </div>
+
+        <button
+          class="viewer-nav next"
+          (click)="nextImage()"
+          [disabled]="(images?.length || 0) <= 1">
+          ›
+        </button>
+
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="viewer-thumbs" *ngIf="(images?.length || 0) > 1">
+        <img
+          *ngFor="let img of images; let i = index"
+          [src]="apiUrl + img.thumbUrl"
+          (click)="selectImage(i)"
+          class="viewer-thumb"
+          [class.active]="i === currentImageIndex" />
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1044 @@
+.filter-actions {
+  align-items: center;
+}
+
+/* Base button style */
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #fff;
+  border: 1.5px solid #cfd6e0;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Primary (Advance Filters) */
+.filter-btn.primary {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.filter-btn.primary mat-icon {
+  font-size: 18px;
+  color: #2563eb;
+}
+
+/* Hover effect */
+.filter-btn:hover {
+  background: #f8fafc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Primary hover */
+.filter-btn.primary:hover {
+  background: rgba(37, 99, 235, 0.05);
+}
+
+/* Disabled state */
+.filter-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+/* ================= FILTER DIALOG CONTAINER ================= */
+.filter-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ================= HEADER ================= */
+.filter-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  /*background: #f9fafb;*/
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: #fff;
+}
+
+
+.filter-close {
+ /* cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: #6b7280;*/
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff3;
+    color: #fff;
+    transition: all .25s ease;
+}
+
+/*.filter-close:hover {
+  color: #ef4444;
+}
+*/
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.close-btn {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+
+  transition: all 0.25s ease;
+}
+
+.close-btn mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: rotate(90deg);
+}
+
+.close-btn:active {
+  transform: scale(0.95);
+}
+
+/* ================= CONTENT ================= */
+.filter-dialog-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+/* ================= ACCORDION ================= */
+.accordion-button {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #eef2ff;
+  color: #1e3a8a;
+}
+
+.accordion-body {
+  padding: 16px;
+}
+
+/* ================= FORM CONTROLS ================= */
+/*.form-label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}*/
+.form-label {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;          /* neutral dark */
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+
+.form-control,
+.form-select {
+  font-size: 14px;
+  min-height: 38px;
+}
+
+/* ================= STICKY FOOTER ================= */
+.filter-dialog-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= FOOTER BUTTONS ================= */
+.filter-dialog-footer button {
+  min-height: 40px;
+  font-size: 14px;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 576px) {
+  .filter-dialog {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .filter-dialog-header {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .filter-dialog-content {
+    padding: 12px;
+  }
+
+  .filter-dialog-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-dialog-footer button {
+    width: 100%;
+  }
+
+  .accordion-body {
+    padding: 12px;
+  }
+}
+
+/* ================= EXTRA SMALL DEVICES ================= */
+@media (max-width: 420px) {
+  .form-label {
+    font-size: 12px;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 13px;
+  }
+}
+
+/* ================= SEARCH HEADER ================= */
+.search-header {
+  padding: 10px 12px;
+  background: #ffffff;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 10px;
+}
+
+/* ================= TITLE ================= */
+.search-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #111827;
+}
+
+/* Result count */
+.search-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+/* ================= SAVED BUTTON ================= */
+.saved-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 999px; /* pill */
+  border: 1.5px solid #ec4899;
+  color: #ec4899;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+/* Icon inside button */
+.saved-btn mat-icon {
+  font-size: 18px;
+}
+
+/* Hover */
+.saved-btn:hover {
+  background: rgba(236, 72, 153, 0.08);
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 576px) {
+  .search-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .search-title {
+    font-size: 16px;
+  }
+
+  .saved-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.saved-btn.active {
+  background: #ec4899;
+  color: #fff;
+}
+
+/* ================= GRID ================= */
+.profile-grid {
+  margin-top: 10px;
+}
+
+/* ================= CARD ================= */
+.profile-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 18px 16px 16px;
+  text-align: center;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= HEADER ================= */
+.card-header {
+  background: transparent;
+  border: none;
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+}
+
+/* ================= IMAGE ================= */
+.img-wrapper {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #3b82f6;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= PLAN BADGE ================= */
+.status-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+  color: #ffffff;
+  background: #6b7280;
+}
+
+/* Optional plan colors */
+.status-badge.gold {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.status-badge.premium {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+/* ================= BODY ================= */
+.profile-body {
+  padding: 0 !important;
+}
+
+/* Name / Profile ID */
+.profile-body .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+/* Info rows */
+.profile-body .meta,
+.profile-body .location {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+/* Remove icon dominance */
+.location mat-icon {
+  color: #9ca3af;
+}
+
+/* ================= BUTTONS ================= */
+.profile-body .d-flex {
+  justify-content: center;
+}
+
+/* View Profile (outline blue) */
+.profile-body button[mat-flat-button],
+.profile-body .view-btn {
+  border: 1.5px solid #2563eb;
+  color: #2563eb;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.profile-body button[mat-flat-button]:hover,
+.profile-body .view-btn:hover {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* Shortlist / View Contact (yellow) */
+.profile-body button[color="accent"] {
+  background: #fbbf24;
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.profile-body button[color="accent"]:hover {
+  background: #f59e0b;
+}
+
+/* Disabled state */
+.profile-body button[disabled] {
+  opacity: 0.6;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 576px) {
+  .img-wrapper {
+    width: 72px;
+    height: 72px;
+  }
+
+  .profile-body .name {
+    font-size: 13px;
+  }
+
+  .profile-body .meta,
+  .profile-body .location {
+    font-size: 13px;
+  }
+}
+
+/* ================= DRAWER CONTAINER ================= */
+mat-drawer-container {
+  height: 100%;
+}
+
+/* ================= DRAWER ================= */
+mat-drawer {
+  width: 340px;
+  max-width: 90vw;
+  background: #ffffff;
+  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ================= HEADER ================= */
+mat-drawer h5 {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ================= LIST ================= */
+mat-list {
+  padding: 0;
+}
+
+/* ================= LIST ITEM ================= */
+mat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Hover effect */
+mat-list-item:hover {
+  background: #f9fafb;
+}
+
+/* ================= AVATAR ================= */
+img[matListAvatar] {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #e5e7eb;
+}
+
+/* ================= TEXT ================= */
+mat-list-item h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #111827;
+}
+
+mat-list-item p {
+  font-size: 13px;
+  margin: 0;
+  color: #6b7280;
+}
+
+/* ================= DELETE BUTTON ================= */
+mat-list-item button {
+  margin-left: auto;
+}
+
+/* ================= EMPTY STATE ================= */
+mat-list p.text-muted {
+  padding: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 576px) {
+  mat-drawer {
+    width: 100%;
+  }
+}
+
+
+/* ======================================================
+   ANGULAR MATERIAL DIALOG – GLOBAL FIX & ENHANCEMENTS
+   ====================================================== */
+
+/* ---------- Z-INDEX FIX (MOST IMPORTANT) ---------- */
+.cdk-overlay-container {
+  z-index: 1300 !important;
+}
+
+.cdk-overlay-backdrop {
+  z-index: 1299 !important;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.cdk-overlay-pane {
+  z-index: 1300 !important;
+}
+
+.mat-dialog-container {
+  z-index: 1301 !important;
+  padding: 0 !important;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+  background: #fff;
+}
+
+/* ======================================================
+   QUICK VIEW DIALOG LAYOUT
+   ====================================================== */
+
+.quick-view-dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  width: 100%;
+}
+
+/* ---------- HEADER (STICKY) ---------- */
+.dialog-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: #fff;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.dialog-header-text {
+  color: #ffffff !important;
+}
+/* ---------- CONTENT (SCROLLABLE) ---------- */
+.dialog-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+/* ---------- FOOTER (STICKY) ---------- */
+.dialog-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ======================================================
+   PROFILE IMAGE
+   ====================================================== */
+
+.quick-view-dialog img.rounded-circle {
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* ======================================================
+   SECTION TITLES
+   ====================================================== */
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 22px 0 10px;
+  color: #374151;
+  border-left: 4px solid #0d6efd;
+  padding-left: 10px;
+}
+
+/* ======================================================
+   INFO PILLS GRID (FILTER DIALOG STYLE)
+   ====================================================== */
+
+.pill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.info-pill {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+
+.info-pill:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.info-pill .label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.info-pill .value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* ======================================================
+   VIEW CONTACT BUTTON
+   ====================================================== */
+
+.quick-view-dialog button[mat-flat-button] {
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* ======================================================
+   PHOTO THUMBNAILS
+   ====================================================== */
+
+.quick-view-dialog .img-thumbnail {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease;
+}
+
+.quick-view-dialog .img-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+/* ======================================================
+   MOBILE RESPONSIVE (FULLSCREEN DIALOG)
+   ====================================================== */
+
+@media (max-width: 768px) {
+  .mat-dialog-container {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+  }
+
+  .dialog-content {
+    padding: 14px;
+  }
+
+  .pill-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+/* ======================================================
+   SAFE AREA SUPPORT (iOS)
+   ====================================================== */
+
+@supports (padding: env(safe-area-inset-top)) {
+  .dialog-header {
+    padding-top: calc(14px + env(safe-area-inset-top));
+  }
+
+  .dialog-footer {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+}
+
+
+/* ================= LOCATION ROW ================= */
+
+.profile-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #6b7280; /* neutral gray */
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Icon styling */
+.profile-location .location-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #ef4444; /* subtle red pin */
+  flex-shrink: 0;
+}
+
+/* Text styling */
+.profile-location .location-text {
+  font-weight: 700;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover polish (optional) */
+.profile-card:hover .profile-location {
+  color: #374151;
+}
+
+.profile-card:hover .location-icon {
+  color: #dc2626;
+}
+
+.img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Badge on top-right corner */
+.status-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+/* Overlay at bottom of image */
+.profile-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /*background: rgba(0, 0, 0, 0.6);*/
+  color: #fff;
+  font-size: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 6px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.match-score-badge {
+  z-index: 10;
+}
+
+.profile-status-badge {
+  z-index: 10;
+}
+
+.profile-info-overlay {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+}
+
+.verified-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 12px;
+  background: rgba(0, 128, 0, 0.75);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.verified-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 12px;
+  margin-top: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+
+  border-radius: 18px;
+  box-shadow: 0 3px 8px rgba(46, 204, 113, 0.35);
+}
+
+.verified-pill i {
+  font-size: 13px;
+}
+
+.interest-btn {
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 
+    background-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;      /* prevent text wrapping */
+  min-width: 130px;         /* consistent width */
+  flex: 1 1 auto;           /* responsive shrink */
+}
+
+/* SEND */
+.interest-btn.send {
+  background-color: #28a745;
+}
+
+.interest-btn.send:hover:not(:disabled) {
+  background-color: #218838;
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(40, 167, 69, 0.35);
+}
+
+/* UNSEND */
+.interest-btn.unsend {
+  background-color: #dc3545;
+}
+
+.interest-btn.unsend:hover:not(:disabled) {
+  background-color: #c82333;
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(220, 53, 69, 0.35);
+}
+
+/* DISABLED */
+.interest-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* View Profile button (if wrapped in row) */
+.button-row .view-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+/* Small card responsiveness */
+@media (max-width: 360px) {
+  .interest-btn {
+    font-size: 11px;
+    padding: 5px 8px;
+    min-width: 105px;
+  }
+
+  .button-row {
+    gap: 6px;
+  }
+}
+
+/* ================= Theme Upgrade ================= */
+.filter-btn,
+.filter-dialog,
+.filter-dialog-content,
+.filter-dialog-footer,
+.profile-card,
+.card,
+.mat-mdc-card {
+  background: var(--app-color-surface);
+  color: var(--app-color-text);
+  border-color: var(--app-color-border);
+}
+
+.filter-btn {
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-xs);
+}
+
+.filter-btn.primary,
+.filter-btn.primary mat-icon {
+  color: var(--app-color-primary);
+  border-color: var(--app-color-primary);
+}
+
+.filter-btn:hover,
+.filter-btn.primary:hover {
+  background: var(--app-color-primary-soft);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.filter-dialog {
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-xl);
+  box-shadow: var(--app-shadow-md);
+}
+
+.filter-dialog-header {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--app-color-primary), var(--app-color-accent));
+  border-bottom-color: var(--app-color-border);
+}
+
+.filter-dialog-footer {
+  border-top-color: var(--app-color-border);
+  box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.accordion-button:not(.collapsed) {
+  color: var(--app-color-primary);
+  background: var(--app-color-primary-soft);
+}
+
+.form-label {
+  color: var(--app-color-text);
+  letter-spacing: 0;
+}
+
+.form-control,
+.form-select {
+  color: var(--app-color-text);
+  background: var(--app-color-surface);
+  border-color: var(--app-color-border);
+  border-radius: var(--app-radius-md);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--app-color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--app-color-primary-rgb), 0.14);
+}
+
+.close-btn,
+.filter-close {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.interest-btn.send {
+  background-color: var(--app-color-success);
+}
+
+.interest-btn.unsend {
+  background-color: var(--app-color-danger);
+}
+
+.button-row .view-btn,
+.view-btn {
+  color: #ffffff;
+  background: var(--app-color-primary);
+  border-radius: var(--app-radius-md);
+}
+

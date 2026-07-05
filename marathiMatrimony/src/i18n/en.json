@@ -1,0 +1,12 @@
+{
+  "NAV": {
+    "HOME": "Home",
+    "ABOUT": "About Us",
+    "SERVICES": "Services",
+    "CONTACT": "Contact"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "REGISTER": "Register"
+  }
+}

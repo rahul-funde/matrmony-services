@@ -1,0 +1,170 @@
+/* ================= PAGE LAYOUT ================= */
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 16px;
+}
+
+h2 {
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+h4 {
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* ================= FILTERS ================= */
+.row.mb-4.g-3 {
+  align-items: center;
+}
+
+input[type="date"],
+select {
+  height: 42px;
+  font-size: 14px;
+}
+
+/* ================= SUMMARY CARDS ================= */
+.card {
+  border-radius: 14px;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card h6 {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.card h3 {
+  font-size: 26px;
+  margin: 0;
+}
+
+/* Responsive cards */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 12px;
+  }
+}
+
+/* ================= REPORT CARD ================= */
+.report-card {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= TABLE WRAPPER ================= */
+.table-wrapper {
+  max-height: 420px;
+  overflow: auto;
+  border-radius: 12px;
+}
+
+/* ================= MATERIAL TABLE ================= */
+table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.mat-mdc-table {
+  background: #fafafa;
+}
+
+/* Header */
+.mat-mdc-header-row {
+  background: #ffffff;
+}
+
+.mat-mdc-header-cell {
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+/* Sticky header shadow */
+.mat-mdc-header-row.mat-mdc-table-sticky {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+/* Body rows */
+.mat-mdc-row {
+  transition: background 0.15s ease;
+}
+
+.mat-mdc-row:hover {
+  background: #f2f6ff;
+}
+
+/* Cells */
+.mat-mdc-cell {
+  font-size: 14px;
+  padding: 14px;
+  white-space: nowrap;
+}
+
+/* ================= FOOTER (TOTAL ROW) ================= */
+.mat-mdc-footer-row {
+  background: #f1f1f1;
+  font-weight: 600;
+}
+
+.mat-mdc-footer-cell {
+  border-top: 2px solid #ccc;
+  padding: 14px;
+}
+
+/* ================= PAGINATOR ================= */
+mat-paginator {
+  margin-top: 12px;
+  background: transparent;
+}
+
+/* ================= BUTTON ================= */
+button[mat-raised-button] {
+  border-radius: 24px;
+  padding: 6px 18px;
+  font-weight: 500;
+}
+
+/* ================= MOBILE TABLE SCROLL ================= */
+@media (max-width: 768px) {
+  .table-wrapper {
+    max-height: none;
+    overflow-x: auto;
+  }
+
+  .mat-mdc-table {
+    min-width: 600px;
+  }
+}
+
+/* ================= SMALL SCREEN ADJUSTMENTS ================= */
+@media (max-width: 576px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  .card h3 {
+    font-size: 22px;
+  }
+}

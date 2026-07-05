@@ -1,0 +1,12 @@
+<mat-card class="glass-card">
+  <h3>Messages</h3>
+  <div class="msg-list">
+    <div class="msg-item" *ngFor="let msg of messages$ | async" [@fadeIn]>
+      <img [src]="msg.photo" alt="{{msg.name}}" />
+      <div>
+        <p class="name">{{msg.name}}</p>
+        <p class="text">{{msg.lastMessage}}</p>
+      </div>
+    </div>
+  </div>
+</mat-card>

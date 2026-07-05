@@ -1,0 +1,36 @@
+ng g class DashboardAdmin/core/models/user --type=model --skip-tests
+ng g class DashboardAdmin/core/models/plan --type=model --skip-tests
+ng g class DashboardAdmin/core/models/dashboard --type=model --skip-tests
+
+ng g service DashboardAdmin/core/services/dashboard --skip-tests
+ng g service DashboardAdmin/core/services/user --skip-tests
+
+ng g component DashboardAdmin/shared/components/stat-card  --standalone --skip-tests  --style=css
+
+ng g component DashboardAdmin/shared/components/plan-card --standalone --skip-tests  --style=css
+
+
+ng g component DashboardAdmin/shared/components/dashboard-filters --standalone --skip-tests  --style=css
+
+
+
+ng g component DashboardAdmin/features/admin-dashboard-new --standalone --skip-tests --style=css
+
+ng g component DashboardAdmin/features/admin-dashboard-new/components/user-growth-chart --standalone  --skip-tests --style=css
+
+ng g component DashboardAdmin/features/admin-dashboard-new/components/plan-distribution-chart --standalone --skip-tests --style=css
+
+
+ng g component DashboardAdmin/features/admin-dashboard-new/components/plan-growth-chart --standalone   --skip-tests --style=css
+
+ng g component DashboardAdmin/features/admin-dashboard-new/components/users-table --standalone --skip-tests --style=css
+
+
+# Layout
+ng g c DashboardAdmin/layout/admin-layout --standalone
+
+# Menu Service
+ng g s DashboardAdmin/core/services/admin-menu
+
+# (Optional) Menu Model
+ng g i DashboardAdmin/core/models/admin-menu-item

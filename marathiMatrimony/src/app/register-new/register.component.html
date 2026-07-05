@@ -1,0 +1,245 @@
+<!-- Registration Overlay -->
+<div *ngIf="showRegister" class="overlay">
+  <div class="register-card shadow position-relative">
+
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="btn-close position-absolute top-0 end-0 m-3 close-button-register"
+      aria-label="Close"
+      (click)="closeDialogx()"> X
+    </button>
+
+    <!-- Heading -->
+    <!-- <h3 class="text-center mb-3">Create Your Account</h3> -->
+    <p class="join-text text-center mb-4">
+      Join <span class="highlight">Sushil Maratha Matrimony</span> today
+    </p>
+
+    <!-- Registration Form -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- First Name & Surname -->
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <input
+            type="text"
+            class="form-control custom-input"
+            placeholder="First Name"
+            formControlName="firstname">
+
+          <div *ngIf="f['firstname'].touched && f['firstname'].hasError('required')"
+               class="text-warning small mt-1">
+            First name is required
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control custom-input"
+            placeholder="Surname"
+            formControlName="lastname">
+
+          <div *ngIf="f['lastname'].touched && f['lastname'].hasError('required')"
+               class="text-warning small mt-1">
+            Surname is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Gender & Date of Birth -->
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <select
+            class="form-select custom-input"
+            formControlName="gender"
+            (change)="onGenderChange()">
+
+            <option value="" disabled selected>Gender</option>
+            <option *ngFor="let gender of genders"
+                    [value]="gender.value">
+              {{ gender.label }}
+            </option>
+          </select>
+
+          <div *ngIf="f['gender'].touched && f['gender'].hasError('required')"
+               class="text-warning small mt-1">
+            Gender is required
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <input
+            type="date"
+            class="form-control custom-input"
+            placeholder="Date of Birth"
+            formControlName="dob"
+            (change)="updateDob($event)">
+
+          <div *ngIf="f['dob'].touched && f['dob'].hasError('required')"
+               class="text-warning small mt-1">
+            Date of birth is required
+          </div>
+
+          <div *ngIf="f['dob'].hasError('ageInvalid')"
+               class="text-warning small mt-1">
+            {{ f['dob'].getError('ageInvalid') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Number & Email -->
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <input
+            type="tel"
+            class="form-control custom-input"
+            placeholder="Mobile Number"
+            formControlName="mobilenumber">
+
+          <div *ngIf="f['mobilenumber'].touched && f['mobilenumber'].hasError('required')"
+               class="text-warning small mt-1">
+            Mobile number is required
+          </div>
+
+          <div *ngIf="f['mobilenumber'].hasError('pattern')"
+               class="text-warning small mt-1">
+            Invalid mobile number
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <input
+            type="email"
+            class="form-control custom-input"
+            placeholder="Email"
+            formControlName="email">
+
+          <div *ngIf="f['email'].touched && f['email'].hasError('required')"
+               class="text-warning small mt-1">
+            Email is required
+          </div>
+
+          <div *ngIf="f['email'].hasError('email')"
+               class="text-warning small mt-1">
+            Enter a valid email
+          </div>
+        </div>
+      </div>
+
+      <!-- Password & Confirm Password -->
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <input
+            type="password"
+            class="form-control custom-input"
+            placeholder="Password"
+            formControlName="password">
+
+          <div *ngIf="f['password'].touched && f['password'].hasError('required')"
+               class="text-warning small mt-1">
+            Password is required
+          </div>
+
+          <div *ngIf="f['password'].hasError('minlength')"
+               class="text-warning small mt-1">
+            Minimum 6 characters required
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <input
+            type="password"
+            class="form-control custom-input"
+            placeholder="Confirm Password"
+            formControlName="confirmPassword">
+
+          <div *ngIf="f['confirmPassword'].touched && f['confirmPassword'].hasError('required')"
+               class="text-warning small mt-1">
+            Confirm Password is required
+          </div>
+
+          <div *ngIf="registerForm.errors?.['passwordMismatch'] && f['confirmPassword'].touched"
+               class="text-warning small mt-1">
+            Passwords do not match
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms & Conditions -->
+		<div class="form-check terms-check mb-3">
+		  <input
+		    class="form-check-input"
+		    type="checkbox"
+		    id="terms"
+		    formControlName="termsAccepted">
+
+		  <label class="form-check-label" for="terms">
+		    I agree to the
+		    <a
+		      class="terms-link"
+		      (click)="openTerms($event)">
+		      Terms & Conditions
+		    </a>
+		  </label>
+		</div>
+
+		<!-- Validation -->
+		<div
+		  *ngIf="f['termsAccepted'].touched && f['termsAccepted'].invalid"
+		  class="text-warning small">
+		  You must accept the Terms & Conditions
+		</div>
+
+
+      <!-- Submit Buttons -->
+      <div class="register-buttons">
+        <button
+          type="submit"
+          class="btn btn-golden"
+          [disabled]="registerForm.invalid">
+          Register Now
+        </button>
+
+      	<a
+		  class="btn btn-outline-login"
+		  (click)="goToLogin($event)">
+		  Already have an account? Login
+		</a>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- Terms & Conditions Dialog -->
+<div *ngIf="showTermsDialog" class="terms-overlay">
+  <div class="terms-card">
+
+    <!-- Close Button -->
+    <button class="terms-close" type="button" aria-label="Close terms" (click)="closeTerms()">&times;</button>
+
+    <!-- Heading -->
+    <h4 class="text-center mb-3">
+      {{ currentLang === 'English' ? 'Terms & Conditions' : 'केंद्राचे नियम व अटी' }}
+    </h4>
+
+    <!-- Scrollable Content -->
+    <div class="terms-content app-scroll-panel">
+
+      <ol>
+        <li *ngFor="let term of terms">
+          {{ currentLang === 'English' ? term.en : term.mar }}
+        </li>
+      </ol>
+    </div>
+
+    <!-- Action Button -->
+    <button class="btn btn-golden w-100 mt-3" (click)="agreeTerms()">
+      {{ currentLang === 'English' ? 'I Understand' : 'समजले' }}
+    </button>
+
+  </div>
+</div>

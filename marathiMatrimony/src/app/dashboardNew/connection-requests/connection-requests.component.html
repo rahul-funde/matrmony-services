@@ -1,0 +1,94 @@
+<div class="tab-container glass-container">
+  <!-- ===== Tabs ===== -->
+  <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+    <mat-tab label="Received"></mat-tab>
+    <mat-tab label="Sent"></mat-tab>
+    <mat-tab label="Accepted"></mat-tab>
+  </mat-tab-group>
+
+  <!-- ===== Scroll Buttons ===== -->
+  <button
+    *ngIf="showLeftArrow"
+    class="scroll-btn scroll-left"
+    (click)="scrollLeft()"
+  >
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <button
+    *ngIf="showRightArrow"
+    class="scroll-btn scroll-right"
+    (click)="scrollRight()"
+  >
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+  <!-- ===== Request Grid ===== -->
+  <div
+    class="request-grid"
+    #scrollContainer
+    (scroll)="checkScrollArrows()"
+    [@listAnimation]
+  >
+    <mat-card
+      class="request-card glass-card"
+      *ngFor="let person of (currentList$ | async) || []"
+    >
+      <!-- Profile Photo -->
+      <div class="photo-wrapper">
+        <img
+          [src]="person.photo"
+          alt="{{ person.name }}"
+          class="profile-photo"
+        />
+
+        <div
+          class="status-chip"
+          [ngClass]="{
+            pending: activeTab === 0,
+            sent: activeTab === 1,
+            connected: activeTab === 2
+          }"
+        >
+          <mat-icon *ngIf="activeTab === 0">hourglass_empty</mat-icon>
+          <mat-icon *ngIf="activeTab === 1">send</mat-icon>
+          <mat-icon *ngIf="activeTab === 2">favorite</mat-icon>
+          {{ getStatusLabel() }}
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="info">
+        <h3>{{ person.name }}</h3>
+        <p>{{ person.city }}</p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <button mat-raised-button color="primary" (click)="viewProfile(person)">
+          <mat-icon>visibility</mat-icon>
+          View
+        </button>
+
+        <ng-container *ngIf="activeTab === 0">
+          <button
+            mat-stroked-button
+            color="accent"
+            (click)="acceptRequest(person)"
+          >
+            <mat-icon>check_circle</mat-icon>
+            Accept
+          </button>
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="declineRequest(person)"
+          >
+            <mat-icon>cancel</mat-icon>
+            Decline
+          </button>
+        </ng-container>
+      </div>
+    </mat-card>
+  </div>
+</div>

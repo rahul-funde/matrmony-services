@@ -1,0 +1,264 @@
+/* ===============================
+   DASHBOARD LAYOUT
+================================ */
+.dashboard-container {
+  height: 100vh;
+  background: #f4f6f9;
+}
+
+.custom-sidenav {
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+}
+
+.main-content {
+  padding: 24px 32px;
+  overflow: auto;
+}
+
+/* ===============================
+   PLAN LIST CONTAINER
+================================ */
+.plan-list-container {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+/* ===============================
+   TOOLBAR
+================================ */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  min-width: 280px;
+  max-width: 380px;
+  width: 100%;
+}
+
+.create-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ===============================
+   TABLE
+================================ */
+.full-width-table {
+  width: 100%;
+  min-width: 1600px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header */
+.mat-header-row {
+  background-color: #f5f7fb;
+}
+
+.mat-header-cell {
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #333;
+  padding: 14px 16px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Body Cells */
+.mat-cell {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #444;
+  white-space: nowrap;
+}
+
+/* Zebra rows */
+.mat-row:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Hover effect */
+.mat-row:hover {
+  background-color: #eef4ff;
+  transition: background-color 0.2s ease;
+}
+
+/* ===============================
+   FEATURES COLUMN
+================================ */
+.mat-cell span {
+  line-height: 1.4;
+}
+
+/* ===============================
+   STATUS STYLING
+================================ */
+.mat-cell:nth-child(14) {
+  font-weight: 600;
+}
+
+/* ===============================
+   ACTION BUTTONS
+================================ */
+.mat-icon-button {
+  width: 36px;
+  height: 36px;
+}
+
+.mat-icon-button mat-icon {
+  font-size: 20px;
+}
+
+.mat-icon-button[color="primary"] {
+  color: #1976d2;
+}
+
+.mat-icon-button[color="warn"] {
+  color: #d32f2f;
+}
+
+/* Disabled delete */
+button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   SCROLLBAR (DESKTOP)
+================================ */
+.plan-list-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.plan-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.plan-list-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.plan-list-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 16px;
+  }
+
+  .plan-list-container {
+    padding: 16px;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .create-link {
+    justify-content: center;
+  }
+}
+
+.feature-chip {
+  font-size: 12px;
+  height: 24px;
+  margin: 2px;
+}
+
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: #e6f4ea;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background: #fdecea;
+  color: #d32f2f;
+}
+
+
+.plan-list-container {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.search-box {
+  width: 320px;
+}
+
+.column-btn {
+  border-radius: 24px;
+}
+
+.full-width-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mat-header-cell {
+  font-weight: 700;
+  background: #fafafa;
+  white-space: nowrap;
+}
+
+.mat-cell {
+  white-space: nowrap;
+}
+
+.feature-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.feature-chip {
+  font-size: 11px;
+  height: 26px;
+}

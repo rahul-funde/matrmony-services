@@ -1,0 +1,68 @@
+<mat-sidenav-container class="sidenav-container app-top-offset">
+  <mat-sidenav #drawer mode="side" opened>
+    <mat-nav-list>
+       <a mat-list-item routerLink="/admin-dashboard" routerLinkActive="active-link">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+     <!--  <a mat-list-item routerLink="/users" routerLinkActive="active-link">
+        <mat-icon>group</mat-icon>
+        <span>Users</span>
+      </a> -->
+       <a mat-list-item routerLink="/membership" routerLinkActive="active-link">
+            <mat-icon>card_membership</mat-icon>
+            <span>Plans</span>
+          </a>
+          <a mat-list-item routerLink="/admin-subscriptions" routerLinkActive="active-link">
+            <mat-icon>subscriptions</mat-icon>
+            <span>Subscriptions</span>
+          </a>
+          <a mat-list-item routerLink="/coupons" routerLinkActive="active-link">
+            <mat-icon>local_offer</mat-icon>
+            <span>Coupons</span>
+          </a>
+          
+           <!-- Membership Section -->
+      <!-- <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>workspace_premium</mat-icon>
+            <span>Membership</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-nav-list>
+          <a mat-list-item routerLink="/membership" routerLinkActive="active-link">
+            <mat-icon>card_membership</mat-icon>
+            <span>Plans</span>
+          </a>
+          <a mat-list-item routerLink="/admin-subscriptions" routerLinkActive="active-link">
+            <mat-icon>subscriptions</mat-icon>
+            <span>Subscriptions</span>
+          </a>
+          <a mat-list-item routerLink="/coupons" routerLinkActive="active-link">
+            <mat-icon>local_offer</mat-icon>
+            <span>Coupons</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel> -->
+
+      <!-- Settings -->
+      <a mat-list-item routerLink="/socialmedia" routerLinkActive="active-link">
+        <mat-icon>socialmedia</mat-icon>
+        <span>Social Media</span>
+      </a>
+
+      <a mat-list-item routerLink="/reports" routerLinkActive="active-link">
+        <mat-icon>reports</mat-icon>
+        <span>Reports</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- Routed Content -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

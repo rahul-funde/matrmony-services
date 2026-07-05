@@ -1,0 +1,35 @@
+<div class="dashboard">
+
+  <!-- <h2 class="page-title">Welcome, Admin</h2> -->
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <app-stat-card title="Total Users" [value]="stats.totalUsers" [growth]="15"></app-stat-card>
+    <app-stat-card title="Active Users" [value]="stats.activeUsers" [growth]="12"></app-stat-card>
+    <app-stat-card title="Inactive / Expired" [value]="stats.inactiveUsers" [growth]="-8"></app-stat-card>
+    <app-stat-card title="New Users" [value]="stats.newUsers" [growth]="22"></app-stat-card>
+  </div>
+
+  <!-- PLAN CARDS -->
+  <div class="plans-grid">
+    <div class="plan-card" *ngFor="let p of planStats">
+      <div class="plan-name">{{ p.name }}</div>
+      <div class="plan-count">{{ p.count }}</div>
+      <div class="plan-growth">+{{ p.growth }}%</div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-grid">
+    <app-user-growth-chart></app-user-growth-chart>
+    <app-plan-distribution-chart></app-plan-distribution-chart>
+    <app-plan-growth-chart></app-plan-growth-chart>
+  </div>
+
+  <!-- FILTERS -->
+  <app-dashboard-filters></app-dashboard-filters>
+
+  <!-- USERS TABLE -->
+  <app-users-table></app-users-table>
+
+</div>

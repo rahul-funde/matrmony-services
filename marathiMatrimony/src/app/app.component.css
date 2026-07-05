@@ -1,0 +1,63 @@
+.app-global-controls {
+  position: fixed;
+  top: 86px;
+  right: 12px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--app-color-text);
+}
+
+.app-language-switcher,
+.app-theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-sm);
+  color: var(--app-color-text);
+  font-size: 13px;
+}
+
+.app-language-switcher label {
+  margin: 0;
+  font-weight: 600;
+}
+
+.app-language-switcher select {
+  min-width: 104px;
+  border: 1px solid var(--app-color-border-strong);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-color-surface);
+  color: var(--app-color-text);
+  padding: 4px 6px;
+}
+
+.app-theme-toggle {
+  min-height: 32px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.app-theme-toggle:hover {
+  border-color: var(--app-color-primary);
+  color: var(--app-color-primary);
+}
+
+@media (max-width: 600px) {
+  .app-global-controls {
+    top: 72px;
+    right: 8px;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+
+  .app-language-switcher,
+  .app-theme-toggle {
+    font-size: 12px;
+  }
+}

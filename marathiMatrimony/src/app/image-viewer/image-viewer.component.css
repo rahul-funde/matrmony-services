@@ -1,0 +1,210 @@
+/* ================================
+   OVERLAY
+================================ */
+.viewer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+/* ================================
+   DIALOG
+================================ */
+.viewer-dialog {
+  width: 520px;
+  max-width: 100%;
+  max-height: 92vh;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================================
+   HEADER
+================================ */
+.viewer-header {
+  height: 60px;
+  background: linear-gradient(135deg, #7b7ff3, #8b8ff5);
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.viewer-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.viewer-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.viewer-close:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ================================
+   BODY
+================================ */
+.viewer-body {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ================================
+   MAIN IMAGE WRAPPER
+================================ */
+.viewer-main-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================================
+   MAIN IMAGE CONTAINER
+================================ */
+.viewer-main {
+  width: 100%;
+  max-width: 520px;
+  height: 65vh;                     /* 🔥 FULL VIEW HEIGHT */
+  background: #f7f8fc;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  margin: 0 48px;                   /* space for arrows */
+}
+
+/* ================================
+   MAIN IMAGE
+================================ */
+.viewer-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;              /* 🔥 NO CROPPING */
+  border-radius: 14px;
+  transition: transform 0.35s ease;
+  cursor: zoom-in;
+}
+
+.viewer-image.zoomed {
+  transform: scale(1.4);
+  cursor: zoom-out;
+}
+
+/* ================================
+   NAVIGATION BUTTONS
+================================ */
+.viewer-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 42px;
+  height: 64px;
+  font-size: 2rem;
+  color: #ffffff;
+
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+}
+
+.viewer-nav:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.viewer-nav.prev {
+  left: 8px;
+}
+
+.viewer-nav.next {
+  right: 8px;
+}
+
+/* ================================
+   THUMBNAILS
+================================ */
+.viewer-thumbs {
+  display: flex;
+  gap: 12px;
+  padding-top: 8px;
+  overflow-x: auto;
+}
+
+.viewer-thumb {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.viewer-thumb:hover,
+.viewer-thumb.active {
+  border-color: #7b7ff3;
+  transform: scale(1.08);
+}
+
+/* ================================
+   MOBILE RESPONSIVENESS
+================================ */
+@media (max-width: 600px) {
+  .viewer-dialog {
+    width: 95vw;
+    height: 90vh;
+    border-radius: 16px;
+  }
+
+  .viewer-main {
+    height: 55vh;
+    margin: 0 40px;
+  }
+
+  .viewer-thumb {
+    width: 56px;
+    height: 56px;
+  }
+}

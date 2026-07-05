@@ -1,0 +1,164 @@
+/* 🌈 Wrapper */
+.interests-wrapper {
+  padding: 1.25rem;
+}
+
+/* 🔧 Fix Angular Material clipping */
+.mat-tab-body-content {
+  overflow: visible !important;
+}
+
+/* 🎨 Tab Themes */
+.tab-theme-received .mat-ink-bar { background: #0d6efd; }
+.tab-theme-sent .mat-ink-bar { background: #6f42c1; }
+.tab-theme-accepted .mat-ink-bar { background: #28a745; }
+.tab-theme-rejected .mat-ink-bar { background: #dc3545; }
+
+/* 🧭 Tabs polish */
+.mat-tab-group {
+  margin-top: 8px;
+}
+
+.mat-tab-header {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.mat-tab-label {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* 🧩 Cards container */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  padding-top: 48px;          /* 🔥 REDUCED */
+  justify-content: center;
+}
+
+/* 📱 Mobile swipe */
+@media (max-width: 768px) {
+  .cards-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .profile-card {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+  }
+}
+
+/* 👤 Profile Card */
+.profile-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 52px 18px 20px;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+  transition: transform .25s ease, box-shadow .25s ease;
+  cursor: pointer;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+/* 🖼 Profile Image */
+.profile-card img {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  position: absolute;
+  top: -44px;                 /* 🔥 LOWERED */
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid #ffffff;
+  object-fit: cover;
+  background: #f2f2f2;
+}
+
+/* 👤 Name */
+.profile-card h5 {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 💼 Occupation */
+.profile-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 📏 Age & Height */
+.profile-card small {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #999;
+}
+
+/* 🔖 Status Badge */
+.status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.status-badge.accepted { background: #28a745; }
+.status-badge.rejected { background: #dc3545; }
+.status-badge.pending  { background: #ffc107; color: #000; }
+
+/* 🎯 Actions */
+.actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.accept {
+  background: #28a745;
+  color: #fff;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+}
+
+.reject {
+  background: #dc3545;
+  color: #fff;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+}
+
+/* 🧾 Tab badge */
+.badge {
+  background: #e9ecef;
+  color: #333;
+  border-radius: 10px;
+  font-size: 11px;
+  padding: 2px 7px;
+  margin-left: 6px;
+}

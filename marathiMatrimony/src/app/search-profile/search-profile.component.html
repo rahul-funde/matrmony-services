@@ -1,0 +1,705 @@
+<app-header></app-header>
+
+<!-- SIDENAV (handles backdrop internally) -->
+<app-sidenav></app-sidenav>
+
+<!-- MAIN CONTENT -->
+<main
+  class="main-content"
+  [class.shifted]="
+    (sidenavMenuService.isOpen$ | async) &&
+    !(sidenavMenuService.isCollapsed$ | async) &&
+    !isMobile()
+  "
+>    <div class="container my-4">
+      <!-- ================= MOBILE FILTER BUTTON ================= -->
+      <div class="filter-actions d-flex justify-content-end mb-2 gap-2">
+
+        <!-- Advance Filters -->
+        <button class="filter-btn primary" (click)="openFilterDialog()">
+          <mat-icon class="me-1">tune</mat-icon>
+          Advance Filters
+        </button>
+
+        <!-- Clear Filters -->
+        <button
+          class="filter-btn"
+          [disabled]="!hasActiveFilters()"
+          (click)="clearAllFilters()">
+          Clear Filters
+        </button>
+
+      </div>
+
+
+<!-- ================= FILTER DIALOG ================= -->
+<ng-template #filterDialog>
+  <div class="filter-dialog">
+
+    <!-- HEADER -->
+    <div class="filter-dialog-header">
+      <span>Search Filters</span>
+      <span
+        class="filter-close close-btn"
+        mat-dialog-close
+        title="Close"
+      >
+        ✕
+      </span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="filter-dialog-content">
+      <form [formGroup]="searchForm" class="filter-form">
+
+        <div class="accordion" id="filterAccordion">
+
+          <!-- ================= PRIMARY FILTERS ================= -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#primaryFilters"
+              >
+                Primary Filters
+              </button>
+            </h2>
+
+            <div
+              id="primaryFilters"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#filterAccordion"
+            >
+              <div class="accordion-body">
+                <div class="row g-3">
+
+                  <!-- Profile ID -->
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Profile ID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="profileId"
+                      placeholder="G0001-1225"
+                    />
+                  </div>
+
+                  <!-- Seeking -->
+                  <!-- <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Seeking</label>
+                    <select class="form-select" formControlName="seeking">
+                      <option value="">All</option>
+                      <option *ngFor="let s of seeking" [value]="s">
+                        {{ s }}
+                      </option>
+                    </select>
+                  </div>
+ -->
+                  <!-- Age -->
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">From Age</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="ageMin"
+                    />
+                  </div>
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">To Age</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="ageMax"
+                    />
+                  </div>
+
+                  <!-- Marital Status -->
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Marital Status</label>
+                    <select
+                      class="form-select"
+                      multiple
+                      formControlName="maritalStatus"
+                    >
+                      <option
+                        *ngFor="let s of maritalStatusOptions"
+                        [value]="s"
+                      >
+                        {{ s }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <!-- Sub Caste -->
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Sub-Caste</label>
+                    <input
+                      type="text"
+                      class="form-control mb-2"
+                      placeholder="Search sub-caste..."
+                      [formControl]="subCasteSearchCtrl"
+                    />
+                    <select
+                      class="form-select"
+                      multiple
+                      formControlName="subCaste"
+                    >
+                      <option
+                        *ngFor="let s of filteredSubCastes"
+                        [value]="s"
+                      >
+                        {{ s }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <!-- Occupation -->
+                  <div class="col-12 col-lg-4">
+                    <label class="form-label">Occupation</label>
+                    <input
+                      type="text"
+                      class="form-control mb-2"
+                      placeholder="Search occupation..."
+                      [formControl]="occupationSearchCtrl"
+                    />
+                    <select
+                      class="form-select"
+                      multiple
+                      formControlName="occupationType"
+                    >
+                      <optgroup
+                        *ngFor="let group of filteredOccupationGroups$ | async"
+                        [label]="group.category"
+                      >
+                        <option
+                          *ngFor="let o of group.values"
+                          [value]="o"
+                        >
+                          {{ o }}
+                        </option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <!-- Education -->
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Education</label>
+                    <select
+                      class="form-select"
+                      multiple
+                      formControlName="education"
+                    >
+                      <option
+                        *ngFor="let e of filteredQualifications"
+                        [value]="e"
+                      >
+                        {{ e }}
+                      </option>
+                    </select>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= ADVANCED FILTERS ================= -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#advancedFilters"
+              >
+                Advanced Filters
+              </button>
+            </h2>
+
+            <div
+              id="advancedFilters"
+              class="accordion-collapse collapse"
+              data-bs-parent="#filterAccordion"
+            >
+              <div class="accordion-body">
+                <div class="row g-3">
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Min Height</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="heightMin"
+                    />
+                  </div>
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Max Height</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="heightMax"
+                    />
+                  </div>
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Min Income</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="incomeMin"
+                    />
+                  </div>
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Max Income</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="incomeMax"
+                    />
+                  </div>
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Manglik</label>
+                    <select class="form-select" formControlName="manglik">
+                      <option value="">All</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Diet</label>
+                    <select class="form-select" formControlName="diet">
+                      <option value="">All</option>
+                      <option value="Vegetarian">Vegetarian</option>
+                      <option value="Non-Veg">Non-Veg</option>
+                      <option value="Vegan">Vegan</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Native Place</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="nativePlace"
+                    />
+                  </div>
+
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label">Work Place</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="workPlace"
+                    />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="filter-dialog-footer">
+
+      <!-- Clear All -->
+      <button
+        type="button"
+        class="btn btn-outline-danger me-auto"
+        [disabled]="!hasActiveFilters()"
+        (click)="clearAllFilters()"
+      >
+        Clear All Filters
+      </button>
+
+      <!-- Actions -->
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        mat-dialog-close
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="applyFilters()"
+      >
+        Apply Filters
+      </button>
+
+    </div>
+
+
+  </div>
+</ng-template>
+
+
+<!-- ================= SEARCH HEADER ================= -->
+<div class="search-header d-flex justify-content-between align-items-center mb-3">
+  <h4 class="search-title">
+    Search Results
+    <small class="search-count">({{ total || profiles.length }})</small>
+  </h4>
+
+  <button mat-stroked-button class="saved-btn">
+    <mat-icon>favorite</mat-icon>
+    Saved ({{ savedMatches.length }})
+  </button>
+</div>
+
+
+<!-- ================= SEARCH RESULTS (Infinite Scroll) ================= -->
+<div
+  class="profiles-container row g-3"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="fetchProfiles()"
+>
+
+  <!-- No results message -->
+  <div *ngIf="!loading && profiles.length === 0" class="col-12 text-center my-5">
+    <p class="text-muted fs-5">No profiles found.</p>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="col-12 text-center my-3">
+    <mat-progress-spinner diameter="40" mode="indeterminate"></mat-progress-spinner>
+  </div>
+<div class="row profile-grid">
+  <div
+    class="col-xl-3 col-lg-4 col-md-6 mb-4"
+    *ngFor="let profile of profiles; trackBy: trackByUserId"
+  >
+    <div class="profile-card shadow-sm">
+
+      <!-- HEADER WITH IMAGE -->
+      <div class="card-header position-relative">
+        <div class="img-wrapper position-relatives">
+          <img
+            [src]="getProfileImageSrc(profile)"
+            (error)="onImageError($event)"
+            (click)="openViewer(profile?.photoDetails?.profilePicture)"
+            alt="Profile"
+          />
+        </div>
+         <!-- Match Score Badge -->
+        <div
+          *ngIf="profile.matchScore"
+          class="match-score-badge position-absolute top-0 start-0 m-2 px-2 py-1 app-status-badge"
+        >
+          {{ profile.matchScore }}%
+        </div>
+        <!-- Only show completion & status if verified -->
+          <div class="profile-info-overlay" *ngIf="profile.status === 'verified'">
+            <span class="verified-badge">
+              <i class="bi bi-patch-check-fill"></i> Verified
+            </span>
+          </div>
+        <span class="status-badge" [ngClass]="profile.plan">
+          {{ profile.plan | titlecase }}
+        </span>
+      </div>
+
+      <!-- BODY -->
+      <div class="profile-body p-3">
+        <h5 class="name mb-1">{{ formatFullName(profile) | titlecase }} | {{ profile.userId }}</h5>
+        <div class="meta text-secondary small mb-1">
+          {{ profile.personalDetails?.age ? profile.personalDetails.age + ' yrs' : '—' }} •
+          {{ formatHeight(profile.personalDetails?.height, profile.personalDetails?.heightUnit) }}
+
+        </div>
+        <div class="meta text-muted small mb-2 text-truncate">
+          {{ profile.careerDetails?.occupation
+            || profile.educationDetails?.highestQualification
+            || '—' }}
+        </div>
+
+        <div class="profile-location" *ngIf="profile.contactDetails?.city">
+          <mat-icon class="location-icon">location_on</mat-icon>
+          <span class="location-text">
+            {{ profile.contactDetails.city | titlecase }}
+          </span>
+          <!-- <ng-container class="location-text" *ngIf="profile.contactDetails?.state">
+            , {{ profile.contactDetails.state | titlecase  }}
+          </ng-container>
+          <ng-container class="location-text" *ngIf="profile.contactDetails.country">
+            , {{ profile.contactDetails.country | titlecase  }}
+          </ng-container>
+ -->        
+        </div>
+
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex gap-2 mb-2">
+          <button
+            (click)="toggleInterest(profile)"
+            [disabled]="profile.isLoading || profile.interestStatus === 'accepted'"
+            [ngClass]="{
+              'send': !profile.interestStatus 
+                      || profile.interestStatus === 'rejected' 
+                      || profile.interestStatus === 'cancelled',
+              'unsend': profile.interestStatus === 'pending',
+              'matched': profile.interestStatus === 'accepted'
+            }"
+            class="interest-btn flex-fill"
+          >
+            <!-- <span *ngIf="profile.isLoading" class="spinner-border spinner-border-sm"></span> -->
+
+            {{
+              profile.interestStatus === 'pending' ? 'Cancel Interest' :
+              profile.interestStatus === 'accepted' ? 'Matched ✔' :
+              'Send Interest'
+            }}
+          </button>
+
+
+          <button 
+            mat-button 
+            class="view-btn w-100 btn-sm" 
+            (click)="openQuickView(profile)"
+          >
+            View Contact
+          </button>
+          <!-- <button mat-stroked-button color="accent" class="flex-fill btn-sm" (click)="saveProfile(profile)">  Shortlist  </button> -->
+        </div>
+      </div>
+        </div>
+  </div>
+</div>
+
+
+</div>
+
+<!-- DEBUG (optional) -->
+<!-- <pre class="mt-3">{{ profiles | json }}</pre> -->
+
+<!-- ================= LOADING ================= -->
+<div *ngIf="loading" class="text-center my-4">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
+
+      <!-- SAVED MATCHES DRAWER -->
+      <mat-drawer-container autosize>
+        <mat-drawer #drawer position="end" mode="over">
+          <h5 class="p-3">Saved Matches</h5>
+
+          <mat-list>
+            <mat-list-item *ngFor="let m of savedMatches">
+              <img matListAvatar [src]="getProfileImageSrc(m)" (error)="onImageError($event)">
+              <h6 matLine>{{ formatFullName(m) }}</h6>
+              <p matLine>{{ m.personalDetails?.age }} yrs</p>
+              <button mat-icon-button color="warn" (click)="removeSavedProfile(m)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+
+            <p *ngIf="savedMatches.length === 0" class="text-muted px-3">
+              No saved matches
+            </p>
+          </mat-list>
+        </mat-drawer>
+      </mat-drawer-container>
+
+    </div>
+</main>
+
+<app-footer></app-footer>
+
+<ng-template #quickViewDialog let-data>
+  <div class="quick-view-dialog">
+
+    <!-- ================= HEADER ================= -->
+    <div class="dialog-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-semibold">
+        {{ data.personalDetails?.lastName || '—' }}
+        <small class="text-muted dialog-header-text">({{ data.userId || '—' }})</small>
+      </h5>
+      <button class="close-btn" mat-icon-button (click)="closeQuickView()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <div class="dialog-content">
+
+      <!-- PROFILE IMAGE -->
+      <div class="text-center mb-3" *ngIf="data.photoDetails?.profilePicture?.length">
+        <img
+          [src]="getProfileImageSrc(data)"
+          (error)="onImageError($event)"
+            (click)="openViewer(data?.photoDetails?.profilePicture)"
+          class="rounded-circle profile-photo-sm"
+          alt="Profile Photo"
+        />
+      </div>
+
+
+      <!-- VIEW CONTACT -->
+      <div class="text-center my-4" *ngIf="!showContact && (data.contactDetails?.phoneNumber || data.contactDetails?.emailAddress)">
+        <button mat-flat-button color="primary" (click)="viewContact(data)">
+          👁️ View Contact
+        </button>
+      </div>
+
+      <!-- CONTACT DETAILS -->
+      <div *ngIf="showContact && data.contactDetails">
+        <h6 class="section-title">Contact Details</h6>
+        <div class="pill-grid">
+
+        <div 
+          class="info-pill"
+          *ngIf="data.personalDetails?.firstName || data.personalDetails?.lastName"
+        >
+          <span class="label">👤 Full Name</span>
+          <span class="value">
+            {{
+              data.personalDetails.firstName
+            }}
+            {{
+              data.personalDetails.middleName ? data.personalDetails.middleName : ''
+            }}
+            {{
+              data.personalDetails.lastName
+            }}
+          </span>
+        </div>
+
+          <div class="info-pill" *ngIf="data.contactDetails?.phoneNumber"><span class="label">📞 Mobile</span><span class="value">{{ data.contactDetails.phoneNumber }}</span></div>
+
+          <div class="info-pill" *ngIf="data.contactDetails?.whatsappNumber"><span class="label">💬 WhatsApp</span><span class="value">{{ data.contactDetails.whatsappNumber }}</span></div>
+          <div class="info-pill" *ngIf="data.contactDetails?.emailAddress"><span class="label">✉️ Email</span><span class="value">{{ data.contactDetails.emailAddress }}</span></div>
+
+          <div class="info-pill" *ngIf="data?.familyDetails?.fatherContactNumber"><span class="label">📞 Father Contact Number:</span><span class="value">{{ data?.familyDetails?.fatherContactNumber }}</span></div>
+
+          <div class="info-pill" *ngIf="data?.familyDetails?.motherContactNumber"><span class="label">📞 Mother Contact Number:</span><span class="value">{{ data?.familyDetails?.motherContactNumber }}</span></div>
+
+          <div class="info-pill" *ngIf="data.contactDetails?.city || data.contactDetails?.state || data.contactDetails?.country">
+            <span class="label">📍 Location</span>
+            <span class="value">{{ data.contactDetails.city || '' }}{{ data.contactDetails.state ? ', ' + data.contactDetails.state : '' }}{{ data.contactDetails.country ? ', ' + data.contactDetails.country : '' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSONAL INFORMATION -->
+      <h6 class="section-title" *ngIf="data.personalDetails">Personal Information</h6>
+      <div class="pill-grid" *ngIf="data.personalDetails">
+
+        <div class="info-pill" *ngIf="data.personalDetails?.age"><span class="label">🎂 Age</span><span class="value">{{ data.personalDetails.age }} yrs</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.dateOfBirth"><span class="label">📅 DOB</span><span class="value">{{ data.personalDetails.dateOfBirth | date:'MMM d, y' }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.gender"><span class="label">⚥ Gender</span><span class="value">{{ data.personalDetails.gender }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.religion"><span class="label">🛕 Religion</span><span class="value">{{ data.personalDetails.religion }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.caste || data.personalDetails?.subCaste">
+          <span class="label">👥 Caste</span>
+          <span class="value">{{ data.personalDetails.caste || '—' }}{{ data.personalDetails.subCaste ? ' (' + data.personalDetails.subCaste + ')' : '' }}</span>
+        </div>
+        <div class="info-pill" *ngIf="data.personalDetails?.maritalStatus"><span class="label">💍 Status</span><span class="value">{{ data.personalDetails.maritalStatus }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.height"><span class="label">📏 Height</span><span class="value">{{ data.personalDetails.height }} {{ data.personalDetails.heightUnit || '' }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.complexion"><span class="label">🎨 Complexion</span><span class="value">{{ data.personalDetails.complexion }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.bloodGroup"><span class="label">🩸 Blood Group</span><span class="value">{{ data.personalDetails.bloodGroup }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.languagesSpoken"><span class="label">🗣️ Languages</span><span class="value">{{ data.personalDetails.languagesSpoken }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.spectacles"><span class="label">👓 Spectacles</span><span class="value">{{ data.personalDetails.spectacles }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.lens"><span class="label">👁️ Lens</span><span class="value">{{ data.personalDetails.lens }}</span></div>
+        <div class="info-pill" *ngIf="data.personalDetails?.physicalDisability"><span class="label">♿ Disability</span><span class="value">{{ data.personalDetails.physicalDisability }}</span></div>
+      </div>
+
+
+      <!-- EDUCATION -->
+      <h6 class="section-title" *ngIf="data.educationDetails">Education</h6>
+      <div class="pill-grid" *ngIf="data.educationDetails">
+        <div class="info-pill" *ngIf="data.educationDetails?.highestQualification"><span class="label">🎓 Qualification</span><span class="value">{{ data.educationDetails.highestQualification }}</span></div>
+        <div class="info-pill" *ngIf="data.educationDetails?.collegeName"><span class="label">🏫 College</span><span class="value">{{ data.educationDetails.collegeName }}</span></div>
+        <div class="info-pill" *ngIf="data.educationDetails?.yearOfCompletion"><span class="label">📅 Year</span><span class="value">{{ data.educationDetails.yearOfCompletion }}</span></div>
+        <div class="info-pill" *ngIf="data.educationDetails?.educationType"><span class="label">📘 Type</span><span class="value">{{ data.educationDetails.educationType }}</span></div>
+        <div class="info-pill" *ngIf="data.educationDetails?.additionalQualifications"><span class="label">➕ Extra</span><span class="value">{{ data.educationDetails.additionalQualifications }}</span></div>
+      </div>
+
+      <!-- CAREER -->
+      <h6 class="section-title" *ngIf="data.careerDetails">Career</h6>
+      <div class="pill-grid" *ngIf="data.careerDetails">
+        <div class="info-pill" *ngIf="data.careerDetails?.occupation"><span class="label">💼 Occupation</span><span class="value">{{ data.careerDetails.occupation }}</span></div>
+        <div class="info-pill" *ngIf="data.careerDetails?.jobTitle"><span class="label">🧑‍💻 Job Title</span><span class="value">{{ data.careerDetails.jobTitle }}</span></div>
+        <div class="info-pill" *ngIf="data.careerDetails?.companyName"><span class="label">🏢 Company</span><span class="value">{{ data.careerDetails.companyName }}</span></div>
+        <div class="info-pill" *ngIf="data.careerDetails?.annualIncome"><span class="label">💰 Income</span><span class="value">₹{{ data.careerDetails.annualIncome }}</span></div>
+        <div class="info-pill" *ngIf="data.careerDetails?.employmentType"><span class="label">🕘 Employment</span><span class="value">{{ data.careerDetails.employmentType }}</span></div>
+        <div class="info-pill" *ngIf="data.careerDetails?.workLocationCity || data.careerDetails?.workLocationState || data.careerDetails?.workLocationCountry">
+          <span class="label">📍 Location</span>
+          <span class="value">{{ data.careerDetails.workLocationCity || '' }}{{ data.careerDetails.workLocationState ? ', ' + data.careerDetails.workLocationState : '' }}{{ data.careerDetails.workLocationCountry ? ', ' + data.careerDetails.workLocationCountry : '' }}</span>
+        </div>
+      </div>
+
+      <!-- LIFESTYLE -->
+      <h6 class="section-title" *ngIf="data.lifestyleDetails">Lifestyle</h6>
+      <div class="pill-grid" *ngIf="data.lifestyleDetails">
+        <div class="info-pill" *ngIf="data.lifestyleDetails?.diet"><span class="label">🍽️ Diet</span><span class="value">{{ data.lifestyleDetails.diet }}</span></div>
+        <div class="info-pill" *ngIf="data.lifestyleDetails?.smoking"><span class="label">🚬 Smoking</span><span class="value">{{ data.lifestyleDetails.smoking }}</span></div>
+        <div class="info-pill" *ngIf="data.lifestyleDetails?.drinking"><span class="label">🍷 Drinking</span><span class="value">{{ data.lifestyleDetails.drinking }}</span></div>
+        <div class="info-pill" *ngIf="data.lifestyleDetails?.hobbies"><span class="label">🎯 Hobbies</span><span class="value">{{ data.lifestyleDetails.hobbies }}</span></div>
+      </div>
+
+      <!-- FAMILY -->
+      <h6 class="section-title" *ngIf="data.familyDetails">Family Details</h6>
+      <div class="pill-grid" *ngIf="data.familyDetails">
+        <div class="info-pill" *ngIf="showContact && data.familyDetails?.fatherName"><span class="label">👨 Father</span><span class="value">{{ data.familyDetails.fatherName }} ({{ data.familyDetails.fatherOccupation || '' }})</span></div>
+        <div class="info-pill" *ngIf="showContact && data.familyDetails?.motherName"><span class="label">👩 Mother</span><span class="value">{{ data.familyDetails.motherName }} ({{ data.familyDetails.motherOccupation || '' }})</span></div>
+        <div class="info-pill" *ngIf="data.familyDetails?.brothersCount !== undefined"><span class="label">👦 Brothers</span><span class="value">{{ data.familyDetails.brothersCount }}</span></div>
+        <div class="info-pill" *ngIf="data.familyDetails?.sistersCount !== undefined"><span class="label">👧 Sisters</span><span class="value">{{ data.familyDetails.sistersCount }}</span></div>
+        <div class="info-pill" *ngIf="data.familyDetails?.familyType"><span class="label">🏠 Family Type</span><span class="value">{{ data.familyDetails.familyType }}</span></div>
+        <div class="info-pill" *ngIf="data.familyDetails?.familyWealth"><span class="label">💰 Wealth</span><span class="value">{{ data.familyDetails.familyWealth }}</span></div>
+        <div class="info-pill" *ngIf="data.familyDetails?.nativeDistrict"><span class="label">📍 Native</span><span class="value">{{ data.familyDetails.nativeDistrict }}</span></div>
+      </div>
+
+      <!-- HOROSCOPE -->
+      <h6 class="section-title" *ngIf="data.horoscopeDetails">Horoscope</h6>
+      <div class="pill-grid" *ngIf="data.horoscopeDetails">
+        <div class="info-pill" *ngIf="data.horoscopeDetails?.rashi"><span class="label">♈ Rashi</span><span class="value">{{ data.horoscopeDetails.rashi }}</span></div>
+        <div class="info-pill" *ngIf="data.horoscopeDetails?.navsarNav"><span class="label">♈ NavRas Nav</span><span class="value">{{ data.horoscopeDetails.navsarNav }}</span></div>
+        <div class="info-pill" *ngIf="data.horoscopeDetails?.birthTime"><span class="label">⏰ Birth Time</span><span class="value">{{ data.horoscopeDetails.birthTime }}</span></div>
+        <div class="info-pill" *ngIf="data.horoscopeDetails?.birthPlace"><span class="label">📍 Birth Place</span><span class="value">{{ data.horoscopeDetails.birthPlace }}</span></div>
+      </div>
+
+      <!-- ABOUT & PARTNER EXPECTATIONS -->
+      <h6 class="section-title" *ngIf="data.additionalInfoDetails?.personalDescription">About</h6>
+      <p class="small text-muted" *ngIf="data.additionalInfoDetails?.personalDescription">{{ data.additionalInfoDetails.personalDescription }}</p>
+
+      <h6 class="section-title" *ngIf="data.additionalInfoDetails?.reasonForPartner">Reason for Marriage</h6>
+      <p class="small text-muted" *ngIf="data.additionalInfoDetails?.reasonForPartner">{{ data.additionalInfoDetails.reasonForPartner }}</p>
+
+      <h6 class="section-title" *ngIf="data.additionalInfoDetails?.partnerExpectations">Partner Expectations</h6>
+      <p class="small text-muted" *ngIf="data.additionalInfoDetails?.partnerExpectations">{{ data.additionalInfoDetails.partnerExpectations }}</p>
+
+      <!-- PHOTOS -->
+      <h6 class="section-title" *ngIf="data.photoDetails?.profilePicture?.length">Photos</h6>
+      <div class="d-flex gap-2 flex-wrap" *ngIf="data.photoDetails?.profilePicture?.length">
+      </div>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <div class="dialog-footer text-end">
+      <button mat-flat-button color="accent" (click)="closeQuickView()">Close</button>
+    </div>
+
+  </div>
+</ng-template>
+
+<!-- ================= Full Screen Image Viewer ================= -->
+<app-image-viewer
+  [images]="selectedImages"
+  [apiUrl]="apiUrl"
+  [open]="viewerOpen"
+  (close)="viewerOpen = false">
+</app-image-viewer>
+

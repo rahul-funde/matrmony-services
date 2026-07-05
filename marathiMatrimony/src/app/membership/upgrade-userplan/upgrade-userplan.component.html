@@ -1,0 +1,322 @@
+
+<!-- ================== DASHBOARD VIEW (NO HEADER/FOOTER/SIDENAV) ================== -->
+  <ng-container *ngTemplateOutlet="mainContent"></ng-container>
+
+<!-- ==================================================================== -->
+<!-- ========================= MAIN CONTENT ============================= -->
+<!-- ==================================================================== -->
+
+<ng-template #mainContent>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle Theme">
+  <!-- <span class="sun">🌞</span><span class="moon">🌙</span> -->
+  <div class="info-wrapper">
+  <mat-icon class="info-icon">info</mat-icon>
+
+  <div class="policy-tooltip guideline-tooltip">
+    <p class="tooltip-title">How to Use This Page</p>
+    <ul>
+      <li><strong>View Plans:</strong> Each card shows name, duration, price, and features.</li>
+      <li><strong>Current Plan:</strong> Highlighted at the top or marked “Current Plan.”</li>
+      <li><strong>Features:</strong> Click <em>Show More</em> to see all included features.</li>
+      <li><strong>Contact Policy:</strong> Hover/tap the info icon to understand limits.</li>
+      <li><strong>Select Plan:</strong> Click <em>Purchase/Upgrade</em> to choose. Disabled if already active.</li>
+      <li><strong>Offline Payment:</strong> Click <em>Offline Payment</em> to scan QR and upload receipt.</li>
+      <li><strong>Mobile Friendly:</strong> Tap icons, scroll lists, QR adjusts for screen.</li>
+      <li><strong>Tips:</strong> Recommended plans have badges. Check features before purchasing.</li>
+    </ul>
+  </div>
+</div>
+
+</button>
+
+<div class="col-12 col-md-12 mb-3" *ngIf="!currentPlan?.isActive && !currentPlan?.isNoPlan">
+  <div class="glass-card text-center">
+    <h6 class="text-danger mb-2">
+      प्लॅन कालबाह्य झाला आहे
+    </h6>
+
+    <p class="mb-1">
+      त्यामुळे आपली सदस्यता संपली आहे.
+    </p>
+
+    <p class="mb-1">
+      सर्व सुविधा सुरू ठेवण्यासाठी आजच आपला प्लॅन नूतनीकरण करा.
+    </p>
+
+    <p class="mb-0 fw-semibold">
+      📞 मदतीसाठी संपर्क: <span class="text-primary">9370225218</span>
+    </p>
+
+    <!-- WhatsApp Button -->
+    <a
+      href="https://wa.me/919370225218?text=नमस्कार,%20माझा%20प्लॅन%20कालबाह्य%20झाला%20आहे.%20कृपया%20मदत%20करा."
+      target="_blank"
+      class="btn btn-success d-inline-flex align-items-center gap-2 px-4"
+    >
+      <span>💬 WhatsApp वर संपर्क करा</span>
+    </a>
+  </div>
+</div>
+
+<div class="col-12 col-md-12 mb-3" *ngIf="currentPlan?.isNoPlan">
+  <div class="glass-card text-center">
+    <h6 class="text-primary mb-2">
+      आपले स्वागत आहे! 🎉
+    </h6>
+
+    <p class="mb-1">
+      आपण अद्याप कोणताही प्लॅन निवडलेला नाही.
+    </p>
+
+    <p class="mb-1">
+      सर्व सुविधा वापरण्यासाठी आजच आपला प्लॅन सक्रिय करा.
+    </p>
+
+    <p class="mb-0 fw-semibold">
+      📞 मदतीसाठी संपर्क: <span class="text-primary">9370225218</span>
+    </p>
+
+    <!-- WhatsApp Button -->
+    <a
+      href="https://wa.me/919370225218?text=नमस्कार,%20मी%20नवीन%20वापरकर्ता%20आहे.%20कृपया%20प्लॅन%20विषयी%20माहिती%20द्या."
+      target="_blank"
+      class="btn btn-success d-inline-flex align-items-center gap-2 px-4"
+    >
+      <span>💬 WhatsApp वर संपर्क करा</span>
+    </a>
+  </div>
+</div>
+
+
+
+<div class="container my-4" *ngIf="!isLoading; else loading">
+
+  <div class="row mt-3">
+    <!-- CURRENT PLAN – LEFT -->
+    <div class="col-12 col-md-3 mb-3" *ngIf="currentPlan?.isActive"> 
+      
+      <h2 class="section-title">Current Plan Details</h2>
+
+      <div *ngIf="currentPlan?.plan; else noActive">
+        <div class="glass-card current-card">
+
+          <div class="current-header">
+            <h5>{{ currentPlan?.plan?.planName }}</h5>
+          </div>
+
+          <div class="current-body">
+
+            <!-- Plan Basic Info -->
+            <div><strong>Price:</strong> ₹{{ currentPlan?.plan?.price }}</div>
+            <div><strong>Duration:</strong> {{ currentPlan?.plan?.duration }} months</div>
+            <div><strong>Start:</strong> {{ currentPlan?.plan?.startDate | date:'mediumDate' }}</div>
+            <div><strong>End:</strong> {{ currentPlan?.plan?.endDate | date:'mediumDate' }}</div>
+            <div><strong>Status:</strong> {{ currentPlan?.plan?.status | titlecase }}</div>
+            <div><strong>Days Left:</strong> {{ currentPlan?.daysLeft }}</div>
+            <!-- <div><strong>Contact Limit:</strong> {{ currentPlan?.contactLimit }}</div> -->
+
+            <!-- Contact Policy Summary -->
+            <div class="contact-policy">
+              <strong>Contact Policy:</strong><br>
+              <p>
+              <span *ngIf="currentPlan?.raw?.contactPolicy?.totalLimit != null">
+              Contact Limit: {{ currentPlan?.raw?.contactPolicy?.totalLimit }}
+            </span> |
+            <span *ngIf="currentPlan?.raw?.contactPolicy?.dailyLimit != null">
+              Daily Contact Limit: {{ currentPlan?.raw?.contactPolicy?.dailyLimit }}
+            </span> |
+            <span *ngIf="currentPlan?.raw?.contactPolicy?.weeklyLimit != null">
+              Weekly Contact Limit: {{ currentPlan?.raw?.contactPolicy?.weeklyLimit }}
+            </span> |
+            <span *ngIf="currentPlan?.raw?.contactPolicy?.monthlyLimit != null">
+              Monthly Contact Limit: {{ currentPlan?.raw?.contactPolicy?.monthlyLimit }}
+            </span>
+              </p>
+              <span class="info-wrapper" *ngIf="currentPlan?.raw?.contactPolicy">
+                <mat-icon class="info-icon">help_outline</mat-icon>
+                <div class="policy-tooltip">
+
+                  <p class="tooltip-title">How Contact Limits Work</p>
+
+                  <ul>
+                    <li *ngIf="currentPlan?.contactPolicy?.totalLimit">
+                      <strong>Total Limit:</strong> You can contact
+                      <strong>{{ currentPlan.raw?.contactPolicy.totalLimit }}</strong> profiles during plan duration.
+                    </li>
+                    <li *ngIf="currentPlan?.raw?.contactPolicy?.dailyLimit">
+                      <strong>Daily Limit:</strong> Up to
+                      <strong>{{ currentPlan.raw?.contactPolicy.dailyLimit }}</strong> profiles/day.
+                    </li>
+                    <li *ngIf="currentPlan?.raw?.contactPolicy?.weeklyLimit">
+                      <strong>Weekly Limit:</strong> Up to
+                      <strong>{{ currentPlan.raw?.contactPolicy.weeklyLimit }}</strong> profiles/week.
+                    </li>
+                    <li *ngIf="currentPlan?.raw?.contactPolicy?.monthlyLimit">
+                      <strong>Monthly Limit:</strong> Up to
+                      <strong>{{ currentPlan.raw?.contactPolicy.monthlyLimit }}</strong> profiles/month.
+                    </li>
+                    <li *ngIf="currentPlan?.raw?.contactPolicy?.carryForward">
+                      <strong>Carry Forward:</strong> Unused contacts will carry forward.
+                    </li>
+                  </ul>
+
+                  <!-- Example for daily limit -->
+                  <p *ngIf="currentPlan?.raw?.contactPolicy?.dailyLimit > 0" class="example-text">
+                    <strong>Example:</strong> You can contact
+                    <strong>{{ currentPlan.raw?.contactPolicy.dailyLimit }}</strong> profiles today.
+                    <ng-container *ngIf="currentPlan.raw?.contactPolicy.carryForward; else expireExample">
+                      Unused contacts will be <strong>carried forward</strong>.
+                    </ng-container>
+                    <ng-template #expireExample>
+                      Unused contacts will <strong>expire</strong>.
+                    </ng-template>
+                  </p>
+
+                </div>
+              </span>
+            </div>
+
+            <!-- Features -->
+            <h6 class="features-title mt-3">Features</h6>
+            <ul class="features-list">
+              <!-- {{currentPlan | json }} -->
+              <li *ngFor="let f of currentPlan?.plan?.features">
+                <mat-icon>check_circle</mat-icon> {{ f }}
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noActive>
+        <div class="glass-card current-card text-muted fst-italic">
+          You currently do not have any active plan.
+        </div>
+      </ng-template>
+    </div>
+
+
+    <!-- AVAILABLE PLANS – RIGHT -->
+    <div class="col-12 col-md-9">
+      <h2 class="section-title">Available Plans</h2>
+      <div class="separator mb-3"></div>
+
+      <div *ngIf="plans && plans.length; else noPlans" class="row g-4">
+        <div class="col-12 col-sm-6 col-md-4" *ngFor="let plan of plans">
+
+          <div class="glass-card plan-card d-flex flex-column"
+               [class.recommended]="plan?.recommended"
+               [ngClass]="{
+                 'active-plan': currentPlan?.plan?.planId === plan?.planId
+               }">
+               <!--  'lower-plan': currentPlan?.plan?.status==='active' && plan?.price<=currentPlanPrice && currentPlan?.plan?.planId !== plan?.planId -->
+
+            <div *ngIf="plan?.recommended" class="badge-recommend">★ Recommended</div>
+            <div *ngIf="plan?.discount" class="ribbon-discount">{{ plan.discount }}% OFF</div>
+
+            <!-- Plan Header -->
+            <div class="plan-head">
+              <h5>{{ plan?.name || plan?.planName }}</h5>
+              <p>{{ plan?.duration }} months</p>
+            </div>
+
+            <!-- Price -->
+            <div class="plan-price">₹ {{ plan?.price }}</div>
+
+            <!-- Contact Policy -->
+            <div class="contactpolicy">
+              <span *ngIf="plan?.contactPolicy?.totalLimit != null">Contact Limit: {{ plan.contactPolicy.totalLimit }} | </span>
+              <span *ngIf="plan?.contactPolicy?.dailyLimit != null">Daily Contact Limit: {{ plan.contactPolicy.dailyLimit }} | </span>
+              <span *ngIf="plan?.contactPolicy?.weeklyLimit != null">Weekly Contact Limit: {{ plan.contactPolicy.weeklyLimit }} | </span>
+              <span *ngIf="plan?.contactPolicy?.monthlyLimit != null">Monthly Contact Limit: {{ plan.contactPolicy.monthlyLimit }} | </span>
+              <span *ngIf="plan?.contactPolicy?.carryForward != null">Carry Forward: {{ plan.contactPolicy.carryForward ? 'Yes' : 'No' }}</span>
+            </div>
+
+            <!-- Features -->
+            <h6 class="features-title">Features</h6>
+            <ul class="features" [class.show-more-visible]="plan.showMore">
+              <li *ngFor="let feature of plan?.features">
+                <mat-icon>check_circle</mat-icon> {{ feature }}
+              </li>
+            </ul>
+            <button *ngIf="plan?.features?.length>4" class="toggle-btn" (click)="plan.showMore=!plan.showMore">
+              {{ plan.showMore ? 'Show Less' : 'Show More' }}
+            </button>
+
+            <!-- Action Buttons -->
+            <div class="btn-area mt-auto">
+              <button *ngIf="currentPlan?.plan?.planId === plan?.planId" class="btn btn-secondary" disabled>Current Plan</button>
+              <button class="purchaseplan-btn"
+                      (click)="purchasePlan(plan)">
+<!--                      [disabled]="currentPlan?.plan?.status==='active' && plan?.price<=currentPlanPrice"
+                      [class.disabled-blur]="currentPlan?.plan?.status==='active' && plan?.price<=currentPlanPrice" -->
+                Pay Online
+              </button>
+              
+              <button class="button-row mat-stroked-button"
+                      (click)="openQRPopup(plan)">
+                      <!-- *ngIf="!currentPlan?.plan || plan?.price>currentPlanPrice || !currentPlan?.isActive" -->
+                Pay Offline (QR)
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noPlans>
+        <p class="text-muted fst-italic">No plans available.</p>
+      </ng-template>
+    </div>
+
+  </div>
+</div>
+
+<!-- Loading -->
+<ng-template #loading>
+  <div class="center py-5">
+    <div class="spinner-border text-danger"></div> Loading plans...
+  </div>
+</ng-template>
+
+<!-- QR Modal -->
+<div class="qr-modal" [class.show]="qrModalVisible" (click)="closeQRPopup()">
+  <div class="qr-modal-content glass-card" (click)="$event.stopPropagation()">
+
+    <button class="close-btn" (click)="closeQRPopup()">✖</button>
+
+    <h3 class="qr-title-popup text-danger fw-bold mb-3">Scan & Pay</h3>
+
+    <div class="qr-scroll">
+
+      <p>
+        <strong>Plan:</strong> {{ selectedPlan?.name || selectedPlan?.planName }}
+        <strong>Amount:</strong> ₹{{ selectedPlan?.price }}
+      </p>
+
+      <div class="qr-image-frame text-center my-3">
+        <img src="images/qr-payment.png" class="qr-img" alt="QR Code">
+      </div>
+
+      <label class="fw-bold mb-1">Upload Payment Screenshot</label>
+      <input type="file" accept="image/*" class="form-control"
+            (change)="onReceiptUpload($event, selectedPlan)">
+
+      <img *ngIf="receiptPreview[selectedPlan?.id]" 
+           [src]="receiptPreview[selectedPlan?.id]" 
+           class="receipt-preview mt-3">
+
+    </div>
+
+    <div class="qr-actions mt-3">
+      <button class="btn btn-danger w-100 mb-2" (click)="submitOfflinePayment(selectedPlan)">Submit</button>
+      <button class="btn btn-outline-dark w-100" (click)="closeQRPopup()">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+</ng-template>

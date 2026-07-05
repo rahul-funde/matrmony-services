@@ -1,0 +1,45 @@
+{
+  "name": "matrimony-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.14.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "couchbase": "^4.6.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.2",
+    "node-cache": "^5.1.2",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^6.10.1",
+    "razorpay": "^2.9.6",
+    "sharp": "^0.34.5",
+    "twilio": "^5.10.5",
+    "uuid": "^11.1.0",
+    "validator": "^13.12.0",
+    "winston": "^3.17.0",
+    "xml2js": "^0.6.2"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": "This Node.js backend provides user authentication using **Couchbase**, **JWT**, **Email Verification**, and **OTP-based Login**.",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

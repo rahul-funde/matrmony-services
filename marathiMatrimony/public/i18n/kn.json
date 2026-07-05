@@ -1,0 +1,11 @@
+{
+  "app": { "name": "ಸುಶೀಲ್ ಮರಾಠಾ", "language": "ಭಾಷೆ" },
+  "auth": {
+    "login": { "title": "ಲಾಗಿನ್", "failed": "ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ." },
+    "passwordReset": { "success": "ಪಾಸ್ವರ್ಡ್ ಯಶಸ್ವಿಯಾಗಿ ಮರುಹೊಂದಿಸಲಾಗಿದೆ!", "failed": "ಪಾಸ್ವರ್ಡ್ ಮರುಹೊಂದಿಕೆ ವಿಫಲವಾಗಿದೆ." }
+  },
+  "common": { "close": "ಮುಚ್ಚಿ", "save": "ಉಳಿಸಿ", "cancel": "ರದ್ದುಮಾಡಿ", "search": "ಹುಡುಕಿ", "loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ..." },
+  "profile": { "basicDetails": "ಮೂಲ ವಿವರಗಳು", "photos": "ಫೋಟೋಗಳು", "contactDetails": "ಸಂಪರ್ಕ ವಿವರಗಳು" },
+  "membership": { "upgradePlan": "ಪ್ಲಾನ್ ಅಪ್ಗ್ರೇಡ್ ಮಾಡಿ", "currentPlan": "ಪ್ರಸ್ತುತ ಪ್ಲಾನ್", "contactsRemaining": "ಉಳಿದ ಸಂಪರ್ಕಗಳು" },
+  "admin": { "dashboard": "ಡ್ಯಾಶ್ಬೋರ್ಡ್", "users": "ಬಳಕೆದಾರರು", "plans": "ಪ್ಲಾನ್‌ಗಳು", "payments": "ಪಾವತಿಗಳು" }
+}

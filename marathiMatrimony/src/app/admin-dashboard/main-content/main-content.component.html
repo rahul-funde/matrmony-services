@@ -1,0 +1,501 @@
+<mat-sidenav-container class="sidenav-container">
+    <!-- Slide-In Panel -->
+    <mat-sidenav #sidenav mode="over" position="end" [opened]="false" class="admin-detail-sidenav">
+      <div class="slide-in-content p-4" *ngIf="selectedUser">
+        <button mat-icon-button class="close-btn float-right" (click)="closeSlideInPanel()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <br/>
+        <mat-tab-group>
+          <!-- Profile Tab -->
+          <mat-tab label="Profile">
+            <div class="section">
+              <h4 class="section-title">Personal Information</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Full Name:</span> <span>{{ selectedUser?.personalDetails?.firstName }} {{ selectedUser?.personalDetails?.middleName }} {{ selectedUser?.personalDetails?.lastName }}</span></div>
+                <div class="info-row"><span class="label">Gender:</span> <span>{{ selectedUser?.personalDetails?.gender }}</span></div>
+                <div class="info-row"><span class="label">Age:</span> <span>{{ selectedUser?.personalDetails?.age }}</span></div>
+                <div class="info-row"><span class="label">Height:</span> <span>{{ selectedUser?.personalDetails?.height }}</span></div>
+                <div class="info-row"><span class="label">Weight:</span> <span>{{ selectedUser?.personalDetails?.weight }}</span></div>
+                <div class="info-row"><span class="label">Date of Birth:</span> <span>{{ selectedUser?.personalDetails?.dateOfBirth }}</span></div>
+                <div class="info-row"><span class="label">Blood Group:</span> <span>{{ selectedUser?.personalDetails?.bloodGroup }}</span></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4 class="section-title">Contact Information</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Email:</span> <span>{{ selectedUser?.email }}</span></div>
+                <div class="info-row"><span class="label">Mobile:</span> <span>{{ selectedUser?.mobilenumber }}</span></div>
+                <div class="info-row"><span class="label">Location:</span> <span>{{ selectedUser?.contactDetails?.city }}, {{ selectedUser?.contactDetails?.state }}, {{ selectedUser?.contactDetails?.country }}</span></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4 class="section-title">Lifestyle</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Diet:</span> <span>{{ selectedUser?.lifestyleDetails?.diet }}</span></div>
+                <div class="info-row"><span class="label">Smoking:</span> <span>{{ selectedUser?.lifestyleDetails?.smoking }}</span></div>
+                <div class="info-row"><span class="label">Drinking:</span> <span>{{ selectedUser?.lifestyleDetails?.drinking }}</span></div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <!-- Career Tab -->
+          <mat-tab label="Career">
+            <div class="section">
+              <h4 class="section-title">Career Details</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Company:</span> <span>{{ selectedUser?.careerDetails?.companyName }}</span></div>
+                <div class="info-row"><span class="label">Job Title:</span> <span>{{ selectedUser?.careerDetails?.jobTitle }}</span></div>
+                <div class="info-row"><span class="label">Occupation:</span> <span>{{ selectedUser?.careerDetails?.occupation }}</span></div>
+                <div class="info-row"><span class="label">Income:</span> <span>₹{{ selectedUser?.careerDetails?.annualIncome }}</span></div>
+                <div class="info-row"><span class="label">Work Location:</span> <span>{{ selectedUser?.careerDetails?.workLocationCity }}, {{ selectedUser?.careerDetails?.workLocationCountry }}</span></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4 class="section-title">Education</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">College:</span> <span>{{ selectedUser?.educationDetails?.collegeName }}</span></div>
+                <div class="info-row"><span class="label">Qualification:</span> <span>{{ selectedUser?.educationDetails?.highestQualification }}</span></div>
+                <div class="info-row"><span class="label">Year of Completion:</span> <span>{{ selectedUser?.educationDetails?.yearOfCompletion }}</span></div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <!-- Family Tab -->
+          <mat-tab label="Family">
+            <div class="section">
+              <h4 class="section-title">Family Details</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Father:</span> <span>{{ selectedUser?.familyDetails?.fatherName }} ({{ selectedUser?.familyDetails?.fatherOccupation }})</span></div>
+                <div class="info-row"><span class="label">Mother:</span> <span>{{ selectedUser?.familyDetails?.motherName }} ({{ selectedUser?.familyDetails?.motherOccupation }})</span></div>
+                <div class="info-row"><span class="label">Brothers:</span> <span>{{ selectedUser?.familyDetails?.brothersCount }} ({{ selectedUser?.familyDetails?.brothersMarriedCount }} married)</span></div>
+                <div class="info-row"><span class="label">Sisters:</span> <span>{{ selectedUser?.familyDetails?.sistersCount }} ({{ selectedUser?.familyDetails?.sistersMarriedCount }} married)</span></div>
+                <div class="info-row"><span class="label">Family Type:</span> <span>{{ selectedUser?.familyDetails?.familyType }}</span></div>
+                <div class="info-row"><span class="label">Wealth:</span> <span>{{ selectedUser?.familyDetails?.familyWealth }}</span></div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <!-- Horoscope Tab -->
+          <mat-tab label="Horoscope">
+            <div class="section">
+              <h4 class="section-title">Horoscope</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Rashi:</span> <span>{{ selectedUser?.horoscopeDetails?.rashi }}</span></div>
+                <div class="info-row"><span class="label">Nakshatra:</span> <span>{{ selectedUser?.horoscopeDetails?.nakshatra }}</span></div>
+                <div class="info-row"><span class="label">Birth Time:</span> <span>{{ selectedUser?.horoscopeDetails?.birthTime }}</span></div>
+                <div class="info-row"><span class="label">Birth Place:</span> <span>{{ selectedUser?.horoscopeDetails?.birthPlace }}</span></div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <!-- Preferences Tab -->
+          <mat-tab label="Preferences">
+            <div class="section">
+              <h4 class="section-title">Partner Preferences</h4>
+              <div class="info-grid">
+                <div class="info-row"><span class="label">Expectations:</span> <span>{{ selectedUser?.additionalInfoDetails?.partnerExpectations }}</span></div>
+                <div class="info-row"><span class="label">Reason for Partner:</span> <span>{{ selectedUser?.additionalInfoDetails?.reasonForPartner }}</span></div>
+                <div class="info-row"><span class="label">Height Preference:</span> <span>{{ selectedUser?.partnerPreferencesDetails?.heightPreference }}</span></div>
+                <div class="info-row"><span class="label">Plan:</span> <span>{{ selectedUser?.plan }}</span></div>
+                <div class="info-row"><span class="label">Status:</span> <span>{{ selectedUser?.status }}</span></div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+        <div class="text-center mt-4">
+          <button mat-raised-button color="primary" (click)="closeSlideInPanel()">Close</button>
+        </div>
+      </div>
+    </mat-sidenav>
+
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="top-section">
+      <mat-card class="info-card" *ngFor="let entry of topInfo | keyvalue">
+        <mat-card-header>
+          <mat-card-title>{{ entry.key }}</mat-card-title>
+        </mat-card-header>
+        <hr />
+        <mat-card-content>
+          <h2>{{ entry.value }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+      <div class="table-actions">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput [(ngModel)]="filterText" (ngModelChange)="applyFilterText()" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Plan</mat-label>
+          <mat-select [(ngModel)]="planFilter" (selectionChange)="filterTable()">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let plan of plans" [value]="plan.value">
+              {{ plan.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select [(ngModel)]="genderFilter" (selectionChange)="filterTable()">
+            <mat-option value="">All</mat-option>
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="statusFilter" (selectionChange)="filterTable()">
+              <mat-option value="" matTooltip="All">All</mat-option>
+              <mat-option *ngFor="let status of statusOptions" 
+                          [value]="status.value" 
+                          [matTooltip]="status.label">
+                {{ status.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>From Date</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="fromDate" (dateChange)="onFromDateChange()" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>To Date</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="toDate" (dateChange)="filterTable()" [min]="fromDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>        
+          <button mat-raised-button color="primary" (click)="exportTable()">Export CSV</button>
+          <button mat-icon-button color="accent" (click)="refreshTable()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+      </div>
+
+
+<mat-tab-group (selectedTabChange)="onTabChange($event)">
+
+  <!-- ALL USERS -->
+  <mat-tab [label]="'All Users (' + dataSource.data.length + ')'">
+    <ng-container *ngTemplateOutlet="userTable;
+      context:{ source:dataSource, paginator:paginators }">
+    </ng-container>
+  </mat-tab>
+
+  <!-- EXPIRING SOON -->
+  <mat-tab [label]="'Expiring Soon (' + warningUsers.data.length + ')'">
+    <ng-container *ngTemplateOutlet="userTable;
+      context:{ source:warningUsers, paginator:paginators }">
+    </ng-container>
+  </mat-tab>
+
+  <!-- EXPIRED -->
+  <mat-tab [label]="'Expired (' + expiredUsers.data.length + ')'">
+    <ng-container *ngTemplateOutlet="userTable;
+      context:{ source:expiredUsers, paginator:paginators }">
+    </ng-container>
+  </mat-tab>
+
+</mat-tab-group>
+
+
+<!-- REUSABLE TABLE TEMPLATE -->
+
+<ng-template #userTable let-source="source" let-paginator="paginator">
+
+<div class="table-wrapper">
+
+<table mat-table
+       [dataSource]="source"
+       matSort
+       multiTemplateDataRows
+       class="mat-elevation-z8 user-table">
+
+  <!-- USER ID -->
+  <ng-container matColumnDef="userId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      User ID
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.userId}}
+    </td>
+  </ng-container>
+
+  <!-- FULL NAME -->
+  <ng-container matColumnDef="FullName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      Full Name
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+
+      {{element?.personalDetails?.firstName}}
+      {{element?.personalDetails?.middleName}}
+      {{element?.personalDetails?.lastName}}
+
+    </td>
+  </ng-container>
+
+  <!-- EMAIL -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      Email
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+      {{element.email}}
+    </td>
+  </ng-container>
+
+  <!-- MOBILE -->
+  <ng-container matColumnDef="mobilenumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      Mobile
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+      {{element.mobilenumber}}
+    </td>
+  </ng-container>
+
+  <!-- PLAN -->
+  <ng-container matColumnDef="plan">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      Plan
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+
+      <mat-form-field appearance="outline" class="small-field">
+        <mat-select [(value)]="element.plan"
+                    (selectionChange)="onPlanChange(element)">
+
+          <mat-option *ngFor="let plan of plans"
+                      [value]="plan.value">
+            {{plan.label}}
+          </mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+    </td>
+  </ng-container>
+
+  <!-- STATUS -->
+  <ng-container matColumnDef="status">
+
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      Status
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+
+      <mat-form-field appearance="outline" class="small-field">
+        <mat-select [(value)]="element.status"
+                    (selectionChange)="onStatusChange(element)">
+
+          <mat-option *ngFor="let status of statusOptions"
+                      [value]="status.value">
+            {{status.label}}
+          </mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+    </td>
+
+  </ng-container>
+
+    <ng-container matColumnDef="maritalStatus">
+
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Marital Status
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        {{element?.personalDetails?.maritalStatus}}
+      </td>
+
+    </ng-container>
+
+
+    <ng-container matColumnDef="plan_start_date">
+
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Plan Start Date
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        {{element.planStartDate | date:'dd MMM yyyy'}}
+      </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="plan_end_date">
+
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Plan End Date
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        {{element.planEndDate | date:'dd MMM yyyy'}}
+      </td>
+
+    </ng-container>
+
+<!-- 
+    <ng-container matColumnDef="start_date">
+
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Start Date
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        {{element.start_date | date:'dd MMM yyyy'}}
+      </td>
+
+    </ng-container>
+ -->
+    <ng-container matColumnDef="createdAt">
+
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Created At
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        {{ element.createdAt | date:'dd MMM yyyy' }}
+      </td>
+
+    </ng-container>
+  <!-- END DATE -->
+  <!-- <ng-container matColumnDef="end_date">
+
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+      End Date
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+      {{element.end_date | date:'dd MMM yyyy'}}
+    </td>
+
+  </ng-container>
+ -->
+  <!-- ACTIONS -->
+  <ng-container matColumnDef="actions">
+
+    <th mat-header-cell *matHeaderCellDef sticky>
+      Actions
+    </th>
+
+    <td mat-cell *matCellDef="let row">
+
+      <button mat-icon-button
+              [matMenuTriggerFor]="menu">
+
+        <mat-icon>more_vert</mat-icon>
+
+      </button>
+
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="editRow(row)">
+                        <mat-icon>edit</mat-icon> Edit
+                      </button>
+                      <button mat-menu-item (click)="deleteRow(row)">
+                        <mat-icon>delete</mat-icon> Delete
+                      </button>
+                      <button mat-icon-button (click)="openSlideInPanel(row)">
+                        <mat-icon>info</mat-icon> View
+                      </button>
+                      <button mat-icon-button (click)="updateUserProfile(row)">
+                        <mat-icon>update</mat-icon>
+                      </button>
+                      <button mat-menu-item (click)="openUpdatePasswordDialog(row)">
+                        <mat-icon>lock</mat-icon>
+                        Update Password
+                      </button>
+
+                    </mat-menu>
+
+    </td>
+
+  </ng-container>
+
+
+  <!-- EXPANDABLE DETAILS -->
+  <ng-container matColumnDef="expandedDetail">
+
+    <td mat-cell
+        *matCellDef="let row"
+        [attr.colspan]="displayedColumns.length">
+
+      <div class="expanded-container"
+           *ngIf="expandedElement === row">
+
+        <h4>Career Details</h4>
+
+        <p><b>Company:</b> {{row.careerDetails?.companyName}}</p>
+        <p><b>Job:</b> {{row.careerDetails?.jobTitle}}</p>
+
+        <h4>Personal</h4>
+
+        <p><b>Age:</b> {{row.personalDetails?.age}}</p>
+        <p><b>Height:</b> {{row.personalDetails?.height}}</p>
+
+      </div>
+
+    </td>
+
+  </ng-container>
+
+
+  <!-- HEADER -->
+  <tr mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky:true">
+  </tr>
+
+  <!-- NORMAL ROW -->
+  <tr mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="toggleRow(row)"
+      [ngClass]="row.end_date | rowStatusClass">
+  </tr>
+
+  <!-- EXPANDED ROW -->
+  <!-- <tr mat-row
+      *matRowDef="let row; columns:['expandedDetail']"
+      class="detail-row">
+  </tr>
+ -->
+</table>
+
+
+<mat-paginator
+  #paginatorRef
+  [pageSize]="100"
+  [pageSizeOptions]="[5,10,25,50,75,100,500]"
+  showFirstLastButtons>
+</mat-paginator>
+</div>
+
+</ng-template>
+
+<app-right-sidenav *ngIf="openSidenav" (close)="openSidenav = false"></app-right-sidenav>
+
+<button mat-fab color="accent" class="hanging-icon" (click)="openSidenav = true">
+  <mat-icon>chevron_left</mat-icon>
+</button>
+

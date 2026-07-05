@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container">
+    <!-- Side Navigation -->
+  <!-- <mat-sidenav #sidenav mode="over" class="custom-sidenav">
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.link">
+        <mat-icon class="sidenav-icon">{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+    <mat-sidenav-content>
+      <app-home-container></app-home-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+   -->
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.link">
+          <mat-icon class="sidenav-icon">{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      </mat-nav-list>
+      <!-- Menu items here -->
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <!-- Main content, router-outlet, etc. -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

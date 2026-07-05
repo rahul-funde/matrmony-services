@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <h2>Create Membership Package</h2>
+
+  <form [formGroup]="packageForm" (ngSubmit)="submitForm()">
+    <div class="mb-3">
+      <label class="form-label">Package Name</label>
+      <input class="form-control" formControlName="name" placeholder="e.g. Gold Member" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Price</label>
+      <input class="form-control" type="number" formControlName="price" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Duration</label>
+      <input class="form-control" formControlName="duration" placeholder="e.g. 1 Month" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Features (comma-separated)</label>
+      <input class="form-control" formControlName="features" placeholder="e.g. 10 Interests/Day, Chat Support" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Badge Color</label>
+      <select class="form-select" formControlName="badgeColor">
+        <option value="">Select</option>
+        <option value="primary">Primary</option>
+        <option value="warning">Warning</option>
+        <option value="success">Success</option>
+        <option value="danger">Danger</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="packageForm.invalid">Create Package</button>
+  </form>
+
+  <div *ngIf="message" class="alert alert-success mt-3">{{ message }}</div>
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+</div>

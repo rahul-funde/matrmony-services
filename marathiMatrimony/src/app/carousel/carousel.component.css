@@ -1,0 +1,85 @@
+/* Carousel Wrapper */
+.carousel-bg {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+/* Hover Effect */
+.carousel-image:hover {
+  transform: scale(1.02);
+}
+
+/* Owl Carousel Core Styles Override */
+.owl-carousel .owl-stage-outer {
+  overflow: visible;
+}
+
+.owl-carousel .owl-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  pointer-events: all;
+  transition: background-color 0.3s ease;
+}
+
+.owl-carousel .owl-nav button.owl-prev:hover,
+.owl-carousel .owl-nav button.owl-next:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Dots */
+.owl-carousel .owl-dots {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.owl-carousel .owl-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.owl-carousel .owl-dot.active {
+  background-color: #333;
+}
+
+/* Responsive Tweak */
+@media (max-width: 768px) {
+  .carousel-bg {
+    padding: 10px;
+  }
+
+  .carousel-image {
+    border-radius: 8px;
+  }
+
+  .owl-carousel .owl-nav button.owl-prev,
+  .owl-carousel .owl-nav button.owl-next {
+    padding: 8px;
+  }
+}

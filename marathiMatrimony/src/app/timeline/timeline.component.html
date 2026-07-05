@@ -1,0 +1,854 @@
+<div class="timeline-container">
+  <!-- ===== LEFT SIDEBAR TIMELINE ===== -->
+  <aside class="sidebar">
+    <ul>
+      <!-- Blue Progress Line -->
+      <div
+        class="progress-line"
+        [style.height.%]="((activeIndex + 1) / steps.length) * 100"
+      ></div>
+
+      <!-- Steps -->
+      <li
+        *ngFor="let step of steps; let i = index"
+        [class.active]="i === activeIndex"
+        (click)="scrollToSection(i)"
+      >
+        <span class="step-dot"></span>
+        <div class="step-content">
+          <mat-icon>{{ step.icon }}</mat-icon>
+          <span>{{ step.title }}</span>
+        </div>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ===== RIGHT FORM CONTENT ===== -->
+  <div class="form-container" #contentContainer>
+    <!-- Form with Tab Navigation -->
+       <button mat-raised-button color="primary" (click)="loadProfileOptions()">
+        Test API
+      </button>
+      
+      <button mat-raised-button color="accent" (click)="loadUserProfile()">
+       loadUserProfile
+      </button>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="form-container">
+      <!-- PERSONAL DETAILS -->
+      <section id="personal" #section class="form-section" formGroupName="personalDetails">
+        <h2>Personal Details</h2>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Father Name</mat-label>
+            <input matInput formControlName="middleName" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Surname</mat-label>
+            <input matInput formControlName="lastName" required />
+          </mat-form-field>
+
+          <!-- Date of Birth -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dateOfBirth"
+              required
+              (dateChange)="onDOBChange($event.value)"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Age -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="age" type="number" readonly />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender" required>
+              <mat-option value="Male">Male</mat-option>
+              <mat-option value="Female">Female</mat-option>
+              <mat-option value="Other">Other</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Religion</mat-label>
+            <input matInput formControlName="religion" type="text" value="hindu" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Caste</mat-label>
+            <input matInput formControlName="caste" type="text" value="Maratha" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Sub Caste</mat-label>
+            <mat-select formControlName="subCaste">
+              <mat-option *ngFor="let option of subCasteOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Marital Status</mat-label>
+            <mat-select formControlName="maritalStatus">
+              <mat-option *ngFor="let option of maritalStatusOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Height</mat-label>
+            <input matInput formControlName="height" type="text" />
+            <mat-select matSuffix formControlName="heightUnit" disableRipple class="height-unit-select">
+              <mat-option value="feet">Feet</mat-option>
+              <mat-option value="inches">Inches</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Complexion</mat-label>
+            <mat-select formControlName="complexion">
+              <mat-option *ngFor="let option of complexionOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Physical Disability Dropdown -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Physical Disability</mat-label>
+            <mat-select formControlName="physicalDisability">
+              <mat-option value="yes">Yes</mat-option>
+              <mat-option value="no">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Disability Details shown only when 'yes' is selected -->
+          <div *ngIf="profileForm.get('personalDetails.physicalDisability')?.value === 'yes'">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Disability Details</mat-label>
+              <input matInput formControlName="disabilityDetails" type="text" />
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Weight</mat-label>
+            <input matInput formControlName="weight" type="text" value="" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Blood Group</mat-label>
+            <mat-select formControlName="bloodGroup">
+              <mat-option *ngFor="let option of bloodGroupOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Languages Spoken</mat-label>
+            <input matInput formControlName="languagesSpoken" type="text" value="" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Diet</mat-label>
+            <mat-select formControlName="diet">
+              <mat-option *ngFor="let option of dietOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Spectacles</mat-label>
+            <input matInput formControlName="spectacles" type="text" value="" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Lens</mat-label>
+            <input matInput formControlName="lens" type="text" value="" />
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- HOROSCOPE DETAILS -->
+      <section id="horoscope" formGroupName="horoscopeDetails" #section class="form-section">
+        <h2>Horoscope Details</h2>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rashi</mat-label>
+            <mat-select formControlName="rashi">
+              <mat-option *ngFor="let option of rashiOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nakshatra</mat-label>
+            <mat-select formControlName="nakshatra">
+              <mat-option *ngFor="let option of nakshatraOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Charan</mat-label>
+            <mat-select formControlName="charan">
+              <mat-option *ngFor="let option of charanOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nadi</mat-label>
+            <mat-select formControlName="nadi">
+              <mat-option *ngFor="let option of nadiOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Gan</mat-label>
+            <mat-select formControlName="gan">
+              <mat-option *ngFor="let option of ganOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mangal</mat-label>
+            <mat-select formControlName="mangal">
+              <mat-option *ngFor="let option of mangalOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Birth Time</mat-label>
+            <input matInput formControlName="birthTime" type="time" value="" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Birth Place</mat-label>
+            <input matInput formControlName="birthPlace" type="text" value="" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Devak</mat-label>
+            <input matInput formControlName="deva" type="text" value="" />
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- FAMILY DETAILS -->
+      <section id="family" #section class="form-section"  formGroupName="familyDetails">
+        <h2>Family Details</h2>
+        <div class="form-grid">
+          <!-- Father Details -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Father</mat-label>
+            <mat-select formControlName="father" required>
+              <mat-option value="Mr.">Mr.</mat-option>
+              <mat-option value="Late">Late</mat-option>
+              <mat-option value="Not Applicable">Not Applicable</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Father's Full Name</mat-label>
+            <input matInput formControlName="fatherName" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Father's Occupation</mat-label>
+            <input matInput formControlName="fatherOccupation" type="text" />
+          </mat-form-field>
+
+          <!-- Mother Details -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mother</mat-label>
+            <mat-select formControlName="mother" required>
+              <mat-option value="Mrs.">Mrs.</mat-option>
+              <mat-option value="Late">Late</mat-option>
+              <mat-option value="Not Applicable">Not Applicable</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mother's Full Name</mat-label>
+            <input matInput formControlName="motherName" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mother's Occupation</mat-label>
+            <input matInput formControlName="motherOccupation" type="text" />
+          </mat-form-field>
+
+          <!-- Brothers Details -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Do you have brothers?</mat-label>
+            <mat-select formControlName="hasBrothers">
+              <mat-option value="Yes">Yes</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Number of Brothers</mat-label>
+            <mat-select formControlName="brothersCount">
+              <mat-option *ngFor="let count of [1,2,3,4,5,6,7,8,9,10]" [value]="count">{{ count }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Number of Married Brothers</mat-label>
+            <mat-select formControlName="brothersMarriedCount">
+              <mat-option *ngFor="let count of [1,2,3,4,5,6,7,8,9,10]" [value]="count">{{ count }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Sisters Details -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Do you have sisters?</mat-label>
+            <mat-select formControlName="hasSisters">
+              <mat-option value="Yes">Yes</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Number of Sisters</mat-label>
+            <mat-select formControlName="sistersCount">
+              <mat-option *ngFor="let count of [1,2,3,4,5,6,7,8,9,10]" [value]="count">{{ count }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Number of Married Sisters</mat-label>
+            <mat-select formControlName="sistersMarriedCount">
+              <mat-option *ngFor="let count of [1,2,3,4,5,6,7,8,9,10]" [value]="count">{{ count }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Additional Fields -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Parent's Resident City</mat-label>
+            <input matInput formControlName="parentsResidentCity" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Surnames of Relatives</mat-label>
+            <input matInput formControlName="relativesSurnames" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Family Wealth Details</mat-label>
+            <input matInput formControlName="familyWealth" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mama's Full Name and Place</mat-label>
+            <input matInput formControlName="mamaNameAndPlace" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>District</mat-label>
+            <mat-select formControlName="nativeDistrict" (selectionChange)="onDistrictChange()">
+              <mat-option value="">Select District</mat-option>
+              <mat-option *ngFor="let district of maharashtraData.districts" [value]="district.name">
+                {{ district.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width" *ngIf="talukas && talukas.length">
+            <mat-label>Taluka</mat-label>
+            <mat-select formControlName="nativeTaluka">
+              <mat-option value="">Select Taluka</mat-option>
+              <mat-option *ngFor="let taluka of talukas" [value]="taluka">
+                {{ taluka }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Intercaste Marriage -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Any Intercaste Marriages?</mat-label>
+            <mat-select formControlName="intercasteMarriage">
+              <mat-option value="Yes">Yes</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div *ngIf="profileForm.get('familyDetails.intercasteMarriage')?.value === 'Yes'">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Details of the Intercaste Marriage</mat-label>
+              <input matInput formControlName="intercasteDetails" type="text" />
+            </mat-form-field>
+          </div>
+
+          <!-- Family Type -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Family Type</mat-label>
+            <mat-select formControlName="familyType">
+              <mat-option value="Nuclear">Nuclear</mat-option>
+              <mat-option value="Joint">Joint</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- EDUCATION DETAILS -->
+      <section id="education" #section class="form-section" formGroupName="educationDetails">
+        <h2>Education Details</h2>
+        <div class="form-grid">
+          <!-- Highest Qualification -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Highest Qualification</mat-label>
+            <input matInput formControlName="highestQualification" [matAutocomplete]="auto" type="text" placeholder="e.g., B.E. Computer, M.Sc. Physics" />
+
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredQualifications | async" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+
+            <mat-error>
+              Qualification is required.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- College/University Name -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>College/University Name</mat-label>
+            <input matInput formControlName="collegeName" type="text" />
+            <mat-error>
+              College/University name is required.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Year of Completion -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Year of Completion</mat-label>
+            <mat-select formControlName="yearOfCompletion">
+              <mat-option value="">Select Year</mat-option>
+              <mat-option *ngFor="let year of years" [value]="year">
+                {{ year }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Education Type -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Education Type</mat-label>
+            <mat-select formControlName="educationType">
+              <mat-option value="Full-time">Full-time</mat-option>
+              <mat-option value="Distance">Distance</mat-option>
+              <mat-option value="Online">Online</mat-option>
+            </mat-select>
+            <mat-error>
+              Education type is required.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Additional Qualifications -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Additional Qualifications (if any)</mat-label>
+            <textarea matInput formControlName="additionalQualifications"></textarea>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- CAREER INFORMATION (originally in a tab) -->
+      <section id="careerInfo" #section class="form-section" formGroupName="careerDetails">
+        <h2>Career Information</h2>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Occupation/Profession</mat-label>
+            <input matInput formControlName="occupation" type="text" />
+            <mat-error>
+              Occupation/Profession is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Job Title/Designation</mat-label>
+            <input matInput formControlName="jobTitle" type="text" />
+            <mat-error>
+              Job Title/Designation is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Company/Organization Name</mat-label>
+            <input matInput formControlName="companyName" type="text" />
+            <mat-error>
+              Company/Organization Name is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Annual Income</mat-label>
+            <input matInput formControlName="annualIncome" type="text" />
+            <mat-error>
+              Please enter a valid numeric income.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="workLocationCity" type="text" />
+            <mat-error>
+              City is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="workLocationCountry" type="text" />
+            <mat-error>
+              Country is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Employment Type</mat-label>
+            <mat-select formControlName="employmentType">
+              <mat-option value="Full-time">Full-time</mat-option>
+              <mat-option value="Part-time">Part-time</mat-option>
+              <mat-option value="Freelancer">Freelancer</mat-option>
+            </mat-select>
+            <mat-error>
+              Employment Type is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Previous Job/Work Experience</mat-label>
+            <textarea matInput formControlName="previousWorkExperience"></textarea>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- LIFESTYLE & INTERESTS (originally a tab) -->
+      <section id="lifestyle" #section class="form-section" formGroupName="lifestyleDetails">
+        <h2>Lifestyle & Interests</h2>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Diet</mat-label>
+            <mat-select formControlName="diet">
+              <mat-option value="Vegetarian">Vegetarian</mat-option>
+              <mat-option value="Non-Vegetarian">Non-Vegetarian</mat-option>
+              <mat-option value="Vegan">Vegan</mat-option>
+              <mat-option value="Other">Other</mat-option>
+            </mat-select>
+            <mat-error>
+              Please select your diet preference.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Smoking</mat-label>
+            <mat-select formControlName="smoking">
+              <mat-option value="Yes">Yes</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+            <mat-error >
+              Please specify if you smoke.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Drinking</mat-label>
+            <mat-select formControlName="drinking">
+              <mat-option value="Yes">Yes</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+            <mat-error>
+              Please specify if you drink alcohol.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Hobbies/Interests</mat-label>
+            <textarea matInput formControlName="hobbies"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Sports/Activities</mat-label>
+            <textarea matInput formControlName="sportsActivities"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Favorite Books</mat-label>
+            <textarea matInput formControlName="favoriteBooks"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Favorite Movies</mat-label>
+            <textarea matInput formControlName="favoriteMovies"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Favorite TV Shows</mat-label>
+            <textarea matInput formControlName="favoritetvShows"></textarea>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- PARTNER PREFERENCES -->
+      <section id="partner" #section class="form-section" formGroupName="partnerPreferencesDetails">
+        <h2>Partner Preferences</h2>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Age Range (e.g., 25-30)</mat-label>
+            <input matInput formControlName="ageRange" type="text" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Height Preference</mat-label>
+            <input matInput formControlName="heightPreference" type="text" />
+            <mat-error>
+              Height preference is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Religion/Caste Preferences</mat-label>
+            <textarea matInput formControlName="religionCastePreferences"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Education Preferences</mat-label>
+            <textarea matInput formControlName="educationPreferences"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Occupation Preferences</mat-label>
+            <textarea matInput formControlName="occupationPreferences"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Location Preferences (City, Country)</mat-label>
+            <textarea matInput formControlName="locationPreferences"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Languages Spoken Preferences</mat-label>
+            <textarea matInput formControlName="languagesPreferences"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Lifestyle Preferences (e.g., Vegetarian, Non-Smoker)</mat-label>
+            <textarea matInput formControlName="lifestylePreferences"></textarea>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- CONTACT DETAILS -->
+      <section id="contact" #section class="form-section" formGroupName="contactDetails">
+        <h2>Contact Details</h2>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input matInput formControlName="emailAddress" type="email" />
+            <mat-error >
+              Please enter a valid email address.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phoneNumber" type="text" />
+            <mat-error>
+              Please enter a valid 10-digit phone number.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" type="text" />
+            <mat-error>
+              City is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" type="text" />
+            <mat-error>
+              State is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" type="text" />
+            <mat-error>
+              Country is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <!-- PHOTOS -->
+      <section id="photos" #section class="form-section">
+        <h2>Upload Photos</h2>
+        <div class="form-grid">
+
+          <!-- Single Profile Photo -->
+          <div class="photo-upload">
+            <button mat-stroked-button color="primary" (click)="fileInputProfile.click()">
+              <mat-icon>cloud_upload</mat-icon> Select Profile Photo
+            </button>
+            <input
+              #fileInputProfile
+              type="file"
+              accept="image/*"
+              (change)="handleFileInput($event, 'profile')"
+              hidden
+            />
+
+            <div class="preview" *ngIf="profilePhoto">
+              <img [src]="profilePhoto" alt="Profile Photo" />
+              <button mat-mini-button color="warn" (click)="removePhoto('profile')">Remove</button>
+            </div>
+
+            <button
+              mat-flat-button
+              color="primary"
+              class="upload-btn"
+              [disabled]="!profilePhoto"
+              (click)="uploadPhotos('profile')"
+            >
+              Upload Profile Photo
+            </button>
+          </div>
+
+          <!-- Multiple Profile Photos -->
+          <div class="photo-upload">
+            <button mat-stroked-button color="primary" (click)="fileInputMultiple.click()">
+              <mat-icon>cloud_upload</mat-icon> Select Multiple Photos
+            </button>
+            <input
+              #fileInputMultiple
+              type="file"
+              multiple
+              accept="image/*"
+              (change)="handleFileInput($event, 'multiple')"
+              hidden
+            />
+
+            <div class="preview-grid" *ngIf="profilePictures.length > 0">
+              <div *ngFor="let p of profilePictures; let i = index" class="preview">
+                <img [src]="p" alt="Preview" />
+                <button mat-mini-button color="warn" (click)="removePhoto('multiple', i)">Remove</button>
+              </div>
+            </div>
+
+            <button
+              mat-flat-button
+              color="primary"
+              class="upload-btn"
+              [disabled]="profilePictures.length === 0"
+              (click)="uploadPhotos('multiple')"
+            >
+              Upload Selected Photos
+            </button>
+          </div>
+
+          <!-- Family Photo -->
+          <div class="photo-upload">
+            <button mat-stroked-button color="accent" (click)="fileInputFamily.click()">
+              <mat-icon>photo_camera</mat-icon> Family Photo
+            </button>
+            <input
+              #fileInputFamily
+              type="file"
+              accept="image/*"
+              (change)="handleFileInput($event, 'family')"
+              hidden
+            />
+
+            <div class="preview" *ngIf="familyPhoto">
+              <img [src]="familyPhoto" alt="Family Photo" />
+              <button mat-mini-button color="warn" (click)="removePhoto('family')">Remove</button>
+            </div>
+
+            <button
+              mat-flat-button
+              color="accent"
+              class="upload-btn"
+              [disabled]="!familyPhoto"
+              (click)="uploadPhotos('family')"
+            >
+              Upload Family Photo
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ADDITIONAL INFO -->
+      <section id="additional" #section class="form-section" formGroupName="additionalInfoDetails">
+        <h2>Additional Information</h2>
+        <div class="form-grid">
+          <!-- Personal Description -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Personal Description (about yourself, values, and personality)</mat-label>
+            <textarea matInput formControlName="personalDescription" rows="4"></textarea>
+            <mat-error>
+              Personal description is required and must not exceed 1000 characters.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Reason for Seeking a Partner -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Why are you seeking a partner?</mat-label>
+            <textarea matInput formControlName="reasonForPartner" rows="4"></textarea>
+            <mat-error >
+              Reason for seeking a partner is required and must not exceed 1000 characters.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Partner Expectations -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Expectations from a Partner</mat-label>
+            <textarea matInput formControlName="partnerExpectations" rows="4"></textarea>
+            <mat-error>
+              Partner expectations are required and must not exceed 1000 characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section id="submitbtn" class="form-section">
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" type="submit">
+          Submit
+        </button>
+      </section>
+    </form>
+  </div>
+
+  <!-- ===== FLOATING NAVIGATION BUTTONS ===== -->
+  <div class="floating-buttons">
+    <button
+      mat-fab
+      color="primary"
+      class="nav-btn"
+      (click)="scrollToSection(activeIndex - 1)"
+      [disabled]="activeIndex === 0"
+    >
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+
+    <button
+      mat-fab
+      color="accent"
+      class="nav-btn"
+      (click)="scrollToSection(activeIndex + 1)"
+      [disabled]="activeIndex === steps.length - 1"
+    >
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+  </div>
+</div>

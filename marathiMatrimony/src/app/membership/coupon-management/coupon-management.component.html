@@ -1,0 +1,76 @@
+<!-- Top Nav stays above everything -->
+<app-top-nav (toggleSidenav)="sidenav.toggle()"></app-top-nav>
+
+<!-- Sidenav overlays main content -->
+<mat-sidenav-container
+  class="dashboard-container"
+  [class.sidenav-open]="isSidenavOpen" style="margin-top: 4%;">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    [opened]="false"
+    (openedChange)="onSidenavToggle($event)"
+    class="custom-sidenav">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <form [formGroup]="couponForm" (ngSubmit)="onSubmit()" class="coupon-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Coupon Code</mat-label>
+      <input matInput formControlName="code" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Discount (₹)</mat-label>
+      <input matInput type="number" formControlName="discount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Expiry Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="expiry" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="couponForm.invalid">
+      Add Coupon
+    </button>
+  </form>
+
+  <table mat-table [dataSource]="coupons" class="mat-elevation-z2">
+
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> Code </th>
+      <td mat-cell *matCellDef="let coupon"> {{ coupon.code }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="discount">
+      <th mat-header-cell *matHeaderCellDef> Discount </th>
+      <td mat-cell *matCellDef="let coupon"> ₹{{ coupon.discount }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expiry">
+      <th mat-header-cell *matHeaderCellDef> Expiry </th>
+      <td mat-cell *matCellDef="let coupon"> {{ coupon.expiry }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let coupon">
+        <button mat-icon-button color="warn" (click)="deleteCoupon(coupon.code)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['code', 'discount', 'expiry', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['code', 'discount', 'expiry', 'actions']"></tr>
+  </table>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+

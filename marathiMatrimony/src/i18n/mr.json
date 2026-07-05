@@ -1,0 +1,12 @@
+{
+  "NAV": {
+    "HOME": "मुख्यपृष्ठ",
+    "ABOUT": "आमच्याबद्दल",
+    "SERVICES": "सेवा",
+    "CONTACT": "संपर्क"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "REGISTER": "Register"
+  }
+}

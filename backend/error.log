@@ -1,0 +1,88 @@
+{"level":"error","message":"generateOtp is not defined","timestamp":"2025-03-20T15:07:13.404Z"}
+{"level":"error","message":"hashOtp is not defined","timestamp":"2025-03-20T15:08:12.536Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:08:53.884Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:10:22.515Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:15:50.704Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:18:48.147Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:23:14.600Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:29:03.787Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:37:08.491Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:40:25.538Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:42:13.228Z"}
+{"level":"error","message":"unambiguous timeout","timestamp":"2025-03-20T15:43:44.813Z"}
+{"level":"error","message":"Cannot access 'userId' before initialization","timestamp":"2025-03-20T15:44:31.901Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:02:22.584Z"}
+{"level":"error","message":"collection.query is not a function","timestamp":"2025-03-21T14:02:26.708Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:04:43.563Z"}
+{"level":"error","message":"cluster is not defined","timestamp":"2025-03-21T14:04:49.342Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:06:25.540Z"}
+{"level":"error","message":"parsing failure","timestamp":"2025-03-21T14:06:34.303Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:08:13.974Z"}
+{"level":"error","message":"internal server failure","timestamp":"2025-03-21T14:08:22.049Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:10:34.266Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:11:13.249Z"}
+{"level":"error","message":"internal server failure","timestamp":"2025-03-21T14:11:18.522Z"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2025-03-21T14:13:36.336Z"}
+{"level":"error","message":"gender is not defined","timestamp":"2025-04-16T17:14:05.115Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T17:15:57.663Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T17:56:51.685Z"}
+{"level":"error","message":"bucket.scope.defaultCollection is not a function","timestamp":"2025-04-16T18:09:21.813Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T18:10:09.106Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T18:10:56.741Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T18:12:01.558Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T18:14:54.074Z"}
+{"level":"error","message":"document not found","timestamp":"2025-04-16T18:20:16.854Z"}
+{"level":"error","message":"document exists","timestamp":"2025-04-16T18:24:23.042Z"}
+{"level":"error","message":"document exists","timestamp":"2025-04-16T18:33:41.522Z"}
+{"level":"error","message":"document exists","timestamp":"2025-04-16T18:39:15.861Z"}
+{"level":"error","message":"document exists","timestamp":"2025-04-16T18:43:22.970Z"}
+{"level":"error","message":"document exists","timestamp":"2025-04-16T18:44:00.486Z"}
+{"level":"error","message":"couchbase is not defined","timestamp":"2025-04-16T18:58:12.530Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'document_not_found')","timestamp":"2025-04-16T18:59:18.676Z"}
+{"level":"error","message":"document exists","timestamp":"2025-04-16T19:20:05.988Z"}
+{"level":"error","message":"collection is not defined","timestamp":"2025-04-20T04:58:45.051Z"}
+{"level":"error","message":"collection is not defined","timestamp":"2025-04-20T04:59:26.560Z"}
+{"level":"error","message":"collection is not defined","timestamp":"2025-04-20T05:00:05.120Z"}
+{"level":"error","message":"cluster is not defined","timestamp":"2025-04-20T05:00:32.141Z"}
+{"level":"error","message":"planning failure","timestamp":"2025-05-31T07:46:10.193Z"}
+{"level":"error","message":"planning failure","timestamp":"2025-05-31T07:46:33.882Z"}
+{"level":"error","message":"planning failure","timestamp":"2025-06-02T17:13:52.432Z"}
+{"level":"error","message":"authentication failure","timestamp":"2025-06-21T15:19:17.521Z"}
+{"level":"error","message":"authentication failure","timestamp":"2025-06-21T15:21:31.738Z"}
+{"level":"error","message":"planning failure","timestamp":"2025-06-21T15:23:45.251Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:17:35.877Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:18:02.199Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:18:02.231Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:19:12.576Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:26:49.115Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:26:57.748Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:28:18.687Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:38:24.455Z"}
+{"level":"error","message":"document exists","timestamp":"2025-07-03T16:40:39.293Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-03T16:59:35.769Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-03T17:03:13.723Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:26:21.368Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:26:24.714Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:26:28.163Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:27:12.472Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:27:34.087Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:33:07.912Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:33:29.853Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:35:56.688Z"}
+{"level":"error","message":"exit is not defined","timestamp":"2025-07-05T15:42:31.219Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:42:57.102Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:43:12.966Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:45:09.623Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:48:18.995Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:49:18.575Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:55:00.754Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:57:27.503Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T15:59:22.775Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T16:01:15.541Z"}
+{"level":"error","message":"document not found","timestamp":"2025-07-05T16:02:14.343Z"}
+{"level":"error","message":"planning failure","timestamp":"2025-08-18T15:22:44.767Z"}
+{"level":"error","message":"document exists","timestamp":"2025-11-14T08:43:31.419Z"}
+{"level":"error","message":"document exists","timestamp":"2025-11-14T08:43:39.501Z"}
+{"level":"error","message":"document exists","timestamp":"2025-11-14T08:43:51.755Z"}
+{"level":"error","message":"document exists","timestamp":"2026-02-17T19:08:52.503Z"}
+{"level":"error","message":"document exists","timestamp":"2026-02-17T19:10:12.482Z"}

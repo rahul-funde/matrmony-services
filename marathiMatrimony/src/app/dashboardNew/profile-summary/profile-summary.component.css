@@ -1,0 +1,268 @@
+/* === GLASS CARD (ULTRA COMPACT & MODERN) === */
+.glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+  padding: 1.4rem 1.8rem;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  border-bottom: 3px solid gold;
+}
+
+/* Backlight Glow */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: -45%;
+  left: -45%;
+  width: 190%;
+  height: 190%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 60%);
+  transform: rotate(25deg);
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 25px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.12), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.glass-card:hover::after {
+  opacity: 0.8;
+  transform: translateX(-50%) scale(1.05);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+/* === PROFILE WRAPPER === */
+.profile-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* === AVATAR === */
+.avatar-wrapper {
+  flex: 0 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* === EDIT ICON ON AVATAR === */
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
+  opacity: 0.9;
+}
+
+.edit-avatar-btn mat-icon {
+  font-size: 14px;
+}
+
+.edit-avatar-btn:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* === DETAILS SECTION === */
+.details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.3rem;
+  min-width: 160px;
+}
+
+/* NAME WITH INLINE EDIT ICON */
+.name-with-edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0f172a;
+}
+
+.edit-name-btn {
+  background: none;
+  border: none;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #4f46e5;
+  transition: all 0.2s ease;
+}
+
+.edit-name-btn:hover {
+  color: #a855f7;
+  transform: scale(1.1);
+}
+
+.edit-icon {
+  font-size: 1.1rem;
+}
+
+.details p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.25;
+}
+
+/* === PROGRESS BAR === */
+mat-progress-bar {
+  height: 6px !important;
+  border-radius: 6px;
+  margin-top: 0.4rem;
+}
+
+::ng-deep .mat-mdc-progress-bar {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+::ng-deep .mat-mdc-progress-bar .mdc-linear-progress__bar-inner {
+  border-top-width: 6px;
+  border-radius: 6px;
+}
+
+::ng-deep .mat-mdc-progress-bar__bar-inner {
+  transition: all 0.25s ease-in-out;
+}
+
+/* === UPGRADE MEMBERSHIP BUTTON === */
+.btn-upgrade {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white !important;
+  border-radius: 6px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.25px;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+  transition: all 0.25s ease;
+  padding: 0.15rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.btn-upgrade mat-icon.btn-icon {
+  font-size: 16px;
+}
+
+.btn-upgrade:hover {
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+  transform: translateY(-1px) scale(1.02);
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+/* === RESPONSIVE BREAKPOINTS === */
+@media (max-width: 992px) {
+  .avatar {
+    width: 75px;
+    height: 75px;
+  }
+  .details h3 {
+    font-size: 1.05rem;
+  }
+  .btn-upgrade {
+    padding: 0.3rem 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-wrapper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
+  .details {
+    align-items: center;
+  }
+  .avatar {
+    width: 70px;
+    height: 70px;
+  }
+  .btn-upgrade {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    padding: 0.9rem 0.8rem;
+  }
+  .details h3 {
+    font-size: 1rem;
+  }
+  .details p {
+    font-size: 0.8rem;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+  }
+  .btn-upgrade {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+  }
+}
+
+

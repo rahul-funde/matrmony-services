@@ -1,0 +1,1277 @@
+  <app-header></app-header>
+
+  <!-- CUSTOM SIDENAV -->
+  <app-sidenav></app-sidenav>
+
+  <!-- MAIN CONTENT -->
+  <main
+    class="main-content"
+    [class.shifted]="
+      (sidenavMenuService.isOpen$ | async) &&
+      !(sidenavMenuService.isCollapsed$ | async) &&
+      !isMobile()
+    "
+  >
+    <div class="profile-builder app-page-container">
+      <header class="profile-builder-header">
+        <div>
+          <p class="profile-builder-kicker">Profile setup</p>
+          <h1 class="profile-builder-title">Complete your matrimony profile</h1>
+          <p class="profile-builder-subtitle">
+            Add accurate details to improve profile visibility and help families understand you better.
+          </p>
+        </div>
+
+        <div class="profile-builder-summary" aria-label="Profile completion progress">
+          <span>{{ selectedIndex + 1 }} of {{ steps.length }}</span>
+          <strong>{{ steps[selectedIndex].label }}</strong>
+          <div class="profile-progress-track">
+            <div class="profile-progress-value" [style.width.%]="((selectedIndex + 1) / steps.length) * 100"></div>
+          </div>
+        </div>
+      </header>
+
+      <div class="profile-builder-layout">
+        <aside class="timeline-section" aria-label="Profile sections">
+          <div class="timeline-progress" [style.height.%]="progressHeight"></div>
+
+          <div class="timeline-line"></div>
+
+          <div
+            *ngFor="let step of steps; let i = index"
+            #timelineStep
+            class="timeline-step"
+            [class.active]="i === selectedIndex"
+            [class.completed]="i < selectedIndex"
+            [class.timeline-step-error]="profileForm.get(step.id)?.invalid && (profileForm.touched || formSubmitted)"
+            (click)="formSubmitted = false; selectStep(i)"
+            role="button"
+            [attr.aria-label]="'Go to step ' + step.label"
+            tabindex="0"
+            (keydown.enter)="formSubmitted = false; selectStep(i)"
+          >
+            <div class="circle">{{ i + 1 }}</div>
+            <div class="label">
+              <span>{{ step.label }}</span>
+              <small *ngIf="i === selectedIndex">Current section</small>
+            </div>
+
+            <span
+              class="error-badge"
+              *ngIf="profileForm.get(step.id)?.invalid && (profileForm.touched || formSubmitted)"
+              title="This section has errors"
+              aria-hidden="true"
+            >!</span>
+          </div>
+        </aside>
+
+        <section class="form-section">
+          <div class="form-content" [@stepAnimation]="selectedIndex">
+              <div class="profile-section-header">
+                <div>
+                  <p class="profile-section-eyebrow">Section {{ selectedIndex + 1 }}</p>
+                  <h2 class="section-title">{{ steps[selectedIndex].label }}</h2>
+                </div>
+
+                <div class="profile-header-actions">
+                  <div class="profile-warning-banner">
+                    <mat-icon>tips_and_updates</mat-icon>
+                    <span>Complete your profile to get better match visibility.</span>
+                  </div>
+                  <button type="button" class="btn app-secondary-action" (click)="downloadPdf()">
+                    <mat-icon>download</mat-icon>
+                    Download
+                  </button>
+                </div>
+            </div>
+
+            <!-- Use onSubmit() to set formSubmitted = true in TS at the top -->
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="form-container" novalidate>
+
+              <div class="draft-status">
+                <span *ngIf="draftStatus === 'saving'">Saving...</span>
+                <span *ngIf="draftStatus === 'saved'">Saved</span>
+                <span *ngIf="draftStatus === 'error'">Error</span>
+              </div>
+             <!-- ================= STEP 0: PERSONAL DETAILS ================= -->
+              <div
+                *ngIf="selectedIndex === 0"
+                formGroupName="personalDetails"
+                class="step-section personal-details-grid"
+                data-step="personalDetails"
+                [ngClass]="{ 'section-invalid': profileForm.get('personalDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+              >
+                <!-- First Name -->
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input matInput formControlName="firstName" required />
+                  <mat-error *ngIf="profileForm.get('personalDetails.firstName')?.invalid && (profileForm.get('personalDetails.firstName')?.touched || formSubmitted)">
+                    First name is required.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Father Name -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Father Name</mat-label>
+                  <input matInput formControlName="middleName" required />
+                  <mat-error *ngIf="profileForm.get('personalDetails.middleName')?.invalid && (profileForm.get('personalDetails.middleName')?.touched || formSubmitted)">
+                    Father name is required.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Surname -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Surname</mat-label>
+                  <input matInput formControlName="lastName" required />
+                  <mat-error *ngIf="profileForm.get('personalDetails.lastName')?.invalid && (profileForm.get('personalDetails.lastName')?.touched || formSubmitted)">
+                    Surname is required.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Date of Birth -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Date of Birth</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required (dateChange)="onDOBChange($event.value)" />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="profileForm.get('personalDetails.dateOfBirth')?.invalid && (profileForm.get('personalDetails.dateOfBirth')?.touched || formSubmitted)">
+                    Date of birth is required.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Age -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Age</mat-label>
+                  <input matInput formControlName="age" type="number" readonly />
+                </mat-form-field>
+
+                <!-- Gender -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Gender</mat-label>
+                  <mat-select formControlName="gender" required>
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="profileForm.get('personalDetails.gender')?.invalid && (profileForm.get('personalDetails.gender')?.touched || formSubmitted)">
+                    Gender is required.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Religion -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Religion</mat-label>
+                  <input matInput formControlName="religion" type="text" value="Hindu" />
+                </mat-form-field>
+
+                <!-- Caste -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Caste</mat-label>
+                  <input matInput formControlName="caste" type="text" value="Maratha" />
+                </mat-form-field>
+
+                <!-- Sub Caste -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Sub Caste</mat-label>
+                  <mat-select formControlName="subCaste">
+                    <mat-option *ngFor="let option of subCasteOptions" [value]="option">{{ option }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Marital Status -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Marital Status</mat-label>
+                  <mat-select formControlName="maritalStatus">
+                    <mat-option *ngFor="let option of maritalStatusOptions" [value]="option">{{ option }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Height + Height Unit -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Height</mat-label>
+                  <input matInput formControlName="height" type="text" />
+                  <mat-select matSuffix formControlName="heightUnit" disableRipple class="height-unit-select">
+                    <mat-option value="feet">Feet</mat-option>
+                    <mat-option value="inches">Inches</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="profileForm.get('personalDetails.height')?.invalid && (profileForm.get('personalDetails.height')?.touched || formSubmitted)">
+                    Height is required.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Complexion -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Complexion</mat-label>
+                  <mat-select formControlName="complexion">
+                    <mat-option *ngFor="let option of complexionOptions" [value]="option">{{ option }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Physical Disability -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Physical Disability</mat-label>
+                  <mat-select formControlName="physicalDisability">
+                    <mat-option value="yes">Yes</mat-option>
+                    <mat-option value="no">No</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Disability Details (conditional) -->
+                <mat-form-field appearance="outline" *ngIf="profileForm.get('personalDetails.physicalDisability')?.value === 'yes'">
+                  <mat-label>Disability Details</mat-label>
+                  <input matInput formControlName="disabilityDetails" type="text" />
+                  <mat-error *ngIf="profileForm.get('personalDetails.disabilityDetails')?.invalid && (profileForm.get('personalDetails.disabilityDetails')?.touched || formSubmitted)">
+                    Please provide disability details.
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Weight -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Weight</mat-label>
+                  <input matInput formControlName="weight" type="text" />
+                </mat-form-field>
+
+                <!-- Blood Group -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Blood Group</mat-label>
+                  <mat-select formControlName="bloodGroup">
+                    <mat-option *ngFor="let option of bloodGroupOptions" [value]="option">{{ option }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Languages Spoken -->
+
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Languages Spoken</mat-label>
+                  <mat-select formControlName="languagesSpoken" multiple>
+
+                    <mat-option *ngFor="let lang of languageList" [value]="lang">
+                      {{ lang }}
+                    </mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+<!--                 <mat-form-field appearance="outline">
+                  <mat-label>Languages Spoken</mat-label>
+                  <input matInput formControlName="languagesSpoken" type="text" />
+                </mat-form-field> -->
+
+                <!-- Diet -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Diet</mat-label>
+                  <mat-select formControlName="diet">
+                    <mat-option *ngFor="let option of dietOptions" [value]="option">{{ option }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Spectacles -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Spectacles</mat-label>
+                  <input matInput formControlName="spectacles" type="text" />
+                </mat-form-field>
+
+                <!-- Lens -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Lens</mat-label>
+                  <input matInput formControlName="lens" type="text" />
+                </mat-form-field>
+              </div>
+
+
+              <!-- ================= STEP 1: HOROSCOPE ================= -->
+<div
+  *ngIf="selectedIndex === 1"
+  formGroupName="horoscopeDetails"
+  class="horoscope-details-grid step-section"
+  data-step="horoscopeDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('horoscopeDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Horoscope Details</div> -->
+
+  <!-- Main fields -->
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>Navsar Nav</mat-label>
+    <input matInput formControlName="navsarNav" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Rashi</mat-label>
+    <mat-select formControlName="rashi">
+      <mat-option *ngFor="let option of rashiOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nakshatra</mat-label>
+    <mat-select formControlName="nakshatra">
+      <mat-option *ngFor="let option of nakshatraOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Charan</mat-label>
+    <mat-select formControlName="charan">
+      <mat-option *ngFor="let option of charanOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nadi</mat-label>
+    <mat-select formControlName="nadi">
+      <mat-option *ngFor="let option of nadiOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Gan</mat-label>
+    <mat-select formControlName="gan">
+      <mat-option *ngFor="let option of ganOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mangal</mat-label>
+    <mat-select formControlName="mangal">
+      <mat-option *ngFor="let option of mangalOptions" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>Devak</mat-label>
+    <input matInput formControlName="deva" type="text" />
+  </mat-form-field>
+
+
+  <!-- Row group: Birth Time + Birth Place -->
+  <!-- <div class="row-group"> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Birth Time</mat-label>
+      <input matInput formControlName="birthTime" type="time" />
+      <mat-error *ngIf="profileForm.get('horoscopeDetails.birthTime')?.invalid && (profileForm.get('horoscopeDetails.birthTime')?.touched || formSubmitted)">
+        Birth time is required.
+      </mat-error>
+    </mat-form-field>
+<!-- 
+    <mat-form-field appearance="outline">
+      <mat-label>Birth Place</mat-label>
+      <input matInput formControlName="birthPlace" type="text" />
+      <mat-error *ngIf="profileForm.get('horoscopeDetails.birthPlace')?.invalid && (profileForm.get('horoscopeDetails.birthPlace')?.touched || formSubmitted)">
+        Birth place is required.
+      </mat-error>
+    </mat-form-field>
+ -->
+
+
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Birth Place</mat-label>
+
+  <input
+    matInput
+    [matAutocomplete]="auto"
+    formControlName="birthPlace"
+    placeholder="Search city..."
+  />
+
+  <mat-autocomplete #auto="matAutocomplete"
+                    [displayWith]="displayCity"
+                    (optionSelected)="selectCity($event)">
+    <mat-option *ngFor="let city of filteredCities | async"
+                [value]="city">
+      {{ city.name }}, {{ city.state }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <mat-error *ngIf="profileForm.get('horoscopeDetails.birthPlace')?.invalid && (profileForm.get('horoscopeDetails.birthPlace')?.touched || formSubmitted)">
+    Birth place is required.
+  </mat-error>
+</mat-form-field>
+  
+</div>
+
+<!-- ================= STEP 2: FAMILY ================= -->
+<div
+  *ngIf="selectedIndex === 2"
+  formGroupName="familyDetails"
+  class="family-details-grid step-section"
+  data-step="familyDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('familyDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Family Details</div> -->
+
+  <!-- Father Fields -->
+  <mat-form-field appearance="outline">
+    <mat-label>Father</mat-label>
+    <mat-select formControlName="father">
+      <mat-option value="Shri.">Shri.</mat-option>
+      <mat-option value="Swargiya">Swargiya</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Father's Full Name</mat-label>
+    <input matInput formControlName="fatherName" type="text" />
+    <mat-error *ngIf="profileForm.get('familyDetails.fatherName')?.invalid && (profileForm.get('familyDetails.fatherName')?.touched || formSubmitted)">
+      Father's name is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Father's Occupation</mat-label>
+    <input matInput formControlName="fatherOccupation" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Father Contact Number</mat-label>
+    <input matInput formControlName="fatherContactNumber" type="text" />
+  </mat-form-field>
+
+
+  <!-- Mother Fields -->
+  <mat-form-field appearance="outline">
+    <mat-label>Mother</mat-label>
+    <mat-select formControlName="mother">
+      <mat-option value="Saw.">Saw.</mat-option>
+      <mat-option value="Shrimati.">Shrimati.</mat-option>
+      <mat-option value="Swargiya">Swargiya</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mother's Full Name</mat-label>
+    <input matInput formControlName="motherName" type="text" />
+    <mat-error *ngIf="profileForm.get('familyDetails.motherName')?.invalid && (profileForm.get('familyDetails.motherName')?.touched || formSubmitted)">
+      Mother's name is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mother's Occupation</mat-label>
+    <input matInput formControlName="motherOccupation" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mother Contact Number</mat-label>
+    <input matInput formControlName="motherContactNumber" type="text" />
+  </mat-form-field>
+
+      <!-- Siblings -->
+      <!-- Brothers -->
+      <mat-form-field appearance="outline">
+        <mat-label>Do you have brothers?</mat-label>
+        <mat-select formControlName="hasBrothers">
+          <mat-option value="Yes">Yes</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Show only if Yes -->
+      <mat-form-field
+        appearance="outline"
+        *ngIf="profileForm.get('familyDetails.hasBrothers')?.value === 'Yes'"
+      >
+        <mat-label>Number of Brothers</mat-label>
+        <mat-select formControlName="brothersCount">
+          <mat-option
+            *ngFor="let count of [1,2,3,4,5,6,7,8,9,10]"
+            [value]="count"
+          >
+            {{ count }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Show when count > 0 -->
+      <mat-form-field
+        appearance="outline"
+        *ngIf="
+          profileForm.get('familyDetails.hasBrothers')?.value === 'Yes' &&
+          profileForm.get('familyDetails.brothersCount')?.value > 0
+        "
+      >
+        <mat-label>Number of Married Brothers</mat-label>
+        <mat-select formControlName="brothersMarriedCount">
+          <mat-option
+            *ngFor="let count of [0,1,2,3,4,5,6,7,8,9,10]"
+            [value]="count"
+            [disabled]="
+              count >
+              profileForm.get('familyDetails.brothersCount')?.value
+            "
+          >
+            {{ count }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Sisters -->
+      <mat-form-field appearance="outline">
+        <mat-label>Do you have sisters?</mat-label>
+        <mat-select formControlName="hasSisters">
+          <mat-option value="Yes">Yes</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Show only if Yes -->
+      <mat-form-field
+        appearance="outline"
+        *ngIf="profileForm.get('familyDetails.hasSisters')?.value === 'Yes'"
+      >
+        <mat-label>Number of Sisters</mat-label>
+        <mat-select formControlName="sistersCount">
+          <mat-option
+            *ngFor="let count of [1,2,3,4,5,6,7,8,9,10]"
+            [value]="count"
+          >
+            {{ count }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Show when count > 0 -->
+      <mat-form-field
+        appearance="outline"
+        *ngIf="
+          profileForm.get('familyDetails.hasSisters')?.value === 'Yes' &&
+          profileForm.get('familyDetails.sistersCount')?.value > 0
+        "
+      >
+        <mat-label>Number of Married Sisters</mat-label>
+        <mat-select formControlName="sistersMarriedCount">
+          <mat-option
+            *ngFor="let count of [0,1,2,3,4,5,6,7,8,9,10]"
+            [value]="count"
+            [disabled]="
+              count >
+              profileForm.get('familyDetails.sistersCount')?.value
+            "
+          >
+            {{ count }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+  <!-- Other Fields -->
+  <mat-form-field appearance="outline">
+    <mat-label>Parent's Resident City</mat-label>
+    <input matInput formControlName="parentsResidentCity" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Surnames of Relatives</mat-label>
+    <input matInput formControlName="relativesSurnames" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Family Wealth Details</mat-label>
+    <input matInput formControlName="familyWealth" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mama's Full Name and Place</mat-label>
+    <input matInput formControlName="mamaNameAndPlace" type="text" />
+  </mat-form-field>
+
+
+<!-- ✅ District -->
+<!-- District -->
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>District</mat-label>
+
+  <mat-select
+    formControlName="nativeDistrict"
+    (selectionChange)="onDistrictChange($event.value)"
+    (closed)="districtFilterCtrl.setValue('')">
+
+    <!-- 🔍 Search Box -->
+    <mat-option>
+      <ngx-mat-select-search
+        [formControl]="districtFilterCtrl"
+        placeholderLabel="Search district..."
+        noEntriesFoundLabel="No matching district found">
+      </ngx-mat-select-search>
+    </mat-option>
+
+    <!-- District List -->
+    <mat-option
+      *ngFor="let district of filteredDistricts"
+      [value]="district.name">
+      {{ district.name }}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+<!-- <mat-form-field appearance="outline" *ngIf="talukas && talukas.length"> <mat-label>Taluka</mat-label> <mat-select formControlName="nativeTaluka"> <mat-option value="">Select Taluka</mat-option> <mat-option *ngFor="let taluka of talukas" [value]="taluka">{{ taluka }}</mat-option> </mat-select> </mat-form-field> -->
+
+<!-- Taluka -->
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Taluka</mat-label>
+
+  <mat-select
+    formControlName="nativeTaluka"
+    [disabled]="!talukas.length">
+
+    <mat-option value="">Select Taluka</mat-option>
+
+    <mat-option
+      *ngFor="let taluka of talukas"
+      [value]="taluka">
+      {{ taluka }}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>Any Intercaste Marriages?</mat-label>
+    <mat-select formControlName="intercasteMarriage">
+      <mat-option value="Yes">Yes</mat-option>
+      <mat-option value="No">No</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" *ngIf="profileForm.get('familyDetails.intercasteMarriage')?.value === 'Yes'">
+    <mat-label>Details of the Intercaste Marriage</mat-label>
+    <input matInput formControlName="intercasteDetails" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Family Type</mat-label>
+    <mat-select formControlName="familyType">
+      <mat-option value="Nuclear">Nuclear</mat-option>
+      <mat-option value="Joint">Joint</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+<!-- ================= STEP 3: EDUCATION ================= -->
+<div
+  *ngIf="selectedIndex === 3"
+  formGroupName="educationDetails"
+  class="education-details-grid step-section"
+  data-step="educationDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('educationDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Education Details</div> -->
+<!-- 
+  <mat-form-field appearance="outline">
+    <mat-label>Highest Qualification</mat-label>
+    <input
+      matInput
+      formControlName="highestQualification"
+      [matAutocomplete]="auto"
+      type="text"
+      placeholder="e.g., B.E. Computer, M.Sc. Physics"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredQualifications | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <mat-error *ngIf="profileForm.get('educationDetails.highestQualification')?.invalid && (profileForm.get('educationDetails.highestQualification')?.touched || formSubmitted)">
+      Highest Qualification is required.
+    </mat-error>
+  </mat-form-field>
+ -->
+
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Highest Qualification</mat-label>
+
+  <input
+    matInput
+    formControlName="highestQualification"
+    [matAutocomplete]="auto"
+    type="text"
+    placeholder="e.g., B.E. Computer, M.Sc. Physics"
+    (focus)="openDropdown()"
+  />
+
+  <!-- Clear Button -->
+  <button
+    *ngIf="qualificationControl.value"
+    matSuffix
+    mat-icon-button
+    type="button"
+    (click)="clear()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <!-- Hint -->
+  <mat-hint align="start">
+    Type at least 2 letters or enter custom qualification
+  </mat-hint>
+
+  <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+
+    <mat-option
+      *ngFor="let option of filteredQualifications$ | async"
+      [value]="option">
+      <span [innerHTML]="highlight(option)"></span>
+    </mat-option>
+
+    <!-- Add custom option -->
+    <mat-option
+      *ngIf="showAddOption"
+      [value]="qualificationControl.value">
+      Add "<b>{{ qualificationControl.value }}</b>"
+    </mat-option>
+
+  </mat-autocomplete>
+
+  <mat-error
+    *ngIf="qualificationControl.invalid &&
+          (qualificationControl.touched || formSubmitted)">
+    Highest Qualification is required.
+  </mat-error>
+
+</mat-form-field>
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>College/University Name</mat-label>
+    <input matInput formControlName="collegeName" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Year of Completion</mat-label>
+    <mat-select formControlName="yearOfCompletion">
+      <mat-option value="">Select Year</mat-option>
+      <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Education Type</mat-label>
+    <mat-select formControlName="educationType">
+      <mat-option value="Full-time">Full-time</mat-option>
+      <mat-option value="Distance">Distance</mat-option>
+      <mat-option value="Online">Online</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Additional Qualifications (if any)</mat-label>
+    <textarea matInput formControlName="additionalQualifications"></textarea>
+  </mat-form-field>
+</div>
+
+
+<!-- ================= STEP 4: CAREER ================= -->
+<div
+  *ngIf="selectedIndex === 4"
+  formGroupName="careerDetails"
+  class="career-details-grid step-section"
+  data-step="careerDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('careerDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Career Details</div> -->
+
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Occupation / Profession</mat-label>
+
+  <input
+    matInput
+    type="text"
+    placeholder="Search occupation..."
+    formControlName="occupation"
+    [matAutocomplete]="auto"
+  />
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    autoActiveFirstOption
+    (optionSelected)="selectOccupation($event)"
+  >
+
+    <!-- OPTIONS GROUPED -->
+    <ng-container *ngFor="let group of filteredOccupationGroups$ | async">
+
+      <mat-optgroup [label]="group.category">
+
+        <mat-option
+          *ngFor="let option of group.values"
+          [value]="option">
+          <span [innerHTML]="highlightOccupation(option)"></span>
+        </mat-option>
+
+      </mat-optgroup>
+
+    </ng-container>
+
+    <!-- NO RESULTS -->
+    <mat-option *ngIf="(filteredOccupationGroups$ | async)?.length === 0" disabled>
+      No occupations found
+    </mat-option>
+
+  </mat-autocomplete>
+
+  <mat-error
+    *ngIf="profileForm.get('careerDetails.occupation')?.invalid &&
+           (profileForm.get('careerDetails.occupation')?.touched || formSubmitted)">
+    Occupation is required.
+  </mat-error>
+
+</mat-form-field>
+
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>Job Title/Designation</mat-label>
+    <input matInput formControlName="jobTitle" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Company/Organization Name</mat-label>
+    <input matInput formControlName="companyName" type="text" />
+  </mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Pincode</mat-label>
+  <input
+    matInput
+    formControlName="pincode"
+    maxlength="6"
+    (keyup)="fetchLocationByPincode()"
+  />
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>City</mat-label>
+  <input matInput formControlName="workLocationCity" />
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>State</mat-label>
+  <input matInput formControlName="workLocationState" />
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Country</mat-label>
+  <input matInput formControlName="workLocationCountry" />
+</mat-form-field>
+
+ <!--  <mat-form-field appearance="outline">
+    <mat-label>City</mat-label>
+    <input matInput formControlName="workLocationCity" type="text" />
+  </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>State</mat-label>
+    <input matInput formControlName="workLocationState" type="text" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Country</mat-label>
+    <input matInput formControlName="workLocationCountry" type="text" />
+  </mat-form-field> -->
+
+  <mat-form-field appearance="outline">
+    <mat-label>Employment Type</mat-label>
+    <mat-select formControlName="employmentType">
+      <mat-option value="Full-time">Full-time</mat-option>
+      <mat-option value="Part-time">Part-time</mat-option>
+      <mat-option value="Freelancer">Freelancer</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Previous Job/Work Experience</mat-label>
+    <textarea matInput formControlName="previousWorkExperience"></textarea>
+  </mat-form-field>
+
+  <!-- 
+  <mat-form-field appearance="outline">
+    <mat-label>Annual Income</mat-label>
+    <input matInput formControlName="annualIncome" type="text" />
+  </mat-form-field>
+ -->
+<!-- Annual Income Section -->
+<div class="annual-income-box">
+
+  <label class="income-title">Annual Income</label>
+
+  <div class="income-row">
+
+      <!-- Currency -->
+      <mat-form-field appearance="outline" class="currency-field">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currency" aria-label="Currency">
+          <mat-option value="₹">₹ (INR)</mat-option>
+          <mat-option value="$">$ (USD)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Amount -->
+      <mat-form-field appearance="outline" class="amount-field">
+        <mat-label>Amount</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="annualIncome"
+          min="0"
+          placeholder="Enter amount"
+          aria-label="Annual Income Amount"
+        />
+        <mat-hint class="custom-hint">
+        Preview: {{ getFormattedIncome(profileForm.value?.careerDetails?.annualIncome,
+                    profileForm.value?.careerDetails?.unit) }}
+      </mat-hint>
+        <mat-error *ngIf="profileForm.get('careerDetails.annualIncome')!.hasError('required')">
+          Annual income is required
+        </mat-error>
+        <mat-error *ngIf="profileForm.get('careerDetails.annualIncome')!.hasError('min')">
+          Income must be positive
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Unit -->
+      <mat-form-field appearance="outline" class="unit-field">
+        <mat-label>Unit</mat-label>
+        <mat-select formControlName="unit" aria-label="Income Unit">
+          <mat-option value="thousand">Thousand</mat-option>
+          <mat-option value="lakh">Lakh</mat-option>
+          <mat-option value="crore">Crore</mat-option>
+        </mat-select>
+        <mat-hint>Select unit</mat-hint>
+      </mat-form-field>
+  </div>
+</div>
+</div>
+
+<!-- ================= STEP 5: LIFESTYLE ================= -->
+<div
+  *ngIf="selectedIndex === 5"
+  formGroupName="lifestyleDetails"
+  class="lifestyle-details-grid step-section"
+  data-step="lifestyleDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('lifestyleDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Lifestyle Details</div> -->
+
+  <mat-form-field appearance="outline">
+    <mat-label>Diet</mat-label>
+    <mat-select formControlName="diet">
+      <mat-option value="Vegetarian">Vegetarian</mat-option>
+      <mat-option value="Non-Vegetarian">Non-Vegetarian</mat-option>
+      <mat-option value="Vegan">Vegan</mat-option>
+      <mat-option value="Other">Other</mat-option>
+    </mat-select>
+    <mat-error *ngIf="profileForm.get('lifestyleDetails.diet')?.invalid && (profileForm.get('lifestyleDetails.diet')?.touched || formSubmitted)">
+      Diet is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Smoking</mat-label>
+    <mat-select formControlName="smoking">
+      <mat-option value="Yes">Yes</mat-option>
+      <mat-option value="No">No</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Drinking</mat-label>
+    <mat-select formControlName="drinking">
+      <mat-option value="Yes">Yes</mat-option>
+      <mat-option value="No">No</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Hobbies/Interests</mat-label>
+    <textarea matInput formControlName="hobbies"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sports/Activities</mat-label>
+    <textarea matInput formControlName="sportsActivities"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Favorite Books</mat-label>
+    <textarea matInput formControlName="favoriteBooks"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Favorite Movies</mat-label>
+    <textarea matInput formControlName="favoriteMovies"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Favorite TV Shows</mat-label>
+    <textarea matInput formControlName="favoritetvShows"></textarea>
+  </mat-form-field>
+</div>
+
+            <!-- ================= STEP 6: PARTNER PREFERENCES ================= -->
+<div
+  *ngIf="selectedIndex === 6"
+  formGroupName="partnerPreferencesDetails"
+  class="partner-preferences-grid step-section"
+  data-step="partnerPreferencesDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('partnerPreferencesDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Partner Preferences</div> -->
+
+  <mat-form-field appearance="outline">
+    <mat-label>Age Range (e.g., 25-30)</mat-label>
+    <input matInput formControlName="ageRange" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Height Preference</mat-label>
+    <input matInput formControlName="heightPreference" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Religion/Caste Preferences</mat-label>
+    <textarea matInput formControlName="religionCastePreferences"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Education Preferences</mat-label>
+    <textarea matInput formControlName="educationPreferences"></textarea>
+     <mat-error *ngIf="profileForm.get('partnerPreferencesDetails.educationPreferences')?.invalid && (profileForm.get('partnerPreferencesDetails.educationPreferences')?.touched || formSubmitted)">
+      Education Preferences is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Occupation Preferences</mat-label>
+    <textarea matInput formControlName="occupationPreferences"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Location Preferences (City, Country)</mat-label>
+    <textarea matInput formControlName="locationPreferences"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Languages Spoken Preferences</mat-label>
+    <textarea matInput formControlName="languagesPreferences"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Lifestyle Preferences (e.g., Vegetarian, Non-Smoker)</mat-label>
+    <textarea matInput formControlName="lifestylePreferences"></textarea>
+  </mat-form-field>
+</div>
+<!-- ================= STEP 7: CONTACT DETAILS ================= -->
+<div
+  *ngIf="selectedIndex === 7"
+  formGroupName="contactDetails"
+  class="contact-details-grid step-section"
+  data-step="contactDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('contactDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Contact Details</div> -->
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email Address</mat-label>
+    <input matInput formControlName="emailAddress" type="email" />
+    <mat-error *ngIf="profileForm.get('contactDetails.emailAddress')?.invalid && (profileForm.get('contactDetails.emailAddress')?.touched || formSubmitted)">
+      Please enter a valid email address.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Phone Number</mat-label>
+    <input matInput formControlName="phoneNumber" type="text" />
+    <mat-error *ngIf="profileForm.get('contactDetails.phoneNumber')?.invalid && (profileForm.get('contactDetails.phoneNumber')?.touched || formSubmitted)">
+      Please enter a valid 10-digit phone number.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>WhatsApp Number</mat-label>
+    <input matInput formControlName="whatsappNumber" type="text" />
+    <mat-error *ngIf="profileForm.get('contactDetails.whatsappNumber')?.invalid && (profileForm.get('contactDetails.whatsappNumber')?.touched || formSubmitted)">
+      Please enter a valid 10-digit whatsapp number.
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>City</mat-label>
+    <input matInput formControlName="city" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>State</mat-label>
+    <input matInput formControlName="state" type="text" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Country</mat-label>
+    <input matInput formControlName="country" type="text" />
+  </mat-form-field>
+</div>
+
+
+<!-- PHOTO section -->
+<div
+  *ngIf="selectedIndex === 8"
+  formGroupName="photoDetails"
+  class="photo-details-grid step-section two-column-layout"
+  data-step="photoDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('photoDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+
+          <!-- LEFT COLUMN -->
+          <div class="left-column">
+              <!-- =========================
+               PROFILE PICTURES UPLOAD
+              ========================= -->
+              <div class="photo-upload">
+                <mat-label>Profile Pictures (Max 3)</mat-label>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  (change)="onProfilePicturesSelected($event)"
+                />
+              </div>
+
+              <!-- PREVIEW BEFORE UPLOAD -->
+              <div class="image-preview" *ngIf="profilePictures.length > 0">
+                <div class="preview-grid">
+                  <div *ngFor="let img of profilePictures; let i = index" class="preview-item">
+                    <img [src]="getImagePreview(img)" alt="Preview" />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="uploadProfilePictures()"
+                [disabled]="profilePictures.length === 0"
+              >
+                Upload Profile Pictures
+              </button>
+
+              <mat-divider class="my-3"></mat-divider>
+
+              <!-- UPLOADED IMAGES + PROFILE SELECT -->
+              <div class="uploaded-images" *ngIf="profilePictureUrls.length > 0">
+                <h6>Select Profile Picture</h6>
+                <p class="hint-text" *ngIf="profilePictureUrls.length === 0">
+                  Upload images to select a profile picture
+                </p>
+
+             <div class="image-grid">
+            <!-- Single radio group for all uploaded images -->
+            <mat-radio-group
+              class="image-radio-group"
+              aria-label="Select profile picture"
+            >
+              <div
+                *ngFor="let img of profilePictureUrls; let i = index; trackBy: trackByImg"
+                class="image-card selectable"
+                [class.selected]="profileForm.get('photoDetails.profilePicture')?.value[i]?.isProfile"
+                (click)="onProfileImageSelected(i)"
+              >
+                <!-- IMAGE -->
+                <img
+                  [src]="img"
+                  alt="Profile picture"
+                  class="profile-img"
+                />
+
+                <!-- RADIO -->
+                <mat-radio-button
+                  class="overlay-radio"
+                  [value]="img"
+                  [checked]="profileForm.get('photoDetails.profilePicture')?.value[i]?.isProfile"
+                  (click)="$event.stopPropagation()"
+                >
+                </mat-radio-button>
+
+                <!-- DELETE BUTTON -->
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="warn"
+                  class="delete-btn"
+                  (click)="deleteImage(img, 'profile'); $event.stopPropagation()"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+              </div>
+            </mat-radio-group>
+          </div>
+    </div>
+  </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
+    </div>
+    </div>
+
+<!-- ================= STEP 9: ADDITIONAL INFO ================= -->
+<div
+  *ngIf="selectedIndex === 9"
+  formGroupName="additionalInfoDetails"
+  class="additional-info-grid step-section"
+  data-step="additionalInfoDetails"
+  [ngClass]="{ 'section-invalid': profileForm.get('additionalInfoDetails')?.invalid && (profileForm.touched || formSubmitted) }"
+>
+  <!-- <div class="section-header">Additional Information</div> -->
+
+  <mat-form-field appearance="outline">
+    <mat-label>Personal Description (about yourself, values, and personality)</mat-label>
+    <textarea matInput formControlName="personalDescription" rows="4"></textarea>
+    <mat-error *ngIf="profileForm.get('additionalInfoDetails.personalDescription')?.invalid && (profileForm.get('additionalInfoDetails.personalDescription')?.touched || formSubmitted)">
+      Personal description is required and must not exceed 1000 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Why are you seeking a partner?</mat-label>
+    <textarea matInput formControlName="reasonForPartner" rows="4"></textarea>
+    <mat-error *ngIf="profileForm.get('additionalInfoDetails.reasonForPartner')?.invalid && (profileForm.get('additionalInfoDetails.reasonForPartner')?.touched || formSubmitted)">
+      Reason for seeking a partner is required and must not exceed 1000 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Expectations from a Partner</mat-label>
+    <textarea matInput formControlName="partnerExpectations" rows="4"></textarea>
+    <mat-error *ngIf="profileForm.get('additionalInfoDetails.partnerExpectations')?.invalid && (profileForm.get('additionalInfoDetails.partnerExpectations')?.touched || formSubmitted)">
+      Partner expectations are required and must not exceed 1000 characters.
+    </mat-error>
+  </mat-form-field>
+</div>
+
+
+
+            <!-- 🔽 Sticky Scrollable Buttons -->
+            <div class="form-actions">
+              <button  type="button" mat-stroked-button color="primary"
+                      (click)="formSubmitted = false; prevStep()"
+                      [disabled]="selectedIndex === 0">
+                Previous
+              </button>
+
+              <button mat-raised-button color="primary" type="submit" class="submit-btn">
+                Submit
+              </button>
+
+              <button  type="button" mat-flat-button color="accent"
+                      (click)="formSubmitted = false; nextStep()"
+                      [disabled]="selectedIndex === steps.length - 1">
+                Next</button>
+            </div>
+
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+</main>
+<app-footer></app-footer>

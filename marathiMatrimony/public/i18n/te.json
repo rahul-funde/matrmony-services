@@ -1,0 +1,11 @@
+{
+  "app": { "name": "సుశీల్ మరాఠా", "language": "భాష" },
+  "auth": {
+    "login": { "title": "లాగిన్", "failed": "లాగిన్ విఫలమైంది." },
+    "passwordReset": { "success": "పాస్‌వర్డ్ విజయవంతంగా రీసెట్ అయింది!", "failed": "పాస్‌వర్డ్ రీసెట్ విఫలమైంది." }
+  },
+  "common": { "close": "మూసివేయి", "save": "సేవ్ చేయి", "cancel": "రద్దు", "search": "వెతుకు", "loading": "లోడ్ అవుతోంది..." },
+  "profile": { "basicDetails": "ప్రాథమిక వివరాలు", "photos": "ఫోటోలు", "contactDetails": "సంప్రదింపు వివరాలు" },
+  "membership": { "upgradePlan": "ప్లాన్ అప్‌గ్రేడ్ చేయి", "currentPlan": "ప్రస్తుత ప్లాన్", "contactsRemaining": "మిగిలిన సంప్రదింపులు" },
+  "admin": { "dashboard": "డ్యాష్‌బోర్డ్", "users": "వినియోగదారులు", "plans": "ప్లాన్‌లు", "payments": "చెల్లింపులు" }
+}

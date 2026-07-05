@@ -1,0 +1,151 @@
+<div class="interests-wrapper">
+
+  <mat-tab-group
+    [(selectedIndex)]="selectedIndex"
+    (selectedIndexChange)="onTabChange($event)"
+    class="tab-theme-{{ tabs[selectedIndex] }}"
+  >
+
+    <mat-tab *ngFor="let tab of tabs; let i = index">
+
+      <!-- TAB LABEL -->
+      <ng-template mat-tab-label>
+        {{ tab | titlecase }}
+      </ng-template>
+
+      <div class="cards-container">
+
+        <div
+          class="profile-card"
+          *ngFor="let interest of displayedInterests"
+          (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd($event, interest)"
+        >
+
+          <!-- ================= STATUS BADGE ================= -->
+
+          <span class="status-badge" [ngClass]="interest.status">
+
+            <!-- PENDING -->
+            <ng-container *ngIf="interest.status === 'pending'">
+              {{ interest.initiatedBy === currentUserId 
+                  ? 'Pending (Sent)' 
+                  : 'Pending (Received)' }}
+            </ng-container>
+
+            <!-- ACCEPTED -->
+            <ng-container *ngIf="interest.status === 'accepted'">
+              <ng-container *ngIf="interest.initiatedBy === currentUserId">
+                By Them ✔
+              </ng-container>
+              <ng-container *ngIf="interest.initiatedBy !== currentUserId">
+                You Accepted ✔
+              </ng-container>
+            </ng-container>
+
+            <!-- REJECTED -->
+            <ng-container *ngIf="interest.status === 'rejected'">
+              <ng-container *ngIf="interest.initiatedBy === currentUserId">
+                By Them
+              </ng-container>
+              <ng-container *ngIf="interest.initiatedBy !== currentUserId">
+                You Rejected
+              </ng-container>
+            </ng-container>
+
+            <!-- CANCELLED -->
+            <ng-container *ngIf="interest.status === 'cancelled'">
+              Cancelled
+            </ng-container>
+
+          </span>
+
+          <!-- ================= PROFILE IMAGE ================= -->
+
+          <div class="profile-pic-wrapper">
+            <img
+              [src]="getProfileImage(interest)"
+              class="profile-pic"
+              alt="Profile Picture"
+              (error)="handleImageError($event)"
+              (click)="openViewer(interest?.profilePicture)"
+            />
+          </div>
+
+          <!-- ================= PROFILE DETAILS ================= -->
+
+          <h5>
+            {{ interest.otherUserId }} | {{ interest.lastName }}
+          </h5>
+
+          <p>
+            {{ interest.age || 'N/A' }} | {{ interest.city || 'N/A' }}
+          </p>
+
+          <p>
+            {{ interest.occupation || 'N/A' }}
+          </p>
+
+          <!-- ================= ACTION BUTTONS ================= -->
+
+          <!-- Show Accept / Reject if I received & still pending -->
+          <div
+            class="actions"
+            *ngIf="interest.status === 'pending' 
+                   && interest.initiatedBy !== currentUserId"
+          >
+            <button
+              class="accept"
+              (click)="acceptInterest(interest.interestId)"
+            >
+              Accept
+            </button>
+
+            <button
+              class="reject"
+              (click)="rejectInterest(interest.interestId)"
+            >
+              Reject
+            </button>
+          </div>
+
+          <!-- Show Cancel if I sent & still pending -->
+          <div
+            class="actions"
+            *ngIf="interest.status === 'pending' 
+                   && interest.initiatedBy === currentUserId"
+          >
+            <button
+              class="cancel"
+              (click)="cancelInterest(interest.interestId)"
+            >
+              Cancel
+            </button>
+          </div>
+
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div
+          class="empty-state"
+          *ngIf="displayedInterests.length === 0"
+        >
+          No {{ selectedTab }} interests found.
+        </div>
+
+      </div>
+
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>
+
+<!-- ================= Full Screen Image Viewer ================= -->
+
+<app-image-viewer
+  [images]="selectedImages"
+  [apiUrl]="apiUrl"
+  [open]="viewerOpen"
+  (close)="viewerOpen = false">
+</app-image-viewer>

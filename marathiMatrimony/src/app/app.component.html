@@ -1,0 +1,29 @@
+<div class="app-global-controls" aria-label="Application preferences">
+  <div class="app-language-switcher">
+    <label for="appLanguage">{{ 'app.language' | translate }}</label>
+    <select
+      id="appLanguage"
+      [ngModel]="languageService.currentLanguage"
+      (ngModelChange)="changeLanguage($event)"
+    >
+      <option
+        *ngFor="let language of languageService.languages"
+        [value]="language.code"
+      >
+        {{ language.nativeLabel }}
+      </option>
+    </select>
+  </div>
+
+  <button
+    class="app-theme-toggle"
+    type="button"
+    (click)="toggleTheme()"
+    [attr.aria-pressed]="themeService.currentTheme === 'dark'"
+    [attr.aria-label]="themeService.currentTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+  >
+    {{ themeService.currentTheme === 'dark' ? 'Light' : 'Dark' }}
+  </button>
+</div>
+
+<router-outlet></router-outlet>

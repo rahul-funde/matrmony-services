@@ -1,0 +1,125 @@
+<section id="hero-banner-register" class="position-relative">
+  <!-- Carousel Background -->
+  <owl-carousel-o [options]="customOptions" class="carousel-bg">
+    <ng-container *ngFor="let slide of slides">
+      <ng-template carouselSlide [id]="slide.id">
+        <img [src]="slide.image" [alt]="slide.title" class="carousel-image" />
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+
+  <!-- Registration Form Overlay -->
+  <div class="form-overlay-container d-flex justify-content-end align-items-center">
+    <div class="form-wrapper">
+      <mat-card class="register-card">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-container">
+
+            <!-- First Name -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstname" required />
+              <mat-error *ngIf="f['firstname']?.touched && f['firstname']?.hasError('required')">
+                First name is required
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Last Name -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Sur Name</mat-label>
+              <input matInput formControlName="lastname" required />
+              <mat-error *ngIf="f['lastname']?.touched && f['lastname']?.hasError('required')">
+                Surname is required
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Gender -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender" (selectionChange)="onGenderChange()">
+                <mat-option value="" disabled>Select Gender</mat-option>
+                <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                  {{ gender.label }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="f['gender']?.touched && f['gender']?.hasError('required')">
+                Gender is required
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Date of Birth -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput type="date" formControlName="dob" (change)="updateDob($event)" required />
+              <mat-error *ngIf="f['dob']?.touched && f['dob']?.hasError('required')">
+                Date of birth is required
+              </mat-error>
+              <mat-error *ngIf="f['dob'].hasError('ageInvalid')">
+                {{ f['dob'].getError('ageInvalid') }}
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Mobile Number -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Mobile Number</mat-label>
+              <input matInput formControlName="mobilenumber" required />
+              <mat-error *ngIf="f['mobilenumber']?.touched && f['mobilenumber']?.hasError('required')">
+                Mobile number is required
+              </mat-error>
+              <mat-error *ngIf="f['mobilenumber']?.hasError('pattern')">
+                Invalid mobile number
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" required />
+              <mat-error *ngIf="f['email']?.touched && f['email']?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="f['email']?.hasError('email')">
+                Enter a valid email
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" required />
+              <mat-error *ngIf="f['password']?.touched && f['password']?.hasError('required')">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="f['password']?.hasError('minlength')">
+                Minimum 6 characters required
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Confirm Password -->
+            <mat-form-field appearance="outline" class="form-section full-width">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput type="password" formControlName="confirmPassword" required />
+              <mat-error *ngIf="f['confirmPassword']?.touched && f['confirmPassword']?.hasError('required')">
+                Confirm Password is required
+              </mat-error>
+              <mat-error *ngIf="registerForm.errors?.['passwordMismatch'] && f['confirmPassword']?.touched">
+                Passwords do not match
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid" class="full-width">
+              Register Now
+            </button>
+            <button mat-button routerLink="/login" color="accent" class="full-width">
+              Login
+            </button>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+</section>

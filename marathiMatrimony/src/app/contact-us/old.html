@@ -1,0 +1,126 @@
+<!-- ================= FULL CONTACT MODAL ================= -->
+<div class="contact-modal-overlay" *ngIf="isContactOpen">
+
+  <div class="contact-modal">
+
+    <!-- ================= HEADER (Sticky) ================= -->
+    <div class="contact-modal-header">
+      <h5>
+        {{ currentLang === 'मराठी' ? 'संपर्क करा' : 'Contact Us' }}
+      </h5>
+      <button type="button" class="close-btn" aria-label="Close" (click)="isContactOpen = false">&times;</button>
+    </div>
+
+    <!-- ================= BODY (Scrollable) ================= -->
+    <div class="contact-modal-body">
+
+      <!-- ===== FORM ===== -->
+      <p class="contact-subtitle text-center mb-4">
+        {{ currentLang === 'मराठी' ? 'सुषील मराठा वधू-वर केंद्राशी संपर्क साधा' : 'Get in touch with Sushil Maratha Vadhu Var' }}
+      </p>
+
+      <div *ngIf="successMsg" class="alert alert-success mb-3">{{ successMsg }}</div>
+      <div *ngIf="errorMsg" class="alert alert-danger mb-3">{{ errorMsg }}</div>
+
+      <form [formGroup]="contactForm">
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">{{ currentLang === 'मराठी' ? 'पूर्ण नाव' : 'Full Name' }} *</label>
+            <input type="text" class="form-control" formControlName="name" placeholder="{{ currentLang === 'मराठी' ? 'आपले पूर्ण नाव' : 'Your full name' }}">
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label">{{ currentLang === 'मराठी' ? 'ई-मेल' : 'Email' }} *</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="{{ currentLang === 'मराठी' ? 'आपला ई-मेल' : 'Your email' }}">
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label">{{ currentLang === 'मराठी' ? 'मोबाईल नंबर' : 'Mobile Number' }} *</label>
+            <input type="tel" class="form-control" formControlName="mobile" placeholder="{{ currentLang === 'मराठी' ? 'आपला मोबाइल नंबर' : 'Your mobile number' }}">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">{{ currentLang === 'मराठी' ? 'विषय' : 'Subject' }} *</label>
+            <select class="form-select" formControlName="subject">
+              <option value="">{{ currentLang === 'मराठी' ? 'निवडा' : 'Select' }}</option>
+              <option>सामान्य चौकशी</option>
+              <option>मेंबरशिप</option>
+              <option>प्रोफाईल समस्या</option>
+              <option>तांत्रिक सहाय्य</option>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">{{ currentLang === 'मराठी' ? 'संदेश' : 'Message' }} *</label>
+            <textarea rows="4" class="form-control" formControlName="message" placeholder="{{ currentLang === 'मराठी' ? 'आपला संदेश येथे टाका' : 'Type your message here' }}"></textarea>
+          </div>
+        </div>
+      </form>
+
+      <!-- ===== GOOGLE MAP ===== -->
+      <div class="map-section my-4">
+        <iframe src="https://www.google.com/maps?q=Mantra%20Monarch%20Balewadi%20Pune&output=embed"
+          loading="lazy" class="w-100" style="height: 250px; border:0;"></iframe>
+      </div>
+
+      <!-- ===== CONTACT DETAILS ===== -->
+      <div class="contact-info-section text-center mb-4">
+        <h4 class="section-title mb-3">{{ currentLang === 'मराठी' ? 'संपर्क माहिती' : 'Contact Information' }}</h4>
+        <div class="row g-3 justify-content-center">
+          <div class="col-12 col-md-4">
+            <div class="info-item">
+              <i class="bi bi-telephone-fill"></i>
+              <p>
+                <a href="tel:9370220481">9370220481</a><br>
+                <a href="tel:9370225218">9370225218</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="info-item">
+              <i class="bi bi-envelope-fill"></i>
+              <p>
+                <a href="mailto:contact@sushilmaratha.in">contact&#64;sushilmaratha.in</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="info-item">
+              <i class="bi bi-geo-alt-fill"></i>
+              <p>
+                A4-501, Mantra Monarch,<br>
+                Patil Nagar, Balewadi,<br>
+                Pune – 411014
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="social-icons mt-3">
+          <a href="https://www.instagram.com/sushilmarathavadhuvar/" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61583194727638" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.youtube.com/@SushilMarathaVadhuVar" target="_blank"><i class="bi bi-youtube"></i></a>
+          <a href="https://www.linkedin.com/in/sushil-maratha-738ab13a0/" target="_blank"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= FOOTER (Sticky) ================= -->
+    <div class="contact-modal-footer d-flex justify-content-between">
+      <button type="button" class="btn btn-outline-secondary" (click)="isContactOpen = false">
+        {{ currentLang === 'मराठी' ? 'बंद करा' : 'Close' }}
+      </button>
+
+      <button class="btn btn-primary" [disabled]="loading || contactForm.invalid" (click)="submitForm()">
+        {{ loading ? (currentLang === 'मराठी' ? 'पाठवत आहे...' : 'Sending...') : (currentLang === 'मराठी' ? 'संदेश पाठवा' : 'Send Message') }}
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ================= WHATSAPP FLOAT ================= -->
+  <a href="https://wa.me/919370220481" target="_blank" class="whatsapp-float">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+
+</div>

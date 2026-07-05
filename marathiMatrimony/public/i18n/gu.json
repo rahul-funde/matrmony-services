@@ -1,0 +1,11 @@
+{
+  "app": { "name": "સુશીલ મરાઠા", "language": "ભાષા" },
+  "auth": {
+    "login": { "title": "લૉગિન", "failed": "લૉગિન નિષ્ફળ ગયું." },
+    "passwordReset": { "success": "પાસવર્ડ સફળતાપૂર્વક રીસેટ થયો!", "failed": "પાસવર્ડ રીસેટ નિષ્ફળ ગયું." }
+  },
+  "common": { "close": "બંધ કરો", "save": "સાચવો", "cancel": "રદ કરો", "search": "શોધો", "loading": "લોડ થઈ રહ્યું છે..." },
+  "profile": { "basicDetails": "મૂળભૂત વિગતો", "photos": "ફોટા", "contactDetails": "સંપર્ક વિગતો" },
+  "membership": { "upgradePlan": "પ્લાન અપગ્રેડ કરો", "currentPlan": "વર્તમાન પ્લાન", "contactsRemaining": "બાકી સંપર્કો" },
+  "admin": { "dashboard": "ડેશબોર્ડ", "users": "વપરાશકર્તાઓ", "plans": "પ્લાન", "payments": "ચુકવણીઓ" }
+}

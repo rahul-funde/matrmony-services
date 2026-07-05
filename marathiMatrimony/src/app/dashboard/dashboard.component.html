@@ -1,0 +1,77 @@
+<!-- <mat-toolbar color="primary">
+    <span>Welcome to Dashboard</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="logout()">Logout</button>
+  </mat-toolbar>
+  <mat-card>
+    <h2>Dashboard Content</h2>
+  </mat-card>
+   -->
+
+
+   <mat-sidenav-container class="dashboard-container">
+    <mat-sidenav mode="side" opened class="dashboard-sidenav">
+      <mat-toolbar color="primary">Matrimony</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/dashboard/profile">Profile</a>
+        <a mat-list-item routerLink="/dashboard/preferences">Partner Preferences</a>
+        <a mat-list-item routerLink="/dashboard/matches">Search & Matches</a>
+        <a mat-list-item routerLink="/dashboard/interests">Interests</a>
+        <a mat-list-item routerLink="/dashboard/messages">Messages</a>
+        <a mat-list-item routerLink="/dashboard/payments">Payments</a>
+        <a mat-list-item routerLink="/dashboard/notifications">Notifications</a>
+        <a mat-list-item routerLink="/dashboard/support">Help & Support</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <span>Welcome, {{ userName }}</span>
+        <span class="spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Settings</button>
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+      </mat-toolbar>
+
+      <div class="dashboard-content">
+        <mat-grid-list cols="3" rowHeight="150px" gutterSize="16px">
+          <mat-grid-tile>
+            <mat-card>
+              <mat-card-title>Profile Completion</mat-card-title>
+              <mat-card-content>
+                80% Complete
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-card>
+              <mat-card-title>New Matches</mat-card-title>
+              <mat-card-content>
+                5 New Matches
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-card>
+              <mat-card-title>Unread Messages</mat-card-title>
+              <mat-card-content>
+                2 Unread
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <div class="quick-actions">
+          <button mat-raised-button color="accent">Edit Profile</button>
+          <button mat-raised-button color="accent">Upgrade Membership</button>
+          <button mat-raised-button color="accent">Search Matches</button>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

@@ -1,0 +1,25 @@
+.stat-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.title {
+  font-size: 14px;
+  color: #777;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.growth {
+  font-size: 12px;
+  color: green;
+}
+
+.growth.negative {
+  color: red;
+}

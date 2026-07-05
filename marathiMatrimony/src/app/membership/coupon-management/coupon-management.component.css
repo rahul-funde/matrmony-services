@@ -1,0 +1,99 @@
+/* Layout container */
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+/* Sidenav styling */
+.custom-sidenav {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #ddd;
+  padding: 16px;
+}
+
+/* Main content area */
+.main-content {
+  padding: 32px;
+  overflow-y: auto;
+  background-color: #f0f2f5;
+}
+
+/* Coupon form styling */
+.coupon-form {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: 0 auto 32px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* Submit button */
+button[type="submit"] {
+  align-self: flex-start;
+  padding: 8px 24px;
+}
+
+/* Table styling */
+table.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.mat-header-cell {
+  font-weight: 600;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.mat-cell {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+.mat-row:hover {
+  background-color: #f5f5f5;
+}
+
+/* Action buttons */
+button[mat-icon-button] {
+  margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 16px;
+  }
+
+  .coupon-form {
+    padding: 16px;
+    margin: 0 8px 24px 8px;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    padding: 8px;
+  }
+
+  button[mat-icon-button] {
+    margin-right: 4px;
+  }
+}

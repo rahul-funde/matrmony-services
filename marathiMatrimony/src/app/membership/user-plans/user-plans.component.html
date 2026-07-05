@@ -1,0 +1,140 @@
+<!-- Theme Toggle -->
+<button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle Theme">
+  <span class="sun">🌞</span><span class="moon">🌙</span>
+</button>
+
+<div class="container my-5" *ngIf="!isLoading; else loading">
+
+  <!-- Current Plan Section -->
+<!--   <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="section-title">Current Plan Details</h2>
+    </div>
+
+    <div class="col-12" *ngIf="currentPlan?.plan; else noPlan">
+      <div class="glass-card current-card">
+        <div class="current-header">
+          <h5 class="mb-0">{{ currentPlan?.plan?.planName }}</h5>
+        </div>
+        <div class="current-body">
+          <div class="row g-3">
+            <div class="col-md-6"><strong>Price:</strong> ₹{{ currentPlan?.plan?.price }}</div>
+            <div class="col-md-6"><strong>Duration:</strong> {{ currentPlan?.plan?.duration }} month{{ currentPlan?.plan?.duration > 1 ? 's' : '' }}</div>
+            <div class="col-md-6"><strong>Start Date:</strong> {{ currentPlan?.plan?.startDate | date:'mediumDate' }}</div>
+            <div class="col-md-6"><strong>End Date:</strong> {{ currentPlan?.plan?.endDate | date:'mediumDate' }}</div>
+            <div class="col-md-6"><strong>Status:</strong> {{ currentPlan?.plan?.status | titlecase }}</div>
+            <div class="col-md-6"><strong>Days Left:</strong> {{ currentPlan?.daysLeft }}</div>
+            <div class="col-md-6"><strong>Contact Limit:</strong> {{ currentPlan?.contactLimit }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noPlan>
+      <p class="text-muted fst-italic">You currently do not have any active plan.</p>
+    </ng-template>
+  </div>
+
+  <hr class="my-5 separator">
+ -->
+  <!-- Available Plans -->
+  <div class="row">
+    <div class="col-12 mb-3">
+      <h2 class="section-title">Available Plans</h2>
+    </div>
+
+    <div *ngIf="plans && plans.length > 0; else noPlans" class="row g-4">
+      <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let plan of plans">
+        <div class="glass-card plan-card"
+             [class.recommended]="plan?.recommended"
+             [ngClass]="{'active-plan': plan?.id === currentPlan?.plan?.planId}">
+
+          <!-- Recommended Badge -->
+          <div *ngIf="plan?.recommended" class="badge-recommend">Recommended</div>
+
+          <!-- Discount Ribbon -->
+          <div *ngIf="plan?.discount" class="ribbon-discount">
+            {{ plan.discount }}% OFF
+          </div>
+
+          <!-- Plan Info -->
+          <div class="plan-head">
+            <h5 class="plan-name mb-0">{{ plan?.name }} </h5>
+            <p class="plan-duration mb-0">
+              {{ plan?.duration }} month{{ plan?.duration > 1 ? 's' : '' }}
+            </p>
+          </div>
+
+          <div class="plan-price">₹ {{ plan?.price | number }}</div>
+          <hr class="card-sep">
+
+          <h6 class="features-title ">Features</h6>
+          <ul class="list-unstyled features-list mb-3 features">
+            <li *ngFor="let feature of plan?.features" class="feature-item" [title]="feature">
+               <mat-icon>check_circle</mat-icon>{{ feature | titlecase }}
+            </li>
+          </ul>
+
+          <div class="contact-limit mb-3">
+            Contacts Allowed: <strong>{{ plan?.contactLimit }}</strong>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-grid gap-2">
+          <!--   <button class="btn btn-primary btn-block purchaseplan-btn"
+                    [disabled]="plan?.id === currentPlan?.plan?.planId"
+                    (click)="purchasePlan(plan)">
+              {{ plan?.id === currentPlan?.plan?.planId ? 'Current Plan' : 'Upgrade to this Plan' }}
+            </button> -->
+
+            <button class="btn btn-outline-light btn-block"
+                    (click)="openQRPopup(plan)">
+              Pay Offline (QR)
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noPlans>
+      <p class="text-muted fst-italic">No plans available at the moment.</p>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Loading Spinner -->
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center py-5">
+    <div class="spinner-border text-danger me-2" role="status"></div>
+    <span class="loading-text fw-bold">Loading plans...</span>
+  </div>
+</ng-template>
+
+<!-- QR Modal Popup -->
+<div class="qr-modal" [class.show]="qrModalVisible">
+  <div class="qr-modal-content glass-card">
+    <button class="close-btn" (click)="closeQRPopup()">✖</button>
+
+    <h3 class="qr-title-popup text-danger fw-bold">Scan & Pay</h3>
+    <p>Plan: <strong>{{ selectedPlan?.name }}</strong></p>
+    <p>Amount: ₹ {{ selectedPlan?.price }}</p>
+
+    <div class="qr-image-frame text-center my-3">
+      <img src="images/qr-payment.png" class="qr-img" alt="QR Code">
+    </div>
+
+    <label class="upload-label mt-3 fw-bold">Upload Payment Screenshot</label>
+    <input type="file" accept="image/*" class="form-control"
+           (change)="onReceiptUpload($event, selectedPlan)">
+
+    <img *ngIf="receiptPreview[selectedPlan?.id]" 
+         [src]="receiptPreview[selectedPlan?.id]" 
+         class="receipt-preview mt-3">
+
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-danger flex-grow-1" (click)="submitOfflinePayment(selectedPlan)">Submit</button>
+      <button class="btn btn-outline-dark flex-grow-1" (click)="closeQRPopup()">Cancel</button>
+    </div>
+  </div>
+</div>

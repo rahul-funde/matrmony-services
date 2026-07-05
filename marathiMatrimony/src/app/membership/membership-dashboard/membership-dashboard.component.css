@@ -1,0 +1,84 @@
+/* Grid container for metric cards */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  /*padding: 40px 32px;*/
+  background-color: #f9f9f9;
+  margin-top: 3%;
+}
+
+/* Individual metric card */
+.metric-card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.metric-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon styling */
+.metric-card mat-icon {
+  font-size: 28px;
+  color: #1976d2;
+  flex-shrink: 0;
+}
+
+/* Text container */
+.metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Heading and value */
+.metric-info h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  color: #2c2c2c;
+}
+
+.metric-info p {
+  font-size: 15px;
+  margin: 0;
+  color: #666;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    padding: 24px 16px;
+    gap: 24px;
+    margin-top: 5%;
+  }
+
+  .metric-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .metric-card mat-icon {
+    font-size: 26px;
+  }
+
+  .metric-info h2 {
+    font-size: 16px;
+  }
+
+  .metric-info p {
+    font-size: 14px;
+  }
+}

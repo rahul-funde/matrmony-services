@@ -1,0 +1,57 @@
+<app-header></app-header>
+
+<!-- SIDENAV (handles backdrop internally) -->
+<app-sidenav></app-sidenav>
+
+<!-- MAIN CONTENT -->
+<main #mainContent
+  class="main-content"
+  [class.shifted]="
+    (sidenavMenuService.isOpen$ | async) &&
+    !(sidenavMenuService.isCollapsed$ | async) &&
+    !isMobile()
+  "
+>
+  <!-- LOADING STATE -->
+  <div *ngIf="planActive === null" class="p-4 text-center">
+    Checking your plan...
+  </div>
+
+  <!-- PAYMENT PENDING DIALOG -->
+  <ng-template #paymentPendingDialog>
+    <div class="custom-dialog">
+      <div class="dialog-header">
+        <span class="dialog-icon">⏳</span>
+        <span class="dialog-title">
+          {{ paymentRejected ? 'Payment Failed' : 'Payment Under Review' }}
+        </span>
+        <span class="close-btn" (click)="closeDialog()">×</span>
+      </div>
+
+      <div class="dialog-content">
+        <span class="unique-userid">
+          Unique User ID: {{ userId }} &nbsp; &nbsp;
+          <button type="button" (click)="copyUserId()">Copy</button>
+        </span>
+        <br/> <br/>
+
+
+        {{ paymentRejected
+            ? (currentLang === 'English'
+            ? 'Your payment failed. Please try again or contact support.'
+            : 'आपले पेमेंट अयशस्वी झाले आहे. कृपया पुन्हा प्रयत्न करा किंवा सहाय्य केंद्राशी संपर्क साधा.')
+            : (currentLang === 'English'
+            ? 'आपले पेमेंट तपासणी प्रक्रियेत आहे. लवकरच आम्ही आपल्याला कळवू.'
+            : 'आपले पेमेंट पडताळणी प्रक्रियेत आहे. ही प्रक्रिया 3-6 तास लागू शकते.  पुष्टी झाल्यावर आपल्याला कळवले जाईल.') 
+        }}
+        <br/>
+        Thank you !
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- PLAN ACTIVE -->
+  <app-home-container *ngIf="planActive === true"></app-home-container>
+</main>
+
+<app-footer></app-footer>

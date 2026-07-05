@@ -1,0 +1,8 @@
+const rateLimit = require('express-rate-limit');
+const verifyToken = require('../middlewares/jwtMiddleware'); // Import JWT middle
+const express = require("express");
+const { getRecommendations, getRecommendationsNew } = require("../controllers/recommendation.controller");
+const router = express.Router();
+router.get('/getrecommendations', verifyToken, getRecommendations);
+router.get('/getRecommendationsNew', verifyToken, getRecommendationsNew);
+module.exports = router;

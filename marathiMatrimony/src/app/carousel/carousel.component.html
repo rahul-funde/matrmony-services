@@ -1,0 +1,23 @@
+<!-- <owl-carousel-o [options]="customOptions" class="carousel-bg">
+  <ng-container *ngFor="let slide of slides">
+    <ng-template carouselSlide [id]="slide.id">
+      <img [src]="slide.image" [alt]="slide.title" class="carousel-image" />
+    </ng-template>
+  </ng-container>
+</owl-carousel-o> -->
+
+
+<owl-carousel-o [options]="customOptions" class="carousel-bg">
+  <ng-container *ngFor="let slide of slides">
+    <ng-template carouselSlide>
+      <!-- <img
+        [src]="slide.image"
+        [alt]="slide.title"
+        class="carousel-image"
+        loading="lazy"
+      /> -->
+      <img src="/images/banner-ad-1.jpg" alt="Static test" class="carousel-image" />
+
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>

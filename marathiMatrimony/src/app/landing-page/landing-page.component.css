@@ -1,0 +1,1106 @@
+/* =====================================================================
+   HERO BANNER
+===================================================================== */
+#hero-banner-search {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.carousel-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  filter: brightness(68%) contrast(1.08);
+  transition: transform 9s ease-in-out, filter 0.35s ease;
+}
+
+.carousel-image:hover {
+  transform: scale(1.1);
+  filter: brightness(75%) contrast(1.12);
+}
+
+/* =====================================================================
+   SEARCH CARD OVERLAY
+===================================================================== */
+.form-overlay-container {
+  position: absolute;
+  bottom: 7%;
+  width: 100%;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-card {
+  width: 100%;
+  max-width: 1150px;
+  padding: 28px 38px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: 0.4s ease-in-out;
+}
+
+.search-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.28);
+}
+
+/* Floating animation */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.search-card.float { animation: floatCard 7s ease-in-out infinite; }
+
+/* Parallax effect */
+@media (min-width: 769px) {
+  .form-overlay-container { perspective: 900px; }
+  .search-card.parallax:hover {
+    transform: rotateX(3deg) rotateY(-3deg) scale(1.03);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.33);
+  }
+}
+
+/* Search form */
+.search-box {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.search-box mat-form-field { flex: 1; min-width: 160px; }
+
+.search-box button {
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 32px;
+  background: linear-gradient(90deg, #8e0020, #d32f2f);
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: 0.3s;
+}
+
+.search-box button:hover {
+  background: linear-gradient(90deg, #d32f2f, #8e0020);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+}
+
+@media (max-width: 768px) {
+  .form-overlay-container { position: static; margin: 24px 0; }
+  .search-card { padding: 20px; max-width: 520px; }
+  .search-box { flex-direction: column; gap: 14px; }
+  .search-box mat-form-field, .search-box button { width: 100%; }
+}
+
+/* =====================================================================
+   LOGIN / OTP DIALOGS
+===================================================================== */
+::ng-deep .login-dialog-panel {
+  animation: fadeSlideIn 0.35s ease-out;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-80px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-dialog-container,
+.otp-style-login-container {
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  position: relative;
+}
+
+.otp-style-login-container {
+  width: 380px;
+  margin: 80px auto;
+}
+
+/* Top Border Accent */
+.otp-style-login-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  height: 6px; width: 100%;
+  background: linear-gradient(90deg, #8b0000, #e63939);
+  border-radius: 20px 20px 0 0;
+}
+
+/* Headers */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.dialog-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #8e0020;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #8b0000, #e63939);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(230,57,57,0.4);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  transform: rotate(90deg) scale(1.12);
+  background: linear-gradient(90deg, #a00000, #ff4040);
+}
+
+/* Buttons */
+.otp-style-btn {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #8b0000, #e63939);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(230, 57, 57, 0.28);
+  transition: 0.3s;
+}
+.otp-style-btn:hover {
+  transform: scale(1.03);
+  background: linear-gradient(90deg, #a00000, #ff4040);
+}
+
+/* =====================================================================
+   PROFILE LIST GRID
+===================================================================== */
+.profiles-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 16px;
+}
+
+.profiles-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  transition: 0.3s;
+  overflow: hidden;
+}
+.profile-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+}
+
+.profile-container {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+}
+
+.profile-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  transition: 0.3s;
+}
+.profile-photo:hover {
+  transform: scale(1.05);
+}
+
+.status-badge {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid white;
+  position: absolute;
+}
+.status-badge.online { background: #4caf50; }
+.status-badge.offline { background: #f44336; opacity: 0.8; }
+
+/* Responsive */
+@media (max-width: 599px) {
+  .profile-container { flex-direction: column; text-align: center; }
+  .profile-photo { width: 140px; height: 140px; }
+}
+
+@media (min-width: 600px) and (max-width: 991px) {
+  .profiles-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 992px) {
+  .profiles-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =====================================================================
+   PROFILE DIALOG
+===================================================================== */
+::ng-deep .profile-dialog-container {
+  max-width: 900px;
+  border-radius: 20px;
+  background: #ffffffee;
+  backdrop-filter: blur(14px);
+  padding: 0;
+  overflow: hidden;
+}
+
+.dialog-header {
+  background: #ffffff;
+  padding: 16px 20px;
+  color: #333;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white !important;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+    color: white !important;
+
+}
+
+.dialog-header .close-btn mat-icon {
+  color: #666;
+}
+
+.dialog-header .close-btn:hover mat-icon {
+  color: #000;
+}
+
+.dialog-content {
+  padding: 22px;
+  max-height: 75vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Scrollbar */
+.dialog-content::-webkit-scrollbar {
+  width: 6px;
+}
+.dialog-content::-webkit-scrollbar-track {
+  background: #f7f7f7;
+  border-radius: 10px;
+}
+.dialog-content::-webkit-scrollbar-thumb {
+  background: #cfd6e4;
+  border-radius: 10px;
+}
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #b8c2d6;
+}
+
+/* Cards inside dialog */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+  border: none;
+}
+.card-body .row div {
+  background: #f9fbff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e9eef7;
+  transition: 0.25s;
+}
+.card-body .row div:hover {
+  background: #eef3ff;
+  border-color: #c7d8ff;
+}
+.card-body strong {
+  font-weight: 600;
+  color: #0d6efd;
+}
+
+.view-btn {
+  border: 1px solid #0d6efd;
+  color: #0d6efd;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+.view-btn:hover {
+  background: #0d6efd;
+  color: #fff;
+}
+
+/* =====================================================================
+   LOGIN CARD - GLASSMORPHISM STYLE
+===================================================================== */
+.premium-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: e6dfdf00;
+  padding: 1rem;
+}
+
+.login-card {
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2rem;
+  max-width: 380px;
+  margin: auto;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
+}
+
+.login-card .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.login-card .close-btn:hover {
+  transform: rotate(90deg);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.login-card .login-title {
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+}
+.login-card .login-subtitle {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+.login-card .full-width-input {
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+.login-card .full-width-input .mat-form-field-outline {
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.login-card input {
+  color: #fff;
+}
+.login-card input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-card .login-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+.login-card .login-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+}
+
+.login-card .login-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+.login-card .register-link,
+.login-card .forgot-link {
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.login-card .register-link:hover,
+.login-card .forgot-link:hover {
+  color: #c0c0c0;
+  text-decoration: underline;
+}
+
+/* Navbar hover on desktop */
+@media (min-width: 992px) {
+  .navbar-toggler:hover + .navbar-collapse,
+  .navbar-collapse:hover {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+
+/* ===================== PROFILE DIALOG CONTAINER ===================== */
+.profile-dialog-container {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* ===================== DIALOG HEADER ===================== */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: linear-gradient(90deg, #8e0020, #d32f2f);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.dialog-header h2 {
+  margin: 0;
+}
+
+.dialog-header .close-btn {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.dialog-header .close-btn:hover {
+  transform: rotate(90deg);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===================== DIALOG CONTENT ===================== */
+.dialog-content {
+  padding: 24px 28px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.dialog-content::-webkit-scrollbar {
+  width: 6px;
+}
+.dialog-content::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+.dialog-content::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 10px;
+}
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* ===================== SECTION HEADERS ===================== */
+.section-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #8e0020;
+  margin-top: 16px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #ffd700;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* ===================== TAB GRID ===================== */
+.tab-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* ===================== PROFILE CHIPS ===================== */
+.profile-chip {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.profile-chip:hover {
+  background: #f7f7f7;
+  border-color: #cfcfcf;
+}
+
+/* ===================== PROFILE PHOTO ===================== */
+.profile-photo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.dialog-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s ease;
+}
+
+.dialog-photo:hover {
+  transform: scale(1.05);
+}
+
+/* ===================== VIEW BUTTON ===================== */
+.view-btn {
+  font-size: 0.75rem;
+  border-radius: 8px;
+  padding: 2px 8px;
+  border: 1px solid #8e0020;
+  color: #8e0020;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  background: #8e0020;
+  color: #fff;
+  border-color: #8e0020;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .dialog-content {
+    padding: 16px 20px;
+  }
+  .tab-grid {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .profile-chip {
+    width: 100%;
+  }
+  .dialog-photo {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-dialog-container {
+    border-radius: 12px;
+  }
+  .dialog-header h2 {
+    font-size: 1.05rem;
+  }
+}
+
+/* ================= Glassmorphic Buttons ================= */
+.register-btn,
+.login-btn {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 8px 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Register button gradient border */
+.register-btn {
+  border-image: linear-gradient(135deg, #ff416c, #ff4b2b) 1;
+}
+
+.register-btn:hover {
+  background: rgba(255, 65, 108, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Login button gradient border */
+.login-btn {
+  border-image: linear-gradient(135deg, #1f8ef1, #0f52ba) 1;
+}
+
+.login-btn:hover {
+  background: rgba(31, 142, 241, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional icon spacing */
+.register-btn i,
+.login-btn i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+/* ================= Responsive Button Sizes ================= */
+@media (max-width: 768px) {
+  .register-btn,
+  .login-btn {
+    font-size: 0.85rem;
+    padding: 6px 18px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-btn,
+  .login-btn {
+    font-size: 0.75rem;
+    padding: 5px 14px;
+    border-radius: 10px;
+  }
+}
+
+
+
+
+/* ================= Header Buttons ================= */
+.register-btn,
+.login-btn {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 8px 22px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Login button - match pink logo */
+.login-btn {
+  background: linear-gradient(135deg, #ff2a7b, #ff6eb4);
+}
+
+.login-btn:hover {
+  background: linear-gradient(135deg, #ff52a1, #ff85c0);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Register button - match blue logo */
+.register-btn {
+  background: linear-gradient(135deg, #2aa8ff, #6eb8ff);
+}
+
+.register-btn:hover {
+  background: linear-gradient(135deg, #4bbfff, #90cfff);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .register-btn,
+  .login-btn {
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-btn,
+  .login-btn {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 10px;
+  }
+}
+
+.thumb-img{
+  width:90px;height:90px;
+  object-fit:cover;border-radius:10px;
+  cursor:pointer;transition:.3s;
+}
+.thumb-img:hover{transform:scale(1.05);}
+
+.viewer-overlay{
+  position:fixed;top:0;left:0;width:100vw;height:100vh;
+  background:#000000d5;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
+}
+
+.viewer-content{
+  position:relative;max-width:90vw;max-height:90vh;overflow:hidden;
+}
+
+.viewer-img{
+  max-width:100%;max-height:100%;
+  transition:transform .1s ease-out;cursor:grab;
+}
+
+.viewer-close{
+  position:absolute;top:10px;right:10px;
+  padding:5px 10px;font-size:18px;
+  border:none;border-radius:4px;background:white;cursor:pointer;
+}
+
+.zoom-controls{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;
+}
+
+.zoom-controls button{
+  padding:6px 12px;border:none;background:white;
+  cursor:pointer;border-radius:4px;font-size:16px;
+}
+
+
+
+
+/* login card */
+/* =========================================================
+   LOGIN CARD (FINAL – CONFLICT SAFE)
+========================================================= */
+.login-card {
+  background: linear-gradient(180deg, #8b0015, #a8001f);
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* Close icon */
+.login-card .btn-close {
+  filter: invert(1);
+  opacity: 0.9;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.login-card .btn-close:hover {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+
+/* Headings */
+.login-card h3 {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.login-card p.text-muted {
+  color: #ffd88a !important;
+  font-size: 0.95rem;
+}
+
+/* Labels */
+.login-card .form-label {
+  color: #ffe6b3;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+/* Input group wrapper */
+.login-card .input-group {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Left icon */
+.login-card .input-group-text {
+  background: #f5c16c;
+  color: #5c0a12;
+  border: none;
+  padding: 0 14px;
+  font-size: 1rem;
+}
+
+/* Inputs */
+.login-card .form-control {
+  border: none;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: #000000;
+  background-color: #ffffff;
+}
+
+/* Placeholder */
+.login-card .form-control::placeholder {
+  color: #999;
+}
+
+/* Focus state */
+.login-card .form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Autofill (Chrome / Edge) */
+.login-card .form-control:-webkit-autofill,
+.login-card .form-control:-webkit-autofill:hover,
+.login-card .form-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000000 !important;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Password eye button */
+.login-card .btn-outline-secondary {
+  border: none;
+  background: #ffffff;
+  color: #8b0015;
+  padding: 0 14px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.login-card .btn-outline-secondary:hover {
+  background: #ffe6b3;
+  color: #5c0a12;
+}
+
+/* Login button */
+.login-card .btn-primary {
+  background: linear-gradient(90deg, #f5c16c, #ffd88a);
+  border: none;
+  color: #6a0d12;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 12px;
+  font-size: 1.05rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.login-card .btn-primary:hover {
+  background: linear-gradient(90deg, #ffd88a, #f5c16c);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer links */
+.login-card .d-flex.justify-content-between {
+  justify-content: center !important;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.login-card .btn-link,
+.login-card a {
+  color: #ffd88a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-card .btn-link:hover,
+.login-card a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+/* =========================
+   PANEL STYLING
+========================= */
+.occupation-panel {
+  max-height: 320px;                /* limit height */
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  background-color: #fff;
+  font-family: "Roboto", sans-serif;
+}
+
+/* =========================
+   STICKY SEARCH BAR
+========================= */
+.occupation-search-option {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 8px 12px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================
+   SEARCH CONTAINER
+========================= */
+.search-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;         /* visible border */
+  border-radius: 8px;
+  background-color: #fff;          /* white background */
+  padding: 4px 8px;                /* inner spacing for input and icons */
+  transition: border 0.2s, box-shadow 0.2s;
+  width: inherit;
+}
+
+/* Search input styling */
+.search-container input.mat-input-element {
+  flex: 1;
+  border: none;                    /* remove inner input border */
+  outline: none;
+  background: transparent;          /* container shows white background */
+  padding: 6px 32px 6px 28px;      /* space for icons */
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Highlight on focus */
+.search-container input.mat-input-element:focus {
+  box-shadow: 0 0 0 2px rgba(63,81,181,0.3); /* highlight container */
+}
+
+/* Magnifying glass icon */
+.search-icon {
+  position: absolute;
+  left: 8px;
+  font-size: 16px;
+  color: #888;
+  pointer-events: none;
+}
+
+/* Clear icon */
+.clear-icon {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.clear-icon:hover {
+  color: #555;
+}
+
+/* =========================
+   OPTION GROUP & OPTIONS
+========================= */
+/* Optgroup label */
+.mat-mdc-optgroup-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  padding: 6px 12px;
+}
+
+/* Option styling */
+.mat-mdc-option {
+  font-size: 14px;
+  padding: 8px 12px;
+  transition: background-color 0.2s;
+}
+.mat-mdc-option:hover {
+  background-color: #f5f5f5;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+.occupation-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.occupation-panel::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+.occupation-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+  .occupation-panel {
+    max-height: 260px;
+  }
+  .search-container input.mat-input-element {
+    font-size: 13px;
+    padding: 6px 28px 6px 24px;
+  }
+  .mat-mdc-option {
+    font-size: 13px;
+  }
+}

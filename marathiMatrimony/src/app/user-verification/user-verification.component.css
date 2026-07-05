@@ -1,0 +1,50 @@
+/* src/app/user-verification/user-verification.component.css */
+
+.upload-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.upload-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #eee;
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.progress {
+  height: 10px;
+  background: #4caf50;
+  border-radius: 5px;
+}
+
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.docs-table th, .docs-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.docs-table td.pending {
+  color: orange;
+}
+
+.docs-table td.approved {
+  color: green;
+}
+
+.docs-table td.rejected {
+  color: red;
+}

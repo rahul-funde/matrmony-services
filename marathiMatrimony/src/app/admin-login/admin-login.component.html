@@ -1,0 +1,21 @@
+<!-- src/app/admin-login/admin-login.component.html -->
+<mat-card class="admin-login-card">
+    <h2 class="text-center">Admin Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="identifier">
+        <mat-error *ngIf="loginForm.get('identifier')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="loginForm.get('identifier')?.hasError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </mat-card>
+  

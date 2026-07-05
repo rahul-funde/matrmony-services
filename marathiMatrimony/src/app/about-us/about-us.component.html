@@ -1,0 +1,71 @@
+<div class="about-dialog">
+  <!-- ================= HEADER ================= -->
+  <header class="about-header">
+    <h2 class="about-title">
+      {{ currentLang === 'English' ? 'About Us' : 'आमच्याबद्दल' }}
+    </h2>
+
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="about-close-btn"
+      aria-label="Close dialog"
+      (click)="closeDialog()"
+    >
+      ✕
+    </button>
+  </header>
+
+  <!-- ================= BODY ================= -->
+  <main class="about-body">
+
+    <!-- Intro Section -->
+    <section class="intro-section">
+      <p class="intro">
+        {{ currentLang === 'English'
+          ? 'Find Your Perfect Match with a Trusted Maratha Matrimony Platform'
+          : 'विश्वासार्ह मराठा विवाह संस्थेसोबत शोधा तुमचा परिपूर्ण जोडीदार' }}
+      </p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <h5>{{ currentLang === 'English' ? 'Features' : 'वैशिष्ट्ये' }}</h5>
+      <div class="feature-cards">
+        <div class="feature-card" *ngFor="let f of (currentLang === 'English' ? featureListEn : featureListMr); let i = index">
+          <span class="icon">{{ featureIcons[i] }}</span>
+          <p>{{ f }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specials Section -->
+    <section class="specials-section">
+      <h5>{{ currentLang === 'English' ? 'Special Features' : 'खास वैशिष्ट्ये' }}</h5>
+      <ul>
+        <li *ngFor="let s of currentLang === 'English' ? specialListEn : specialListMr">💠 {{ s }}</li>
+      </ul>
+    </section>
+
+    <!-- Trust Note Section -->
+    <section class="trust-note-section">
+      <p class="trust-note">
+        {{ currentLang === 'English'
+          ? 'Many families in the Maratha community are using our services to find a suitable life partner. 🌐 Register today 📲 Services available on Website and WhatsApp'
+          : 'मराठा समाजातील अनेक कुटुंबे योग्य जोडीदाराच्या शोधासाठी आमच्या सेवांचा वापर करत आहेत. 
+          🌐 आजच नोंदणी करा 📲 वेबसाईट आणि व्हॉट्सॲपवर सेवा उपलब्ध' }}
+      </p>
+      <span class="footer-content">
+        {{ currentLang === 'English'
+          ? 'A trusted matrimonial institution for the highly educated Maratha community.'
+          : '“उच्चशिक्षित मराठा समाजासाठी एक विश्वासार्ह विवाह संस्था”' }}
+      </span>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="about-footer">
+    <button class="footer-close-btn" (click)="closeDialog()">Close</button>
+  </footer>
+</div>

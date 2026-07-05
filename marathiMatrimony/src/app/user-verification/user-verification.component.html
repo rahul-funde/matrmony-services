@@ -1,0 +1,51 @@
+<!-- src/app/user-verification/user-verification.component.html -->
+
+<div class="upload-container">
+  <h2>Upload Verification Documents</h2>
+
+  <!-- Upload Form -->
+  <div class="upload-form">
+    <label>Document Type:</label>
+    <select [(ngModel)]="selectedDocType">
+      <option value="">-- Select Document Type --</option>
+      <option value="aadhar">Aadhar Card</option>
+      <option value="passport">Passport</option>
+      <option value="license">Driving License</option>
+      <option value="photo">Profile Photo</option>
+    </select>
+
+    <input type="file" (change)="onFileSelected($event)" />
+    <button (click)="uploadDocument()">Upload</button>
+  </div>
+
+  <!-- Progress Bar -->
+  <div *ngIf="uploadProgress > 0">
+    Upload Progress: {{ uploadProgress }}%
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="uploadProgress"></div>
+    </div>
+  </div>
+
+  <!-- Submitted Documents -->
+  <h3>Your Submitted Documents</h3>
+  <table class="docs-table" *ngIf="documents.length > 0">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>File</th>
+        <th>Status</th>
+        <th>Remarks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doc of documents">
+        <td>{{ doc.doc_type }}</td>
+        <td><a [href]="doc.doc_url" target="_blank">View</a></td>
+        <td [ngClass]="doc.status">{{ doc.status | titlecase }}</td>
+        <td>{{ doc.remarks || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="documents.length === 0">No documents uploaded yet.</p>
+</div>

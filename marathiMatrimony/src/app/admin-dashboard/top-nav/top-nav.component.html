@@ -1,0 +1,44 @@
+<mat-toolbar #toolbar [class.scrolled-toolbar]="isScrolled" color="primary" class="mat-elevation-z4">
+
+  <!-- Logo + Title with overlay -->
+  <div class="toolbar-left">
+    <img src="images/smlogo4.png" alt="" class="logo-img">
+    <!-- <span class="toolbar-title">Admin Panel</span> -->
+  </div>
+
+  <span class="spacer"></span>
+
+  <!-- Sidenav toggle -->
+  <button mat-mini-fab color="primary" (click)="toggleSidenav.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Notifications -->
+  <button mat-icon-button [matMenuTriggerFor]="notifMenu" class="notif-container">
+    <mat-icon>notifications</mat-icon>
+    <div *ngIf="notificationCount > 0" class="notif-badge">{{ notificationCount }}</div>
+  </button>
+
+  <mat-menu #notifMenu="matMenu" class="notifications-menu">
+    <ng-container *ngIf="notifications.length === 0">
+      <button mat-menu-item>No new notifications</button>
+    </ng-container>
+    <ng-container *ngFor="let n of notifications">
+      <button mat-menu-item [class.read]="n.read" (click)="markNotificationRead(n)">
+        <div class="notif-title">{{ n.title }}</div>
+        <div class="notif-message">{{ n.message }}</div>
+        <div class="notif-time">{{ n.time }}</div>
+      </button>
+    </ng-container>
+  </mat-menu>
+
+  <!-- Profile -->
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+    <img src="images/avatar.png" class="profile-img">
+  </button>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>Profile</button>
+    <button mat-button color="warn" (click)="logout()">Logout</button>
+  </mat-menu>
+
+</mat-toolbar>

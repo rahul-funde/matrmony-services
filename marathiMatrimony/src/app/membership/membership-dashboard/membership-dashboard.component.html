@@ -1,0 +1,64 @@
+<!-- Top Navigation -->
+<app-top-nav (toggleSidenav)="sidenav.toggle()"></app-top-nav>
+
+<!-- Sidenav Layout -->
+<mat-sidenav-container class="sidenav-container" [class.sidenav-open]="isSidenavOpen" style="margin-top: 4%;">
+  
+  <!-- Sidebar -->
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    [opened]="false"
+    (openedChange)="onSidenavToggle($event)"
+    class="custom-sidenav">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="main-content">
+    
+    <!-- Dashboard Metrics -->
+    <section class="dashboard-metrics">
+      <div class="metrics-grid">
+        <mat-card class="metric-card">
+          <mat-icon>group</mat-icon>
+          <div class="metric-info">
+            <h2>Total Members</h2>
+            <p>1,245</p>
+          </div>
+        </mat-card>
+
+        <mat-card class="metric-card">
+          <mat-icon>attach_money</mat-icon>
+          <div class="metric-info">
+            <h2>Monthly Revenue</h2>
+            <p>₹85,000</p>
+          </div>
+        </mat-card>
+
+        <mat-card class="metric-card">
+          <mat-icon>star</mat-icon>
+          <div class="metric-info">
+            <h2>Top Plan</h2>
+            <p>Platinum</p>
+          </div>
+        </mat-card>
+
+        <mat-card class="metric-card">
+          <mat-icon>schedule</mat-icon>
+          <div class="metric-info">
+            <h2>Expiring Soon</h2>
+            <p>32 Subscriptions</p>
+          </div>
+        </mat-card>
+      </div>
+          <!-- Plan List Section -->
+      <section class="plan-list-section">
+        <app-plan-list></app-plan-list>
+      </section>
+    </section>
+
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

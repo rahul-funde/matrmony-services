@@ -1,0 +1,113 @@
+<div class="container-fluid">
+    <div class="row">
+  
+      <!-- Sidebar Filters -->
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6 class="fw-bold mb-3">Filters</h6>
+  
+          <label>Age Range:</label>
+          <div class="d-flex gap-2 mb-3">
+            <input type="number" [(ngModel)]="ageMin" class="form-control" placeholder="Min">
+            <input type="number" [(ngModel)]="ageMax" class="form-control" placeholder="Max">
+          </div>
+  
+          <label>Location:</label>
+          <input type="text" [(ngModel)]="location" class="form-control mb-3">
+  
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="photoOnly">
+            <label class="form-check-label">Photo Only</label>
+          </div>
+  
+          <button class="btn btn-primary btn-sm w-100" (click)="applyFilters()">Apply Filters</button>
+        </div>
+  
+        <!-- Saved Matches -->
+        <div class="card p-3 mt-3">
+          <h6 class="fw-bold mb-3">Saved Matches</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center justify-content-between"
+                *ngFor="let match of savedMatches">
+              <div>
+                <strong>{{ match.name }}</strong> <small class="text-muted">{{ match.age }}, {{ match.location }}</small>
+              </div>
+              <button class="btn btn-sm btn-outline-danger" (click)="removeSavedMatch(match)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+      <!-- Results + Sorting -->
+      <div class="col-md-9">
+  
+        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+          <h5 class="mb-0">Results ({{ filteredResults.length }})</h5>
+  
+          <div class="d-flex align-items-center gap-2">
+            <label class="mb-0">Sort:</label>
+            <select class="form-select form-select-sm w-auto" [(ngModel)]="sortBy" (change)="applySorting()">
+              <option value="relevance">Relevance</option>
+              <option value="recent">Recently Added</option>
+              <option value="age-asc">Age ↑</option>
+              <option value="age-desc">Age ↓</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let profile of paginatedResults">
+            <div class="card h-100 text-center p-2">
+              <img src="https://via.placeholder.com/150" class="card-img-top rounded-circle mx-auto mb-2" width="100">
+              <h6>{{ profile.name }}, {{ profile.age }}</h6>
+              <small class="text-muted">{{ profile.location }}</small>
+  
+              <div class="d-flex justify-content-center gap-2 mt-2">
+                <button class="btn btn-sm btn-outline-primary" (click)="openQuickView(profile)">Quick View</button>
+                <button class="btn btn-sm btn-outline-success" (click)="saveMatch(profile)">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Pagination -->
+        <nav *ngIf="totalPages > 1">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="goToPage(currentPage - 1)">Prev</a>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage">
+              <a class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="goToPage(currentPage + 1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+  
+      </div>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div class="modal fade show d-block" tabindex="-1" *ngIf="selectedProfile" style="background-color: rgba(0,0,0,0.5)">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ selectedProfile.name }}, {{ selectedProfile.age }}</h5>
+          <button type="button" class="btn-close" (click)="closeQuickView()"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" width="100">
+          <p><strong>Location:</strong> {{ selectedProfile.location }}</p>
+          <p><strong>Photo:</strong> {{ selectedProfile.hasPhoto ? 'Available' : 'Not Available' }}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeQuickView()">Close</button>
+          <button class="btn btn-primary">Send Interest</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,56 @@
+<!-- Backdrop -->
+<div
+  class="sidenav-backdrop"
+  *ngIf="(isOpen$ | async) && isMobile"
+  (click)="close()">
+</div>
+
+<aside
+  class="sidenav"
+  [class.open]="isOpen$ | async"
+  [class.collapsed]="isCollapsed$ | async"
+  [class.route-changing]="isRouteChanging"
+  (mouseenter)="onHover(true)"
+  (mouseleave)="onHover(false)">
+
+  <ul>
+    <li *ngFor="let item of (menuItems$ | async)"
+        [class.active]="item.link && router.isActive(item.link, false)">
+
+      <!-- Section Header -->
+      <div *ngIf="item.section && !(isCollapsed$ | async)"
+           class="section-title">
+        {{ item.label }}
+      </div>
+
+      <!-- Menu Item -->
+      <a *ngIf="!item.section"
+         [routerLink]="item.link"
+         (click)="close()"
+         matTooltip="{{ item.label }}"
+         matTooltipPosition="right"
+         [matTooltipDisabled]="!(isCollapsed$ | async) || isMobile">
+
+        <mat-icon>{{ item.icon }}</mat-icon>
+
+        <span *ngIf="!(isCollapsed$ | async)">
+          {{ item.label }}
+        </span>
+
+        <!-- Premium Lock (SAFE) -->
+        <mat-icon *ngIf="item.requiresPremium" class="lock-icon">
+          lock
+        </mat-icon>
+      </a>
+
+    </li>
+  </ul>
+
+  <!-- Collapse -->
+  <button class="collapse-btn" (click)="toggleCollapse()">
+    <mat-icon [class.rotated]="isCollapsed$ | async">
+      chevron_left
+    </mat-icon>
+  </button>
+
+</aside>

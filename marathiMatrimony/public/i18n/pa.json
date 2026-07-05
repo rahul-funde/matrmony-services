@@ -1,0 +1,11 @@
+{
+  "app": { "name": "ਸੁਸ਼ੀਲ ਮਰਾਠਾ", "language": "ਭਾਸ਼ਾ" },
+  "auth": {
+    "login": { "title": "ਲਾਗਇਨ", "failed": "ਲਾਗਇਨ ਅਸਫਲ ਰਿਹਾ." },
+    "passwordReset": { "success": "ਪਾਸਵਰਡ ਸਫਲਤਾਪੂਰਵਕ ਰੀਸੈਟ ਹੋ ਗਿਆ!", "failed": "ਪਾਸਵਰਡ ਰੀਸੈਟ ਅਸਫਲ ਰਿਹਾ." }
+  },
+  "common": { "close": "ਬੰਦ ਕਰੋ", "save": "ਸੇਵ ਕਰੋ", "cancel": "ਰੱਦ ਕਰੋ", "search": "ਖੋਜੋ", "loading": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ..." },
+  "profile": { "basicDetails": "ਮੁੱਢਲੀ ਜਾਣਕਾਰੀ", "photos": "ਫੋਟੋਆਂ", "contactDetails": "ਸੰਪਰਕ ਜਾਣਕਾਰੀ" },
+  "membership": { "upgradePlan": "ਪਲਾਨ ਅੱਪਗ੍ਰੇਡ ਕਰੋ", "currentPlan": "ਮੌਜੂਦਾ ਪਲਾਨ", "contactsRemaining": "ਬਾਕੀ ਸੰਪਰਕ" },
+  "admin": { "dashboard": "ਡੈਸ਼ਬੋਰਡ", "users": "ਯੂਜ਼ਰ", "plans": "ਪਲਾਨ", "payments": "ਭੁਗਤਾਨ" }
+}

@@ -1,0 +1,197 @@
+/* ===================== CONTAINER ===================== */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+
+  /* ================= LEFT COLUMN ================= */
+  .left-column {
+    flex: 1 1 350px;
+    min-width: 300px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    button {
+      margin-bottom: 12px;
+      text-transform: none;
+      font-weight: 500;
+    }
+
+    /* ================= MESSAGE EDITOR ================= */
+    .message-editor-wrapper {
+      position: relative;
+
+      .emoji-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 10;
+      }
+
+      .emoji-popup {
+        position: fixed; /* fixed ensures it aligns with viewport */
+        z-index: 9999;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        padding: 10px;
+        max-width: 350px;
+        max-height: 400px;
+        overflow-y: auto;
+
+        @media (max-width: 768px) {
+          width: 90vw;
+          max-height: 250px;
+          left: 5vw !important;
+          top: auto !important;
+          bottom: 10px;
+        }
+      }
+    }
+
+    /* ================= ACTION BUTTONS ================= */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      button {
+        flex: 1 1 120px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  /* ================= RIGHT COLUMN ================= */
+  .right-column {
+    flex: 2 1 600px;
+    min-width: 300px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+
+    /* ================= FILTERS ================= */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+
+      mat-form-field {
+        flex: 1 1 200px;
+        min-width: 150px;
+      }
+    }
+
+    /* ================= TABLE ================= */
+    .table-container {
+      overflow-x: auto;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+          padding: 12px 8px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #f5f5f5;
+          font-weight: 600;
+        }
+
+        tr.mat-row:hover {
+          background-color: #f1f5fb;
+        }
+
+        mat-checkbox {
+          padding: 0;
+        }
+      }
+    }
+
+    mat-paginator {
+      margin-top: 10px;
+    }
+  }
+}
+
+/* ================= MOBILE ADJUSTMENTS ================= */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 15px;
+
+    .left-column, .right-column {
+      flex: 1 1 100%;
+      min-width: auto;
+      padding: 15px;
+    }
+
+    .actions {
+      flex-direction: column;
+
+      button {
+        flex: 1 1 100%;
+      }
+    }
+
+    .filters {
+      flex-direction: column;
+
+      mat-form-field {
+        flex: 1 1 100%;
+      }
+    }
+
+    .message-editor-wrapper .emoji-popup {
+      width: 90vw;
+      max-height: 250px;
+      left: 5vw !important;
+      top: auto !important;
+      bottom: 10px;
+    }
+  }
+}
+
+/* ================= ADDITIONAL STYLING ================= */
+.mat-form-field.mat-focused .mat-form-field-outline {
+  border-color: #3f51b5; /* highlight color */
+}
+
+.mat-raised-button {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.mat-stroked-button {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}

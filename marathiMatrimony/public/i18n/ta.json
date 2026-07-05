@@ -1,0 +1,11 @@
+{
+  "app": { "name": "சுஷில் மராத்தா", "language": "மொழி" },
+  "auth": {
+    "login": { "title": "உள்நுழை", "failed": "உள்நுழைவு தோல்வியடைந்தது." },
+    "passwordReset": { "success": "கடவுச்சொல் வெற்றிகரமாக மீட்டமைக்கப்பட்டது!", "failed": "கடவுச்சொல் மீட்டமைப்பு தோல்வியடைந்தது." }
+  },
+  "common": { "close": "மூடு", "save": "சேமி", "cancel": "ரத்து", "search": "தேடு", "loading": "ஏற்றுகிறது..." },
+  "profile": { "basicDetails": "அடிப்படை விவரங்கள்", "photos": "புகைப்படங்கள்", "contactDetails": "தொடர்பு விவரங்கள்" },
+  "membership": { "upgradePlan": "திட்டத்தை மேம்படுத்து", "currentPlan": "தற்போதைய திட்டம்", "contactsRemaining": "மீதமுள்ள தொடர்புகள்" },
+  "admin": { "dashboard": "டாஷ்போர்டு", "users": "பயனர்கள்", "plans": "திட்டங்கள்", "payments": "கட்டணங்கள்" }
+}

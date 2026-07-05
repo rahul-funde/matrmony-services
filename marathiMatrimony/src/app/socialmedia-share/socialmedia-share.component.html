@@ -1,0 +1,319 @@
+<div class="container">
+
+  <!-- ================= LEFT COLUMN ================= -->
+  <div class="left-column">
+    <h3>Message Templates</h3>
+
+    <!-- 🌐 LANGUAGE SELECTOR -->
+    <mat-form-field appearance="outline" style="width:160px; margin-bottom:10px;">
+      <mat-label>Language</mat-label>
+      <mat-select [(ngModel)]="selectedLanguage" (selectionChange)="prepareShareMessage()">
+        <mat-option value="en">English</mat-option>
+        <mat-option value="mr">मराठी</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- SAVED TEMPLATES -->
+    <mat-form-field appearance="outline" style="width:100%;">
+      <mat-label>Saved Templates</mat-label>
+      <mat-select [(ngModel)]="selectedTemplateId" (selectionChange)="applyTemplate()">
+        <mat-option value="">Select Template</mat-option>
+        <mat-option *ngFor="let t of savedTemplates" [value]="t.id">
+          {{ t.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-stroked-button
+      color="warn"
+      style="margin-bottom:10px;"
+      [disabled]="!selectedTemplateId"
+      (click)="deleteTemplate(selectedTemplateId!)">
+      Delete Selected Template
+    </button>
+
+    <!-- TEMPLATE NAME -->
+    <mat-form-field appearance="outline" style="width:100%;">
+      <mat-label>Template Name</mat-label>
+      <input matInput [(ngModel)]="templateName">
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!templateName || !shareMessage"
+      (click)="saveTemplate()">
+      {{ isEditing ? 'Update Template' : 'Save Template' }}
+    </button>
+
+    <!-- MESSAGE EDITOR -->
+    <div class="message-editor-wrapper">
+      <mat-form-field appearance="outline" style="width:100%; margin-top:10px;">
+        <mat-label>Prepared Message</mat-label>
+        <textarea
+          matInput
+          rows="8"
+          [(ngModel)]="shareMessage">
+        </textarea>
+
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="toggleEmojiPicker($event)">
+          😊
+        </button>
+      </mat-form-field>
+
+      <!-- EMOJI PICKER -->
+      <div
+        *ngIf="showEmojiPicker"
+        class="emoji-popup"
+        [ngStyle]="{ top: emojiPosition.top, left: emojiPosition.left }"
+        (click)="$event.stopPropagation()">
+
+        <emoji-mart
+          (emojiSelect)="addEmoji($event)"
+          [perLine]="isMobile ? 7 : 9"
+          [emojiSize]="isMobile ? 22 : 24">
+        </emoji-mart>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!shareMessage"
+        (click)="shareWhatsApp()">
+        WhatsApp
+      </button>
+
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="!shareMessage"
+        (click)="shareTelegram()">
+        Telegram
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!selectedProfiles.length"
+        (click)="copyMessageAndOpenFacebook()">
+        📋 Copy & Open Facebook
+      </button>
+
+      <button
+        mat-stroked-button
+        [disabled]="!shareMessage"
+        (click)="copyToClipboard()">
+        Copy
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= RIGHT COLUMN ================= -->
+  <div class="right-column">
+
+  <!-- FILTERS -->
+  <div class="filters">
+
+    <!-- SEARCH -->
+    <mat-form-field appearance="outline">
+      <mat-label>Search name</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        (input)="onFilterChange()">
+    </mat-form-field>
+
+    <!-- MARITAL -->
+    <mat-form-field appearance="outline">
+      <mat-label>Marital Filter</mat-label>
+      <mat-select
+        [(ngModel)]="selectedMaritalGenderFilter"
+        (selectionChange)="onFilterChange()">
+
+        <mat-option value="">All</mat-option>
+        <mat-option value="UNMARRIED_BOYS">Unmarried Boys</mat-option>
+        <mat-option value="UNMARRIED_GIRLS">Unmarried Girls</mat-option>
+        <mat-option value="DIVORCED_MEN">Divorced Men</mat-option>
+        <mat-option value="DIVORCED_WOMEN">Divorced Women</mat-option>
+        <mat-option value="WIDOWER_MEN">Widower Men</mat-option>
+        <mat-option value="WIDOWER_WOMEN">Widower Women</mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+    <!-- PLAN -->
+    <mat-form-field appearance="outline">
+      <mat-label>Plan</mat-label>
+      <mat-select
+        [(ngModel)]="selectedPlanFilter"
+        (selectionChange)="onFilterChange()">
+
+        <mat-option value="">All Plans</mat-option>
+
+        <mat-option
+          *ngFor="let plan of plans"
+          [value]="plan.value">
+
+          {{ plan.label }}
+
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+
+<div class="table-container">
+  <div class="mb-3">
+    <strong>Select fields to include in share message:</strong>
+
+    <div class="row mt-2">
+      <div class="col-md-3" *ngFor="let key of allShareColumns">
+        <mat-checkbox
+          [checked]="selectedShareColumns.includes(key)"
+          (change)="onShareColumnToggle(key, $event.checked)">
+          {{ shareColumnMap[key].label[selectedLanguage] }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" matSort>
+
+    <!-- SELECT -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="toggleSelectAll($event.checked)"
+          [checked]="isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let p">
+        <mat-checkbox
+          (change)="toggleSelection(p, $event.checked)"
+          [checked]="isSelected(p)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+ <!-- USER ID -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let p">{{ p.personalDetails.firstName }} {{ p.personalDetails.middleName }} {{ p.personalDetails.lastName }}</td>
+    </ng-container>
+
+    <!-- USER ID -->
+    <ng-container matColumnDef="userId">
+      <th mat-header-cell *matHeaderCellDef>Profile ID</th>
+      <td mat-cell *matCellDef="let p">{{ p.userId }}</td>
+    </ng-container>
+
+    <!-- GENDER -->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.personalDetails.gender }}
+      </td>
+    </ng-container>
+
+    <!-- AGE -->
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>Age</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.personalDetails.age || 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- MARITAL STATUS -->
+    <ng-container matColumnDef="maritalStatus">
+      <th mat-header-cell *matHeaderCellDef>Marital Status</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.personalDetails.maritalStatus || 'N/A' }}
+      </td>
+    </ng-container>
+    
+    <!-- PLAN -->
+    <ng-container matColumnDef="plan">
+      <th mat-header-cell *matHeaderCellDef>Plan</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.plan || 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- HEIGHT -->
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef>Height</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.personalDetails.height }} {{ p.personalDetails.heightUnit }}
+      </td>
+    </ng-container>
+
+    <!-- EDUCATION -->
+    <ng-container matColumnDef="education">
+      <th mat-header-cell *matHeaderCellDef>Education</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.educationDetails?.highestQualification || 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- OCCUPATION -->
+    <ng-container matColumnDef="occupation">
+      <th mat-header-cell *matHeaderCellDef>Occupation</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.careerDetails?.occupation || 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- INCOME -->
+    <ng-container matColumnDef="income">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Income</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.careerDetails?.annualIncome }}
+      </td>
+    </ng-container>
+
+    <!-- WORK CITY -->
+    <ng-container matColumnDef="workCity">
+      <th mat-header-cell *matHeaderCellDef>Work City</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.careerDetails?.workLocationCity || 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- NATIVE PLACE -->
+    <ng-container matColumnDef="nativePlace">
+      <th mat-header-cell *matHeaderCellDef>Native Place</th>
+      <td mat-cell *matCellDef="let p">
+        {{ p.familyDetails?.nativeTaluka }},
+        {{ p.familyDetails?.nativeDistrict }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+
+    </div>
+
+<mat-paginator
+  #paginator
+  [length]="totalRecords"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[10, 50, 100, 250, 500,1000]"
+  showFirstLastButtons>
+</mat-paginator>
+
+
+
+  </div>
+</div>

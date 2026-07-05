@@ -1,0 +1,206 @@
+<app-header></app-header>
+
+<!-- SIDENAV -->
+<app-sidenav></app-sidenav>
+
+<!-- MAIN CONTENT -->
+<main
+  class="main-content"
+  [class.shifted]="
+    (sidenavMenuService.isOpen$ | async) &&
+    !(sidenavMenuService.isCollapsed$ | async) &&
+    !isMobile()
+  "
+>
+  <div class="container my-4">
+
+    <!-- ================= TABS ================= -->
+    <ul class="nav nav-tabs mb-3 justify-content-center">
+      <li class="nav-item" *ngFor="let tab of tabs">
+        <button
+          class="nav-link"
+          [class.active]="selectedTab === tab"
+          (click)="switchTab(tab)"
+        >
+          {{ tab | titlecase }} Interests
+        </button>
+      </li>
+    </ul>
+
+    <!-- ================= EMPTY ================= -->
+    <div
+      *ngIf="displayedInterests.length === 0"
+      class="text-center text-muted my-4"
+    >
+      <p>No {{ selectedTab }} interests found.</p>
+    </div>
+
+    <!-- ================= INTEREST GRID ================= -->
+    <div
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="150"
+      (scrolled)="onScroll()"
+    >
+      <div
+        class="col"
+        *ngFor="let interest of displayedInterests; trackBy: trackByInterest"
+      >
+        <div class="card shadow-sm h-100">
+
+          <!-- Profile Image -->
+          <img
+            [src]="getProfileImage(interest)"
+            class="card-img-top"
+            loading="lazy"
+            alt="Profile Picture"
+            (error)="handleImageError($event)"
+            (click)="openViewer(interest.profilePicture)"
+          />
+
+          <!-- Card Body -->
+          <div class="card-body text-center p-2">
+
+            <!-- Name -->
+            <h6 class="card-title mb-1">
+              {{ interest.firstName }} {{ interest.lastName }}
+              <small class="text-muted">({{ interest.otherUserId }})</small>
+            </h6>
+
+            <!-- Basic Info -->
+            <p class="card-text text-muted small mb-2">
+              {{ interest.highestQualification }},
+              {{ interest.occupation }},
+              {{ interest.caste }} <br />
+              Age {{ interest.age }},
+              Height: {{ interest.height }} ft
+            </p>
+
+            <!-- ================= STATUS BADGE ================= -->
+            <div class="mb-2">
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-success': interest.status === 'accepted',
+                  'bg-danger': interest.status === 'rejected',
+                  'bg-secondary': interest.status === 'pending',
+                  'bg-dark': interest.status === 'cancelled'
+                }"
+              >
+
+                <!-- Pending -->
+                <ng-container *ngIf="interest.status === 'pending'">
+                  {{ interest.initiatedBy === currentUserId
+                      ? 'Pending (Sent)'
+                      : 'Pending (Received)' }}
+                </ng-container>
+
+                <!-- Accepted -->
+                <ng-container *ngIf="interest.status === 'accepted'">
+                  {{ interest.initiatedBy === currentUserId
+                      ? 'Accepted By Them'
+                      : 'You Accepted' }}
+                </ng-container>
+
+                <!-- Rejected -->
+                <ng-container *ngIf="interest.status === 'rejected'">
+                  {{ interest.initiatedBy === currentUserId
+                      ? 'Rejected By Them'
+                      : 'You Rejected' }}
+                </ng-container>
+
+                <!-- Cancelled -->
+                <ng-container *ngIf="interest.status === 'cancelled'">
+                  Cancelled
+                </ng-container>
+
+              </span>
+            </div>
+
+            <!-- ================= STATUS TIMELINE ================= -->
+              <div
+                class="timeline mt-2"
+                *ngIf="interest.statusHistory?.length"
+              >
+                <div
+                  class="timeline-item small text-start mb-2"
+                  *ngFor="let history of interest.statusHistory"
+                >
+
+                  <div>
+                    <strong>
+                      {{ (history.status || history.newStatus) | titlecase }}
+                    </strong>
+                    <span class="text-muted">
+                      • {{ history.timestamp | date:'medium' }}
+                    </span>
+                  </div>
+
+                  <div class="text-muted">
+                    {{ history.updatedBy === currentUserId
+                        ? 'You performed this action'
+                        : 'They performed this action' }}
+                  </div>
+
+                </div>
+              </div>
+
+
+            <!-- ================= ACTION BUTTONS ================= -->
+
+            <!-- 🔵 SENT TAB -->
+            <div *ngIf="selectedTab === 'sent'">
+
+              <button
+                *ngIf="interest.status === 'pending'"
+                class="btn btn-outline-danger btn-sm w-100"
+                (click)="cancelInterest(interest.interestId)"
+              >
+                Cancel Interest
+              </button>
+
+              <button
+                *ngIf="interest.status !== 'pending'"
+                class="btn btn-sm w-100"
+                [ngClass]="{
+                  'btn-success': interest.status === 'accepted',
+                  'btn-secondary': interest.status === 'rejected',
+                  'btn-dark': interest.status === 'cancelled'
+                }"
+                disabled
+              >
+                {{ interest.status | titlecase }}
+              </button>
+
+            </div>
+
+            <!-- 🟢 RECEIVED TAB -->
+            <div
+              *ngIf="selectedTab === 'received' && interest.status === 'pending'"
+              class="d-grid gap-1"
+            >
+              <button
+                class="btn btn-success btn-sm"
+                (click)="acceptInterest(interest.interestId)"
+              >
+                Accept
+              </button>
+
+              <button
+                class="btn btn-warning btn-sm"
+                (click)="rejectInterest(interest.interestId)"
+              >
+                Reject
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<app-footer></app-footer>

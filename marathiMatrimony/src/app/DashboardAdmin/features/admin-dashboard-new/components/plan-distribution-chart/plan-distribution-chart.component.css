@@ -1,0 +1,73 @@
+/* ================= Chart Card Container ================= */
+.chart-card {
+  background-color: #fff;                   /* White card */
+  border-radius: 12px;                      /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft shadow */
+  padding: 20px;
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 360px;                            /* fixed height ensures chart renders */
+}
+
+.chart-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ================= Header ================= */
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.chart-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ================= Chart Body ================= */
+.chart-body {
+  position: relative;
+  width: 100%;
+  flex: 1;               /* grow to fill remaining space */
+  min-height: 280px;     /* ensures Chart.js has space */
+}
+
+/* ================= Canvas ================= */
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;  /* fills chart-body */
+  max-height: 100%;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   Theme Upgrade
+========================================================= */
+.chart-card {
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-sm);
+  color: var(--app-color-text);
+}
+
+.chart-card:hover {
+  box-shadow: var(--app-shadow-md);
+  border-color: color-mix(in srgb, var(--app-color-primary) 24%, var(--app-color-border));
+}
+
+.chart-header h3 {
+  color: var(--app-color-primary);
+}
+
+.chart-body {
+  color: var(--app-color-text);
+}

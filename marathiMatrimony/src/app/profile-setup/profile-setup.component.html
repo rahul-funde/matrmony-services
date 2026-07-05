@@ -1,0 +1,24 @@
+<div *ngIf="userProfile$ | async as userProfile; else loading">
+  <form >
+    <div>
+      <label>Name:</label>
+      <input formControlName="name" />
+    </div>
+
+    <div>
+      <label>Email:</label>
+      <input formControlName="email" />
+    </div>
+
+    <div>
+      <label>City:</label>
+      <input formControlName="city" />
+    </div>
+
+    <button type="submit">Save</button>
+  </form>
+</div>
+
+<ng-template #loading>
+  <p>Loading profile...</p>
+</ng-template>

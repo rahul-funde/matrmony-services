@@ -1,0 +1,22 @@
+<mat-card class="matches">
+  <div class="header">
+    <h3>Suggested Matches</h3>
+  </div>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div class="grid" *ngIf="!loading">
+    <mat-card class="match" *ngFor="let m of matches">
+      <img mat-card-image [src]="m.photo" alt="{{m.name}}">
+      <mat-card-content>
+        <h4>{{m.name}} <span class="age">{{m.age}}</span></h4>
+        <p class="city">{{m.city}}</p>
+        <div class="compat">Compat: <strong>{{m.compat}}%</strong></div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button (click)="shortlist(m)"><mat-icon>bookmark</mat-icon></button>
+        <button mat-flat-button color="primary" (click)="sendInterest(m)">Send Interest</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</mat-card>

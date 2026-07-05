@@ -1,0 +1,847 @@
+<!-- HEADER -->
+<header class="site-header" [class.shrink]="isShrunk">
+  <!-- Mobile menu overlay -->
+  <div class="menu-overlay" (click)="closeMenu()" [class.show]="isMenuOpen"></div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark">
+              <!-- <img src="images/sushil_maratha_logo1.png" class="brand-logos" /> -->
+
+    <div class="container">
+
+     <a class="navbar-brand brand-area" routerLink="/welcome">
+        <div class="logo-wrapper">
+          <!-- <img src="images/sushil_maratha_logo1.png" class="brand-logo" /> -->
+                    <img src="images/cl1.png" class="brand-logo" />
+
+        </div>
+      </a> 
+      <!-- Logo -->
+<!--       <a class="navbar-brand d-flex align-items-center" routerLink="/welcome">
+        <img src="images/sushil_maratha_logo.png" class="brand-logo" />
+      </a>
+
+ -->      <!-- Mobile Toggle -->
+      <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Center Menu -->
+      <div class="collapse navbar-collapse justify-content-center" [class.show]="isMenuOpen" id="mainNavbar">
+        <ul class="navbar-nav align-items-center gap-lg-4 fw-semibold">
+
+          <li class="nav-item">
+            <a class="nav-link"
+               routerLink="/welcome"
+               routerLinkActive="active"
+               (click)="closeMenu()">
+
+              <i class="bi bi-house-door me-1"></i>
+              {{ currentLang === 'English' ? 'Home' : '??????????' }}
+
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               (click)="openAboutUsDialog()">
+
+              <i class="bi bi-info-circle me-1"></i>
+              {{ currentLang === 'English' ? 'About Us' : '???????????' }}
+
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               routerLink="/services"
+               routerLinkActive="active"
+               (click)="closeMenu()">
+
+              <i class="bi bi-grid me-1"></i>
+              {{ currentLang === 'English' ? 'Services' : '????' }}
+
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"
+               (click)="openContactUsDialog()">
+
+              <i class="bi bi-envelope me-1"></i>
+              {{ currentLang === 'English' ? 'Contact' : '??????' }}
+
+            </a>
+          </li>
+
+          <!-- FILTER BUTTON -->
+          <li class="nav-item">
+            <button class="btn btn-filter"
+                    (click)="toggleFilters()">
+
+              <i class="bi bi-sliders"></i>
+
+              {{ currentLang === 'English'
+                ? 'Filter Profiles'
+                : '???? ??????' }}
+
+            </button>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- Right Section -->
+      <div class="d-flex align-items-center gap-3">
+
+        <!-- Language Toggle -->
+        <div class="dropdown">
+          <button class="btn btn-lang dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            {{ currentLang }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" (click)="switchLang('?????')">?????</a></li>
+            <li><a class="dropdown-item" (click)="switchLang('English')">English</a></li>
+          </ul>
+        </div>
+
+        <!-- Auth Buttons -->
+        <button
+          class="btn btn-outline-primary btn-sm px-3"
+          (click)="openLoginDialog()">
+          {{ currentLang === 'English' ? 'Login' : '?????' }}
+        </button>
+
+        <button
+          class="btn btn-pink btn-sm px-3 fw-semibold"
+          (click)="openRegisterDialog()">
+          {{ currentLang === 'English' ? 'Register' : '??????' }}
+        </button>
+
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+
+<!-- HERO SECTION -->
+<section id="hero-banner-search" class="position-relative">
+  <!-- Carousel Background -->
+  <owl-carousel-o [options]="customOptions" class="carousel-bg">
+    <ng-container *ngFor="let slide of slides">
+      <ng-template carouselSlide [id]="slide.id">
+        <img [src]="slide.image" [alt]="slide.title" class="carousel-image" />
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+
+  <div class="hero-shell text-white">
+    <div class="hero-copy">
+      <span class="hero-kicker">
+        {{ currentLang === 'English' ? 'Trusted Maratha Matrimony' : '??????????? ????? ????? ????' }}
+      </span>
+
+      <h1>
+        {{ currentLang === 'English'
+          ? 'Find a match your family can trust'
+          : '?????????? ???? ????? ????? ???????' }}
+      </h1>
+
+      <p class="lead">
+        {{ currentLang === 'English'
+          ? 'Verified profiles, thoughtful filters, and family-first matchmaking for meaningful relationships.'
+          : '????????? ????????, ???? ?????? ??? ??????????? ?????????? ????????? ?????? ????.' }}
+      </p>
+
+      <div class="hero-trust-row" aria-label="Trust highlights">
+        <span>{{ currentLang === 'English' ? 'Verified profiles' : '????????? ????????' }}</span>
+        <span>{{ currentLang === 'English' ? 'Privacy focused' : '?????????? ?????????' }}</span>
+        <span>{{ currentLang === 'English' ? 'Maratha community' : '????? ?????????' }}</span>
+      </div>
+
+      <div class="hero-match-selector">
+        <span class="selector-label">
+          {{ currentLang === 'English' ? 'I am looking for' : '?? ???? ???' }}
+        </span>
+
+        <div class="selector-buttons">
+          <button
+            class="hero-cta"
+            [class.active]="selectedSeeking === 'Female'"
+            (click)="selectSeeking('Female')">
+            <mat-icon>face</mat-icon>
+            {{ currentLang === 'English' ? 'Bride' : '???' }}
+          </button>
+
+          <button
+            class="hero-cta"
+            [class.active]="selectedSeeking === 'Male'"
+            (click)="selectSeeking('Male')">
+            <mat-icon>emoji_people</mat-icon>
+            {{ currentLang === 'English' ? 'Groom' : '??' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-stats" aria-label="Platform highlights">
+      <div>
+        <strong>{{ happyCouples | number }}</strong>
+        <span>{{ currentLang === 'English' ? 'families connected' : 'कुटुंबे जोडली' }}</span>
+      </div>
+      <div>
+        <strong>100%</strong>
+        <span>{{ currentLang === 'English' ? 'community focused' : 'समाज केंद्रित' }}</span>
+      </div>
+      <button type="button" class="hero-secondary" (click)="toggleFilters()">
+        {{ currentLang === 'English' ? 'Explore profiles' : 'प्रोफाइल पहा' }}
+      </button>
+    </aside>
+  </div>
+
+  <!-- Overlay Content -->
+  <div class="hero-overlay text-center text-white">
+    <h1 class="fw-bold">
+      {{ currentLang === 'English'
+        ? '🌟 Where Trust Meets Tradition'
+        : '🌟 विश्वासाने शोधा तुमचा योग्य जोडीदार' }}
+    </h1>
+    <p class="lead">
+      {{ currentLang === 'English'
+        ? 'Helping Maratha families connect with confidence  🤝'
+        : 'मराठा समाजासाठी विश्वासार्ह विवाह संस्था  🤝' }}
+    </p>
+        <div class="hero-match-selector">
+          <span class="selector-label">
+            {{ currentLang === 'English' ? 'Looking for:' : 'शोधत आहे:' }}
+          </span>
+
+          <div class="selector-buttons">
+
+            <button
+              class=" hero-cta cta-with-scroll"
+              [class.active]="selectedSeeking === 'Bride'"
+              (click)="selectSeeking('Female')">
+              <mat-icon>face</mat-icon>  <!-- groom -->
+              {{ currentLang === 'English' ? 'Bride' : 'वधू' }}
+            </button>
+
+            <button
+              class=" hero-cta cta-with-scroll"
+              [class.active]="selectedSeeking === 'Groom'"
+              (click)="selectSeeking('Male')">
+                <mat-icon>emoji_people</mat-icon>
+                {{ currentLang === 'English' ? 'Groom' : 'वर' }}
+            </button>
+          </div>
+
+    </div>
+<!--     <button class="hero-cta cta-with-scroll" (click)="scrollToProfiles()">
+      <span class="cta-text">
+        {{ currentLang === 'English'
+          ? 'View Verified Profiles'
+          : 'वेरिफाइड प्रोफाइल पहा' }}
+      </span>
+
+      <span class="scroll-indicator mouse inside">
+        <span class="wheel"></span>
+      </span>
+    </button> -->
+  </div>
+
+</section>
+
+<!-- SEARCH & PROFILES SECTION -->
+<section id="search-profiles-section" class="search-profiles-section py-5">
+
+  <div class="container">
+
+    <!-- FILTER BUTTON -->
+    <div class="row mb-4">
+      <div class="col-12 d-flex justify-content-center justify-content-md-end">
+        <button class="btn btn-outline-primary px-4 fw-semibold"
+                (click)="toggleFilters()">
+          <i class="bi bi-funnel me-2"></i>
+          Advance Filters
+        </button> &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-outline-secondary clear-filter" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+
+      <!-- FILTER POPUP OVERLAY -->
+      <div class="filter-overlay" *ngIf="showFilters">
+  <div class="filter-popup">
+
+    <!-- HEADER -->
+    <div class="filter-header">
+      <h5>Advance Filters</h5>
+      <button class="close-btn" (click)="toggleFilters()">✕</button>
+    </div>
+
+    <!-- BODY -->
+    <div class="filter-body">
+      <form [formGroup]="searchForm" class="row g-3">
+
+        <!-- ================= PRIMARY FILTERS ================= -->
+        <div class="col-12">
+          <button
+            type="button"
+            class="filter-accordion-title"
+            (click)="primaryOpen = !primaryOpen"
+          >
+            Primary Filters
+            <span [class.rotate]="primaryOpen">⌄</span>
+          </button>
+        </div>
+
+        <ng-container *ngIf="primaryOpen">
+          <!-- Profile ID -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Profile ID</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="profileId"
+              placeholder="e.g. G0001-1225"
+            />
+          </div>
+
+          <!-- Seeking -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Seeking</label>
+            <select class="form-select" formControlName="seeking">
+              <option value="">All</option>
+              <option *ngFor="let s of seeking" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+
+          <!-- Age -->
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>From Age</label>
+            <input type="number" class="form-control" formControlName="ageMin">
+          </div>
+
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>To Age</label>
+            <input type="number" class="form-control" formControlName="ageMax">
+          </div>
+
+          <!-- Marital Status -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Marital Status</label>
+            <select class="form-select" formControlName="maritalStatus" multiple>
+              <option *ngFor="let s of maritalStatusOptions" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+
+          <!-- Sub-Caste -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Sub-Caste</label>
+            <select class="form-select" formControlName="subCaste" multiple>
+              <option *ngFor="let c of subCasteOptions" [value]="c">{{ c }}</option>
+            </select>
+          </div>
+
+          <!-- Occupation -->
+          <div class="col-12 col-lg-4">
+            <label>Occupation</label>
+
+            <input
+              class="form-control mb-2"
+              placeholder="Search occupation..."
+              [formControl]="occupationSearchCtrl">
+
+            <select
+              class="form-select"
+              formControlName="occupationType"
+              multiple
+              size="6"
+            >
+              <ng-container *ngFor="let group of filteredOccupationGroups$ | async">
+                <optgroup [label]="group.category">
+                  <option *ngFor="let option of group.values" [value]="option">
+                    {{ option }}
+                  </option>
+                </optgroup>
+              </ng-container>
+            </select>
+          </div>
+
+          <!-- Education -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Education</label>
+            <select class="form-select" formControlName="education" multiple>
+              <option *ngFor="let e of educationOptions" [value]="e">{{ e }}</option>
+            </select>
+          </div>
+
+        </ng-container>
+
+        <!-- ================= ADVANCED FILTERS ================= -->
+        <div class="col-12 mt-2">
+          <button
+            type="button"
+            class="filter-accordion-title advanced"
+            (click)="advancedOpen = !advancedOpen"
+          >
+            Advanced Filters
+            <span [class.rotate]="advancedOpen">⌄</span>
+          </button>
+        </div>
+
+        <ng-container *ngIf="advancedOpen">
+
+          <!-- Height -->
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>Min Height</label>
+            <input type="number" class="form-control" formControlName="heightMin">
+          </div>
+
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>Max Height</label>
+            <input type="number" class="form-control" formControlName="heightMax">
+          </div>
+
+          <!-- Income -->
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>Min Income</label>
+            <input type="number" class="form-control" formControlName="incomeMin">
+          </div>
+
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>Max Income</label>
+            <input type="number" class="form-control" formControlName="incomeMax">
+          </div>
+
+          <!-- Manglik -->
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>Manglik</label>
+            <select class="form-select" formControlName="manglik">
+              <option value="">All</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+
+          <!-- Diet -->
+          <div class="col-6 col-md-3 col-lg-2">
+            <label>Diet</label>
+            <select class="form-select" formControlName="diet">
+              <option value="">All</option>
+              <option value="Vegetarian">Vegetarian</option>
+              <option value="Non-Veg">Non-Veg</option>
+              <option value="Vegan">Vegan</option>
+            </select>
+          </div>
+
+          <!-- Native -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Native Place</label>
+            <input class="form-control" formControlName="nativePlace">
+          </div>
+
+          <!-- Work -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label>Work Place</label>
+            <input class="form-control" formControlName="workPlace">
+          </div>
+
+        </ng-container>
+
+      </form>
+    </div>
+
+    <!-- FOOTER (STICKY) -->
+    <div class="filter-footer">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="searchForm.reset()"
+      >
+        Clear All
+      </button>
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="onSearch()"
+      >
+        Apply Filters
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="profiles-container">
+
+  <!-- LEFT SCROLL -->
+  <button class="scroll-btn left-btn" (click)="scrollLeft()">‹</button>
+
+  <div class="profiles-scroll-wrapper" #scrollContainer>
+
+    <ng-container *ngIf="profiles?.length; else noProfiles">
+
+      <div class="profiles-grid">
+
+        <!-- PROFILE CARD -->
+        <div class="profile-card" *ngFor="let p of profiles">
+
+          <!-- BACKGROUND IMAGE -->
+          <div class="card-bg">
+
+            <img
+              [src]="getProfileImage(p)"
+              alt="Profile"
+              (error)="handleImageError($event)"
+              (click)="openViewer(p?.photoDetails?.profilePicture)"
+            />
+
+            <!-- VERIFIED BADGE -->
+            <span *ngIf="p?.status === 'verified'" class="verified-badge">
+              <mat-icon>verified</mat-icon>
+            </span>
+
+          </div>
+
+          <!-- CARD OVERLAY CONTENT -->
+          <div class="card-overlay">
+
+            <!-- ID + NAME -->
+            <div class="profile-id">
+              {{ p.userId }} | {{ p.personalDetails?.lastName }}
+            </div>
+
+            <!-- AGE HEIGHT -->
+            <div class="profile-meta">
+
+              <span *ngIf="p.personalDetails?.age">
+                Age: {{ p.personalDetails.age }}
+              </span>
+
+              <span *ngIf="p.personalDetails?.height">
+                | Height: {{ p.personalDetails.height }}
+              </span>
+
+            </div>
+
+            <!-- MARITAL + LOCATION -->
+            <div class="profile-meta">
+
+              <span *ngIf="p.personalDetails?.maritalStatus">
+               <strong> 💍{{ p.personalDetails.maritalStatus }} </strong>
+              </span>
+
+              <span *ngIf="p.familyDetails?.nativeDistrict">
+                <!-- <mat-icon class="location-icon">location_on</mat-icon> -->
+               📍{{ p.familyDetails.nativeDistrict }}
+              </span>
+
+            </div>
+
+            <!-- OCCUPATION -->
+            <div class="occupation" *ngIf="p.careerDetails?.occupation">
+              💼 {{ p.careerDetails.occupation }}
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="profile-actions">
+
+              <button
+                class="btn view-profile-btn"
+                (click)="openProfileDialog(p)">
+                View Profile
+              </button>
+
+              <button
+                class="btn view-contact-btn"
+                (click)="openLoginDialog(p.userId)">
+                &nbsp;View Contact
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+    <ng-template #noProfiles>
+      <div class="no-profile">
+        No profiles available
+      </div>
+    </ng-template>
+
+  </div>
+
+  <!-- RIGHT SCROLL -->
+  <button class="scroll-btn right-btn" (click)="scrollRight()">›</button>
+
+</div>
+  </div>
+</section>
+
+
+<!-- SUCCESS STORIES SECTION -->
+<div class="success-stories-section">
+
+  <h3 class="section-title">💍 Success Stories</h3>
+  <br>
+    Coming soon...
+  <!-- <div class="story-card" *ngFor="let story of successStories">
+
+    <img [src]="story.image" alt="Couple">
+
+    <div class="story-content">
+      <h4>{{ story.coupleName }}</h4>
+      <p>{{ story.message }}</p>
+    </div>
+
+  </div> -->
+
+</div>
+
+<ng-template #loginDialog>
+  <div class="login-wrapper">
+
+    <div class="login-card dialog-animate">
+
+      <!-- Close Button -->
+      <button
+        type="button"
+        class="login-close-btn"
+        aria-label="Close"
+        (click)="close()"
+      >
+      X
+        <!-- <i class="bi bi-x-lg"></i> -->
+      </button>
+
+      <!-- Title -->
+      <h3 class="login-title">Welcome Back</h3>
+      <p class="login-subtitle">
+        Login to continue to <strong>Sushil Maratha</strong>
+      </p>
+
+      <!-- Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+        <!-- Email / Mobile -->
+        <div class="form-group mb-3">
+          <label>Email or Mobile</label>
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="identifier"
+              placeholder="Enter email or mobile"
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-4">
+          <label>Password</label>
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-lock-fill"></i>
+            </span>
+            <input
+              [type]="hidePassword ? 'password' : 'text'"
+              class="form-control"
+              formControlName="password"
+              placeholder="Enter password"
+            />
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="btn login-btn w-100">
+          Login
+        </button>
+
+        <!-- Footer Links -->
+        <div class="login-footer">
+          <button type="button" (click)="openRegisterDialog()">Create Account</button>
+          <a href="javascript:void(0)" (click)="goToForgotPassword($event)">
+            Forgot Password?
+          </a>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</ng-template>
+
+
+
+
+
+<ng-template #profileDialog let-data>
+  <div class="profile-dialog">
+
+    <!-- Header -->
+    <div class="dialog-header">
+      <div class="header-info">
+        <h2>{{ data.personalDetails.lastName }} ({{ data.userId }}) </h2>
+                <!-- <span class="user-id">({{ data.userId }})</span> -->
+      </div>
+      <button class="close-btn" mat-icon-button (click)="close()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <mat-dialog-content class="dialog-content">
+
+      <!-- Profile Picture + View Contact -->
+      <div class="profile-top profile-top-img d-flex align-items-center gap-3">
+
+        <!-- Profile Picture -->
+        <div class="profile-pic-wrapper profile-pic-wrapperdialog">
+          <img
+            [src]="getProfileImage(data)"
+            class="profile-pic profile-top-img"
+            alt="Profile Picture"
+            (error)="handleImageError($event)"
+            (click)="openViewer(data?.photoDetails?.profilePicture)"
+          />
+        </div>
+
+        <!-- View Contact -->
+        <div class="view-contact-box">
+          <button
+            class="view-contact-btn btn d-flex align-items-center gap-2"
+              matTooltip="{{ currentLang === 'English'
+    ? 'Login or Register to view contact details'
+    : 'संपर्क माहिती पाहण्यासाठी कृपया लॉगिन करा. आपण नोंदणीकृत सदस्य नसल्यास, कृपया नोंदणी करून संपर्क माहिती पाहा. धन्यवाद!' }}"
+            (click)="openLoginDialog(data.userId)">
+
+            <mat-icon class="eye-icon">visibility</mat-icon>
+            <span> {{ currentLang === 'English' ? 'View Contact' : 'संपर्क पाहा.' }}</span>
+
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- Sections -->
+      <div class="profile-sections">
+          <!-- Personal Info -->
+        <section class="profile-section">
+          <h3 class="section-title">Personal Information</h3>
+          <div class="section-grid">
+            <span *ngIf="data.userId">ID: {{ data.userId }}</span>
+            <span *ngIf="data?.personalDetails?.age">🎂 Age: {{ data?.personalDetails?.age }} yrs</span>
+            <span *ngIf="data?.personalDetails?.gender">⚧ Gender: {{ data.personalDetails?.gender }}</span>
+            <span *ngIf="data?.personalDetails?.dateOfBirth">📅 DOB: {{ data.personalDetails?.dateOfBirth | date }}</span>
+            <span *ngIf="data.personalDetails?.height">📏 Height: {{ data.personalDetails?.height }} {{ data.personalDetails?.heightUnit }}</span>
+            <span *ngIf="data.personalDetails?.weight">⚖ Weight: {{ data.personalDetails?.weight }}</span>
+            <span *ngIf="data.personalDetails.bloodGroup">🩸 Blood: {{ data.personalDetails.bloodGroup }}</span>
+            <span *ngIf="data.personalDetails.religion">Religion: {{ data.personalDetails.religion }}</span>
+            <span *ngIf="data.personalDetails.caste">Caste: {{ data.personalDetails.caste }} <span *ngIf="data.personalDetails.subCaste">({{ data.personalDetails.subCaste }})</span></span>
+            <span *ngIf="data.personalDetails.complexion">Skin: {{ data.personalDetails.complexion }}</span>
+            <span *ngIf="data.personalDetails.maritalStatus">Marital Status: {{ data.personalDetails.maritalStatus }}</span>
+          </div>
+        </section>
+
+        <!-- Education -->
+        <section class="profile-section">
+          <h3 class="section-title">Education Details</h3>
+          <div class="section-grid">
+            <span *ngIf="data.educationDetails?.highestQualification">🎓 Highest Qualification: {{ data.educationDetails.highestQualification }}</span>
+            <span *ngIf="data.educationDetails?.educationType">Education Type: {{ data.educationDetails.educationType }}</span>
+            <span *ngIf="data.educationDetails?.collegeName">College: {{ data.educationDetails.collegeName }}</span>
+            <span *ngIf="data.educationDetails?.yearOfCompletion">Year: {{ data.educationDetails.yearOfCompletion }}</span>
+            <span *ngIf="data.educationDetails?.additionalQualifications">Other Qualification: {{ data.educationDetails.additionalQualifications }}</span>
+          </div>
+        </section>
+
+        <!-- Professional -->
+        <section class="profile-section">
+          <h3 class="section-title">Professional & Career</h3>
+          <div class="section-grid">
+            <span *ngIf="data.careerDetails?.occupation">Occupation: {{ data.careerDetails?.occupation }}</span>
+            <span *ngIf="data.careerDetails?.jobTitle">Job Title: {{ data.careerDetails?.jobTitle }}</span>
+            <span *ngIf="data.careerDetails?.companyName">Company: {{ data.careerDetails?.companyName }}</span>
+            <span *ngIf="data.careerDetails?.annualIncome">💰 Annual Income: ₹{{ data.careerDetails?.annualIncome }}</span>
+            <span *ngIf="data.careerDetails?.employmentType">Employment: {{ data.careerDetails?.employmentType }}</span>
+            <span *ngIf="data.careerDetails?.workLocationCity || data.careerDetails?.workLocationCountry">Location: {{ data.careerDetails?.workLocationCity }}, {{ data.careerDetails?.workLocationState }}, {{ data.careerDetails?.workLocationCountry }}</span>
+          </div>
+        </section>
+
+        <!-- Lifestyle -->
+        <section class="profile-section">
+          <h3 class="section-title">Lifestyle</h3>
+          <div class="section-grid">
+            <span *ngIf="data.lifestyleDetails?.diet">Diet: {{ data.lifestyleDetails?.diet }}</span>
+            <span *ngIf="data.lifestyleDetails?.smoking">Smoking: {{ data.lifestyleDetails?.smoking }}</span>
+            <span *ngIf="data.lifestyleDetails?.drinking">Drinking: {{ data.lifestyleDetails?.drinking }}</span>
+            <span *ngIf="data.lifestyleDetails?.hobbies">Hobbies: {{ data.lifestyleDetails?.hobbies }}</span>
+            <span *ngIf="data.personalDetails?.spectacles">Spectacles: {{ data.personalDetails?.spectacles }}</span>
+          </div>
+        </section>
+
+        <!-- Family -->
+        <section class="profile-section">
+          <h3 class="section-title">Family Information</h3>
+          <div class="section-grid">
+            <span *ngIf="data?.familyDetails?.father">Father: {{ data.familyDetails?.father }} ({{ data.familyDetails?.fatherOccupation }})</span>
+            <span *ngIf="data?.familyDetails?.mother">Mother: {{ data.familyDetails.mother }} ({{ data?.familyDetails?.motherOccupation }})</span>
+            <span *ngIf="data?.familyDetails?.familyType">Family Type: {{ data.familyDetails?.familyType }}</span>
+            <span *ngIf="data.familyDetails?.familyWealth">Wealth: {{ data.familyDetails?.familyWealth }}</span>
+            <span *ngIf="data.familyDetails?.hasBrothers">Brothers: {{ data.familyDetails?.brothersCount }} Married: {{ data.familyDetails?.brothersMarriedCount }}</span>
+            <span *ngIf="data.familyDetails?.hasSisters">Sisters: {{ data.familyDetails?.sistersCount }} Married: {{ data.familyDetails?.sistersMarriedCount }}</span>
+          </div>
+        </section>
+
+        <!-- Horoscope -->
+        <section class="profile-section">
+          <h3 class="section-title">Horoscope</h3>
+          <div class="section-grid">
+            <span *ngIf="data.horoscopeDetails?.birthPlace">Birth Place: {{ data.horoscopeDetails.birthPlace }}</span>
+            <span *ngIf="data.horoscopeDetails?.birthTime">Birth Time: {{ data.horoscopeDetails.birthTime }}</span>
+            <span *ngIf="data.horoscopeDetails?.rashi">Rashi: {{ data.horoscopeDetails.rashi }}</span>
+            <span *ngIf="data.horoscopeDetails?.navsarNav" >NavRas Nav: {{ data.horoscopeDetails.navsarNav }}</span>
+            <span *ngIf="data.horoscopeDetails?.nakshatra">Nakshatra: {{ data.horoscopeDetails.nakshatra }}</span>
+            <span *ngIf="data.horoscopeDetails?.gan">Gan: {{ data.horoscopeDetails.gan }}</span>
+            <span *ngIf="data.horoscopeDetails?.nadi">Nadi: {{ data.horoscopeDetails.nadi }}</span>
+            <span *ngIf="data.horoscopeDetails?.mangal">Mangal: {{ data.horoscopeDetails.mangal }}</span>
+          </div>
+        </section>
+
+        <!-- Partner Preferences -->
+        <section class="profile-section">
+          <h3 class="section-title">Partner Expectations</h3>
+          <div class="section-grid">
+            <span *ngIf="data.additionalInfoDetails?.personalDescription">About Me: {{ data.additionalInfoDetails.personalDescription }}</span>
+            <span *ngIf="data.additionalInfoDetails?.partnerExpectations">Expectations: {{ data.additionalInfoDetails.partnerExpectations }}</span>
+            <span *ngIf="data.additionalInfoDetails?.reasonForPartner">Reason: {{ data.additionalInfoDetails.reasonForPartner }}</span>
+          </div>
+        </section>
+
+      </div>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+
+<!-- ================= Full Screen Image Viewer ================= -->
+<app-image-viewer
+  [images]="selectedImages"
+  [apiUrl]="apiUrl"
+  [open]="viewerOpen"
+  (close)="viewerOpen = false">
+</app-image-viewer>
+
+<app-popup-banner></app-popup-banner>

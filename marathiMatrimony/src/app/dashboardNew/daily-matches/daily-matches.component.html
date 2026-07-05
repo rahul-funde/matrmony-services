@@ -1,0 +1,68 @@
+<mat-card class="glass-card">
+
+  <!-- 🌟 Header Section -->
+  <div class="header row align-items-center">
+    <div class="col-md-6 d-flex align-items-center">
+      <h6 class="title mb-0">
+        <mat-icon class="header-icon">favorite</mat-icon>
+        Daily Matches
+      </h6>
+    </div>
+
+    <div class="col-md-6 text-md-end mt-2 mt-md-0">
+      <!-- City Filter -->
+      <mat-form-field appearance="outline" class="filter">
+        <mat-label>Filter by City</mat-label>
+        <input matInput [(ngModel)]="filterCity" placeholder="Type city..." />
+        <button *ngIf="filterCity" mat-icon-button matSuffix aria-label="Clear" (click)="clearFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- 💫 Match Grid -->
+  <div class="match-grid" #scrollContainer (scroll)="checkScrollState()">
+    <div *ngFor="let m of ((matches$ | async) || []) | cityFilter: filterCity" class="match-card">
+
+      <!-- Profile Photo -->
+      <div class="photo-container">
+        <img [src]="m.photo || 'images/avatar.png'" alt="{{ m.firstName }}" class="match-photo" />
+        <!-- Verified Icon -->
+        <mat-icon *ngIf="m.verified" class="verified-icon">verified</mat-icon>
+      </div>
+
+      <!-- Name & Info -->
+      <div class="info">
+        <h4 class="match-name">
+          {{ m.firstName }} {{ m.middleName }} {{ m.lastName }}
+          <mat-icon *ngIf="m.premium" class="premium-icon">star</mat-icon>
+        </h4>
+        <p class="details">{{ m.age }} yrs | {{ m.city }}</p>
+        <p class="compatibility">
+          <mat-icon class="compatibility-icon">favorite</mat-icon>
+          {{ getCompatibility(m?.compatibility) }}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button mat-flat-button color="accent" class="profile-btn" (click)="viewProfile(m)">
+          <mat-icon>visibility</mat-icon> View Profile
+        </button>
+
+        <button mat-flat-button class="interest-btn" [disabled]="m.interestSent" (click)="toggleInterest(m)">
+          <mat-icon>{{ m.hasSentInterest ? 'check_circle' : 'favorite' }}</mat-icon>
+          {{ m.hasSentInterest ? 'Sent' : 'Send Interest' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress">
+    <div class="scroll-progress-bar" [style.width.%]="scrollProgress * 100"></div>
+  </div>
+
+</mat-card>

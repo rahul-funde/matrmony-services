@@ -1,0 +1,33 @@
+<div class="container-fluid dashboard-main">
+
+  <!-- 🟩 First Row: Profile Summary + Daily Matches -->
+  <div class="row mb-4">
+    <div class="col-lg-4 col-md-12 mb-3">
+      <app-profile-summary></app-profile-summary>
+    </div>
+    <div class="col-lg-8 col-md-12 mb-3">
+      <app-daily-matches></app-daily-matches>
+    </div>
+  </div>
+
+  <!-- 🟦 Second Row: Connection Requests + Messages + Notifications -->
+  <div class="row mb-4">
+    <div class="col-lg-8 col-md-6 mb-3">
+      <app-connection-requests></app-connection-requests>
+    </div>
+    <div class="col-lg-2 col-md-6 mb-3">
+      <app-messages></app-messages>
+    </div>
+    <div class="col-lg-2 col-md-12 mb-3">
+      <app-notifications></app-notifications>
+    </div>
+  </div>
+
+  <!-- 🟨 Third Row: Activity Insights -->
+  <div class="row">
+    <div class="col-12">
+      <app-activity-insights></app-activity-insights>
+    </div>
+  </div>
+
+</div>

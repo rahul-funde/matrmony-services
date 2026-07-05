@@ -1,0 +1,36 @@
+<div class="login-dialog">
+  <!-- Header -->
+  <div class="login-header">
+    <h2>Welcome Back</h2>
+    <p>Please login to continue</p>
+  </div>
+
+  <!-- Content -->
+  <div class="login-content">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email or Mobile</mat-label>
+        <input matInput formControlName="identifier">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+
+      <div class="forgot">
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" class="full-width">Login</button>
+        <button mat-button type="button" class="full-width" (click)="close()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div class="login-footer">
+    <p>Don’t have an account? <a href="#">Sign Up</a></p>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<mat-card class="messages">
+  <h3>Messages & Interests</h3>
+  <mat-tab-group>
+    <mat-tab label="Received">
+      <div class="list">
+        <mat-card class="msg" *ngFor="let r of received">
+          <div class="left">
+            <img [src]="r.photo" alt="" />
+            <div>
+              <h4>{{r.name}}</h4>
+              <p>{{r.city}}</p>
+            </div>
+          </div>
+          <div class="right">
+            <small>{{r.time}}</small>
+            <div class="actions">
+              <button mat-flat-button color="primary">Accept</button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="Sent">
+      <div class="list">
+        <mat-card class="msg" *ngFor="let s of sent">
+          <div class="left">
+            <img [src]="s.photo" alt="" />
+            <div>
+              <h4>{{s.name}}</h4>
+              <p>{{s.city}}</p>
+            </div>
+          </div>
+          <div class="right"><small>{{s.date}}</small></div>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

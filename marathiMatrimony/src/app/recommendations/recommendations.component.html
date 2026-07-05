@@ -1,0 +1,360 @@
+<!-- ==================== Recommendations Section ==================== -->
+<div class="container my-4">
+  <!-- <h3 class="section-title">Top Match & Daily Recommendations</h3> -->
+
+  <!-- Horizontal scroll container -->
+  <div class="recommendation-scroll">
+
+      <!-- ================= Daily Recommendations ================= -->
+      <div class="profile-item" *ngFor="let p of recommendations">
+        <div class="card profile-card shadow-sm position-relative h-100">
+
+          <div class="position-relative text-center mt-2">
+            <img
+              [src]="getProfileThumb(p)"
+              class="rounded img-fluid profile-photo"
+              (error)="onImageError($event)"
+              (click)="openViewer(p?.photoDetails?.profilePicture)"
+              alt="Profile"
+            />
+            <span class="match-score-badge green" [ngClass]="getScoreClass(p?.matchScore)"> 💞  {{ p?.matchScore }}%</span>
+            <span *ngIf="p?.isPremium && !user?.isPremium" class="premium-badge">Premium ★</span>
+          </div>
+
+          <div class="card-body text-center profile-card-body">
+            <h6 class="fw-bold">{{ p?.userId }} | {{ p?.personalDetails?.lastName }}</h6>
+            <!-- <p class="text-muted mb-1">{{ p?.userId }}</p> -->
+            <p class="text-muted mb-1">{{ p?.personalDetails?.age }} yrs • {{ p?.contactDetails?.city }}</p>
+            <p class="text-muted mb-1">{{ p?.careerDetails?.occupation }} </p>
+            <!-- <p>&#64; {{ p?.careerDetails?.companyName }}</p> -->
+            <!-- <p class="text-muted mb-2">{{ p?.careerDetails?.annualIncome }} • {{ p?.careerDetails?.employmentType }} • {{ p?.careerDetails?.jobTitle }}</p> -->
+
+            <div class="button-row">
+              <button
+                  [disabled]="p.isLoading || p.interestStatus === 'accepted'"
+                  (click)="toggleInterest(p)"
+                  [ngClass]="{
+                    'send': !p.interestStatus || p.interestStatus === 'rejected' || p.interestStatus === 'cancelled',
+                    'unsend': p.interestStatus === 'pending',
+                    'matched': p.interestStatus === 'accepted'
+                  }"
+                  class="interest-btn"
+                >
+                  <span *ngIf="p.isLoading" class="spinner-border spinner-border-sm"></span>
+
+                  {{
+                    p.interestStatus === 'pending' ? 'Cancel Interest' :
+                    p.interestStatus === 'accepted' ? 'Matched ✔' :
+                    'Send Interest'
+                  }}
+                </button>
+
+
+              <button class="btn btn-dark btn-sm" (click)="openQuickView(p)">View</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  <p *ngIf="!(recommendations?.length)" class="text-center text-muted mt-3">No recommendations available.</p>
+  </div>
+
+  <div id="profile-pdf">
+        <div class="quick-view-popup" *ngIf="selectedProfile">
+          <div class="popup-content">
+
+            <!-- Close button -->
+            <button class="close-btn" (click)="closeQuickView()">✖</button>
+
+            <div class="popup-body d-flex flex-column flex-lg-row">
+
+              <!-- Left Column -->
+              <div class="left-col text-center mb-4 mb-lg-0">
+                <div class="photo-wrapper position-relative mb-3">
+                  <!-- Avatar -->
+                  <div class="avatar-wrapper">
+                    <img
+                      [src]="getProfileThumb(selectedProfile)"
+                      class="avatar-img"
+                      (click)="openViewer(selectedProfile?.photoDetails?.profilePicture)"
+                      (error)="onImageError($event)"
+                    />
+                  </div>
+
+                  <!-- Auto-scroll thumbnails -->
+                  <div class="auto-scroll-wrapper"
+                       (mouseenter)="pauseScroll = true"
+                       (mouseleave)="pauseScroll = false">
+
+                    <div class="auto-scroll-track"
+                         [class.paused]="pauseScroll">
+
+                      <img
+                        *ngFor="let img of selectedProfile?.photoDetails?.profilePicture"
+                        [src]="apiUrl + img.thumbUrl"
+                        class="scroll-thumb"
+                        (click)="openViewer(selectedProfile?.photoDetails?.profilePicture)"
+                      />
+
+                    </div>
+                  </div>
+
+                  <!-- FULL SIZE GALLERY MODAL -->
+                  <div class="gallery-backdrop" *ngIf="isGalleryOpen">
+                    <div class="gallery-modal">
+
+                      <span class="close-btn" (click)="closeGallery()">×</span>
+
+                      <img class="full-image" [src]="selectedImage" />
+
+                      <div class="thumb-row">
+                        <img
+                          *ngFor="let img of galleryImages"
+                          [src]="apiUrl + img.thumbUrl"
+                          class="thumb"
+                          (click)="selectImage(img)"
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <span class="premium-badge" *ngIf="selectedProfile?.isPremium">Premium</span>
+                  <span class="match-score-badge green">{{ selectedProfile?.matchScore }}%</span>
+                </div>
+                <h4>{{ selectedProfile?.personalDetails?.firstName }}</h4>
+                <p class="text-muted">{{ selectedProfile?.personalDetails?.age }} yrs | {{ selectedProfile?.personalDetails?.gender }}</p>
+              </div>
+
+              <!-- Right Column -->
+              <div class="right-col flex-fill ms-lg-4">
+
+          <!-- CONTACT (unlock) -->
+          <div class="info-card">
+            <h4>Contact Details</h4>
+
+            <div class="info-pill-container">
+
+              <!-- If unlocked -->
+              <ng-container *ngIf="selectedProfile?.showContact; else lock">
+
+                <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.firstName">
+                👤 Name:
+                <span class="value-text">
+                  {{selectedProfile?.personalDetails?.firstName}}
+                  {{selectedProfile?.personalDetails?.middleName}}
+                  {{selectedProfile?.personalDetails?.lastName}}
+                </span>
+                </span>
+
+                <span class="info-pill" *ngIf="selectedProfile?.contactDetails?.phoneNumber">
+                  📞 Phone: <span class="value-text">{{ selectedProfile.contactDetails.phoneNumber }}</span>
+                </span>
+
+                <span class="info-pill" *ngIf="selectedProfile?.contactDetails?.emailAddress">
+                  ✉ Email: <span class="value-text">{{ selectedProfile.contactDetails.emailAddress }}</span>
+                </span>
+
+
+                <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.fatherContactNumber">
+                  📞 Father Contact Number: <span class="value-text">{{ selectedProfile.familyDetails.fatherContactNumber }}</span>
+                </span>
+
+
+                <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.motherContactNumber">
+                  📞 Mother Contact Number: <span class="value-text">{{ selectedProfile.familyDetails.motherContactNumber }}</span>
+                </span>
+
+                <span class="info-pill" *ngIf="selectedProfile?.contactDetails?.country">
+                  🌍 Country: <span class="value-text">{{ selectedProfile.contactDetails.country }}</span>
+                </span>
+
+                <span class="info-pill" *ngIf="selectedProfile?.contactDetails?.state">
+                  🏙 State: <span class="value-text">{{ selectedProfile.contactDetails.state }}</span>
+                </span>
+
+                <span class="info-pill" *ngIf="selectedProfile?.contactDetails?.city">
+                  📍 City: <span class="value-text">{{ selectedProfile.contactDetails.city }}</span>
+                </span>
+              </ng-container>
+
+              <!-- If locked -->
+              <ng-template #lock>
+                <button class="btn btn-contact" mat-flat-button color="primary" (click)="deductContact()">👁️ View Contact</button>
+              </ng-template>
+
+            </div>
+          </div>
+
+       
+        <!-- PERSONAL (only show when available) -->
+        <div class="info-card" *ngIf="selectedProfile?.personalDetails">
+          <h4>Personal Information</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.userId">User ID: <span class="value-text">{{selectedProfile?.userId}}</span></span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.lastName">
+              👤 Name:
+              <span class="value-text">
+                {{selectedProfile?.personalDetails?.lastName}}
+              </span>
+            </span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.age">🎂 Age: <span class="value-text">{{selectedProfile?.personalDetails?.age}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.gender">⚧ Gender: <span class="value-text">{{selectedProfile?.personalDetails?.gender}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.dateOfBirth">📅 DOB: <span class="value-text">{{selectedProfile?.personalDetails?.dateOfBirth}}</span></span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.height">📏 Height: <span class="value-text">{{selectedProfile?.personalDetails?.height}} {{selectedProfile?.personalDetails?.heightUnit}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.weight">⚖ Weight: <span class="value-text">{{selectedProfile?.personalDetails?.weight}} kg</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.bloodGroup">💧 Blood Group: <span class="value-text">{{selectedProfile?.personalDetails?.bloodGroup}}</span></span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.religion">🙏 Religion: <span class="value-text">{{selectedProfile?.personalDetails?.religion}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.caste">🧬 Caste: <span class="value-text">{{selectedProfile?.personalDetails?.caste}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.subCaste">🧬 Sub-caste: <span class="value-text">{{selectedProfile?.personalDetails?.subCaste}}</span></span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.complexion">🌤 Complexion: <span class="value-text">{{selectedProfile?.personalDetails?.complexion}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.maritalStatus">💍 Marital Status: <span class="value-text">{{selectedProfile?.personalDetails?.maritalStatus}}</span></span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.diet">🍽 Diet: <span class="value-text">{{selectedProfile?.personalDetails?.diet}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.languagesSpoken">🗣 Languages: <span class="value-text">{{selectedProfile?.personalDetails?.languagesSpoken}}</span></span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.spectacles">👓 Spectacles: <span class="value-text">{{selectedProfile?.personalDetails?.spectacles}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.lens">👁 Lens: <span class="value-text">{{selectedProfile?.personalDetails?.lens}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.physicalDisability">♿ Disability: <span class="value-text">{{selectedProfile?.personalDetails?.physicalDisability}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.personalDetails?.disabilityDetails">🔎 Disability Details: <span class="value-text">{{selectedProfile?.personalDetails?.disabilityDetails}}</span></span>
+
+          </div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="info-card" *ngIf="selectedProfile?.educationDetails">
+          <h4>Education Details</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.educationDetails?.highestQualification">🎓 Highest Qualification: <span class="value-text">{{selectedProfile?.educationDetails?.highestQualification}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.educationDetails?.collegeName">🏫 College: <span class="value-text">{{selectedProfile?.educationDetails?.collegeName}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.educationDetails?.educationType">📘 Type: <span class="value-text">{{selectedProfile?.educationDetails?.educationType}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.educationDetails?.yearOfCompletion">📅 Completed: <span class="value-text">{{selectedProfile?.educationDetails?.yearOfCompletion}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.educationDetails?.additionalQualifications">📄 Additional Qualification: <span class="value-text">{{selectedProfile?.educationDetails?.additionalQualifications}}</span></span>
+          </div>
+        </div>
+
+        <!-- CAREER -->
+        <div class="info-card" *ngIf="selectedProfile?.careerDetails">
+          <h4>Professional & Career Details</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.occupation">💼 Occupation: <span class="value-text">{{selectedProfile?.careerDetails?.occupation}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.jobTitle">🧑‍💻 Job Title: <span class="value-text">{{selectedProfile?.careerDetails?.jobTitle}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.companyName">🏢 Company: <span class="value-text">{{selectedProfile?.careerDetails?.companyName}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.employmentType">🕒 Employment Type: <span class="value-text">{{selectedProfile?.careerDetails?.employmentType}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.annualIncome">💰 Annual Income: <span class="value-text">{{selectedProfile?.careerDetails?.annualIncome}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.workLocationCity || selectedProfile?.careerDetails?.workLocationCountry">📍 Work Location: <span class="value-text">{{selectedProfile?.careerDetails?.workLocationCity}}, {{selectedProfile?.careerDetails?.workLocationCountry}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.careerDetails?.previousWorkExperience">🧳 Experience: <span class="value-text">{{selectedProfile?.careerDetails?.previousWorkExperience}}</span></span>
+          </div>
+        </div>
+
+        <!-- LIFESTYLE -->
+        <div class="info-card" *ngIf="selectedProfile?.lifestyleDetails">
+          <h4>Lifestyle & Interests</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.diet">🍽 Diet: <span class="value-text">{{selectedProfile?.lifestyleDetails?.diet}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.smoking">🚭 Smoking: <span class="value-text">{{selectedProfile?.lifestyleDetails?.smoking}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.drinking">🍺 Drinking: <span class="value-text">{{selectedProfile?.lifestyleDetails?.drinking}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.favoriteBooks">📚 Favorite Books: <span class="value-text">{{selectedProfile?.lifestyleDetails?.favoriteBooks}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.favoriteMovies">🎬 Favorite Movies: <span class="value-text">{{selectedProfile?.lifestyleDetails?.favoriteMovies}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.favoritetvShows">📺 TV Shows: <span class="value-text">{{selectedProfile?.lifestyleDetails?.favoritetvShows}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.hobbies">🎨 Hobbies: <span class="value-text">{{selectedProfile?.lifestyleDetails?.hobbies}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.lifestyleDetails?.sportsActivities">⚽ Sports: <span class="value-text">{{selectedProfile?.lifestyleDetails?.sportsActivities}}</span></span>
+          </div>
+        </div>
+
+        <!-- HOROSCOPE -->
+        <div class="info-card" *ngIf="selectedProfile?.horoscopeDetails">
+          <h4>Horoscope Details</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.birthPlace">📍 Birth Place: <span class="value-text">{{selectedProfile?.horoscopeDetails?.birthPlace}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.birthTime">⏱ Birth Time: <span class="value-text">{{selectedProfile?.horoscopeDetails?.birthTime}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.nakshatra">⭐ Nakshatra: <span class="value-text">{{selectedProfile?.horoscopeDetails?.nakshatra}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.rashi">♈ Rashi: <span class="value-text">{{selectedProfile?.horoscopeDetails?.rashi}}</span>
+            </span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.navsarNav">♈ navras Nav: <span class="value-text">{{selectedProfile?.horoscopeDetails?.navsarNav}}</span>
+            </span>
+
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.gan">🕉 Gan: <span class="value-text">{{selectedProfile?.horoscopeDetails?.gan}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.charan">🔢 Charan: <span class="value-text">{{selectedProfile?.horoscopeDetails?.charan}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.nadi">⚖️ Nadi: <span class="value-text">{{selectedProfile?.horoscopeDetails?.nadi}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.mangal">🔥 Mangal: <span class="value-text">{{selectedProfile?.horoscopeDetails?.mangal}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.horoscopeDetails?.deva">🛐 Deva: <span class="value-text">{{selectedProfile?.horoscopeDetails?.deva}}</span></span>
+          </div>
+        </div>
+
+        <!-- FAMILY -->
+        <div class="info-card" *ngIf="selectedProfile?.familyDetails">
+          <h4>Family Details</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.fatherName">👨 Father: <span class="value-text">{{selectedProfile?.familyDetails?.father}} {{selectedProfile?.familyDetails?.fatherName}} ({{selectedProfile?.familyDetails?.fatherOccupation}})</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.motherName">👩 Mother: <span class="value-text">{{selectedProfile?.familyDetails?.mother}} {{selectedProfile?.familyDetails?.motherName}} ({{selectedProfile?.familyDetails?.motherOccupation}})</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.familyType">🏠 Family Type: <span class="value-text">{{selectedProfile?.familyDetails?.familyType}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.familyWealth">💰 Family Wealth: <span class="value-text">{{selectedProfile?.familyDetails?.familyWealth}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.brothersCount">👦 Brothers: <span class="value-text">{{selectedProfile?.familyDetails?.brothersCount}} (Married: {{selectedProfile?.familyDetails?.brothersMarriedCount}})</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.sistersCount">👧 Sisters: <span class="value-text">{{selectedProfile?.familyDetails?.sistersCount}} (Married: {{selectedProfile?.familyDetails?.sistersMarriedCount}})</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.nativeTaluka || selectedProfile?.familyDetails?.nativeDistrict">📍 Native: <span class="value-text">{{selectedProfile?.familyDetails?.nativeTaluka}}, {{selectedProfile?.familyDetails?.nativeDistrict}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.parentsResidentCity">🏡 Parents Reside: <span class="value-text">{{selectedProfile?.familyDetails?.parentsResidentCity}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.mamaNameAndPlace">👨‍👩‍👦 Mama: <span class="value-text">{{selectedProfile?.familyDetails?.mamaNameAndPlace}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.relativesSurnames">🧾 Relatives: <span class="value-text">{{selectedProfile?.familyDetails?.relativesSurnames}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.intercasteMarriage">🔁 Intercaste Marriage: <span class="value-text">{{selectedProfile?.familyDetails?.intercasteMarriage}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.familyDetails?.intercasteDetails">🔄 Intercaste Details: <span class="value-text">{{selectedProfile?.familyDetails?.intercasteDetails}}</span></span>
+          </div>
+        </div>
+
+        <!-- PARTNER PREFERENCES -->
+        <div class="info-card" *ngIf="selectedProfile?.partnerPreferencesDetails">
+          <h4>Partner Preferences</h4>
+          <div class="info-pill-container">
+            <span class="info-pill" *ngIf="selectedProfile?.additionalInfoDetails?.partnerExpectations">📝 Expectations: <span class="value-text">{{selectedProfile?.additionalInfoDetails?.partnerExpectations}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.ageRange">🎂 Age Range: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.ageRange}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.heightPreference">📏 Height Preference: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.heightPreference}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.educationPreferences">🎓 Education: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.educationPreferences}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.occupationPreferences">💼 Occupation: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.occupationPreferences}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.languagesPreferences">🗣 Languages: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.languagesPreferences}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.lifestylePreferences">✨ Lifestyle: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.lifestylePreferences}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.locationPreferences">📍 Preferred Locations: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.locationPreferences}}</span></span>
+            <span class="info-pill" *ngIf="selectedProfile?.partnerPreferencesDetails?.religionCastePreferences">🙏 Religion & Caste: <span class="value-text">{{selectedProfile?.partnerPreferencesDetails?.religionCastePreferences}}</span></span>
+          </div>
+        </div>
+       
+  </div>    
+      </div>
+     <div class="info-card actions-row">
+          <button class="btn btn-primary" (click)="sendInterest(selectedProfile)">💌 Send Interest</button>
+            <button class="btn btn-secondary" (click)="downloadPdf()">⬇️ Download</button>
+
+            <!-- <button class="btn btn-secondary" (click)="generateProfilePdfMr()">⬇️ Download Bio-data(Marathi)</button> -->
+          <button class="btn btn-outline" (click)="closeQuickView()">Close</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ================= Image Popup ================= -->
+<div class="image-popup" *ngIf="popupImage">
+  <div class="popup-image-content">
+    <button class="close-btn" (click)="closeImagePopup()">✖</button>
+    <img [src]="popupImage" />
+  </div>
+</div>
+
+
+<!-- ================= Full Screen Image Viewer ================= -->
+<app-image-viewer
+  [images]="selectedImages"
+  [apiUrl]="apiUrl"
+  [open]="viewerOpen"
+  (close)="viewerOpen = false">
+</app-image-viewer>

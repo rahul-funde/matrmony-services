@@ -1,0 +1,89 @@
+<header class="header" [class.hide]="isHeaderHidden">
+
+  <!-- LEFT: Logo -->
+ 
+<a class="navbar-brand brand-area" routerLink="/dashboard">
+  <div class="logo-wrappers">
+    <img src="images/cl1.png" class="brand-logo" />
+  </div>
+</a>
+
+  <!-- RIGHT: Menu, Notifications, Profile -->
+  <div class="header-right">
+
+    <!-- Menu Toggle for Mobile -->
+    <button
+      mat-mini-fab
+      class="menu-fab brand-menu"
+      color="primary"
+      (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Notifications -->
+    <div class="notification-wrapper">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="notificationsMenu"
+        aria-label="Notifications"
+        class="notification-btn brand-fab notify-fab">
+        <mat-icon>notifications</mat-icon>
+        <span *ngIf="notificationCount > 0" class="notification-badge">
+          {{ notificationCount }}
+        </span>
+      </button>
+
+      <!-- Notifications Dropdown -->
+      <mat-menu #notificationsMenu="matMenu" class="notifications-menu">
+        <ng-container *ngIf="notifications.length > 0; else noNotifications">
+          <button
+            mat-menu-item
+            *ngFor="let n of notifications"
+            [ngClass]="{'read': n.read}"
+            (click)="markAsRead(n)">
+            <div class="notification-item">
+              <span class="notification-title">{{ n.title }}</span>
+              <span class="notification-time">{{ n.time }}</span>
+            </div>
+          </button>
+        </ng-container>
+        <ng-template #noNotifications>
+          <span class="px-4 py-2">No notifications</span>
+        </ng-template>
+      </mat-menu>
+    </div>
+
+    <!-- Profile -->
+    <div class="profile-wrapper">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="profileMenu"
+        aria-label="Profile Menu"
+        class="profile-btn">
+        <img
+          [src]="profileImageUrl"
+          alt="Profile"
+          class="profile-img"
+          (error)="onImageError($event)" />
+      </button>
+
+      <!-- Online / Premium indicators -->
+      <span *ngIf="isUserOnline" class="status-online"></span>
+      <span *ngIf="isPremiumUser" class="premium-ribbon">★</span>
+    </div>
+
+  </div>
+</header>
+
+<!-- PROFILE MENU -->
+<mat-menu #profileMenu="matMenu">
+  <a mat-menu-item [routerLink]="'/user-profile'">
+    <mat-icon>account_circle</mat-icon> Profile
+  </a>
+  <button mat-menu-item>
+    <mat-icon>help</mat-icon> Help
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+</mat-menu>

@@ -1,0 +1,279 @@
+/* ================= General Container ================= */
+.dashboard-container {
+  height: 100vh;
+  background-color: #f4f6f8;
+}
+
+.main-content {
+  padding: 80px 20px 20px 20px; /* 80px top to avoid top-nav overlap */
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.admin-payments-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ================= Title ================= */
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* ================= Filters ================= */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filters mat-form-field {
+  min-width: 200px;
+  flex: 1;
+}
+
+.filters button {
+  align-self: center;
+  height: 40px;
+}
+
+/* ================= Tabs ================= */
+.tabs {
+  margin-bottom: 20px;
+}
+
+/* ================= Table ================= */
+.table-container {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-header-cell, .mat-cell {
+  padding: 12px 8px;
+}
+
+.mat-header-cell {
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.mat-cell b {
+  font-weight: 500;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.loader {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #3b82f6;
+}
+
+/* ================= Sidenav ================= */
+.custom-sidenav {
+  width: 250px;
+  background: #111827;
+  color: #fff;
+  padding-top: 20px;
+}
+
+/* ================= Dialog ================= */
+.dialog-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.payment-info {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.payment-info p {
+  margin: 8px 0;
+}
+
+.dialog-actions button {
+  margin-right: 10px;
+}
+
+.receipt-viewer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewer-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.receipt-img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.3s ease;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 900px) {
+  .filters mat-form-field {
+    min-width: 100%;
+    flex: unset;
+  }
+
+  .payment-info {
+    max-width: 100%;
+  }
+}
+
+
+/* ---------------- Receipt Dialog ---------------- */
+.mat-dialog-container {
+  padding: 20px !important;
+  max-width: 950px !important;
+  width: 95% !important;
+  box-sizing: border-box;
+}
+
+.dialog-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* LEFT INFO PANEL */
+.payment-info {
+  flex: 1 1 250px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  min-width: 250px;
+}
+
+.payment-info p {
+  margin: 5px 0;
+}
+
+.dialog-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* RIGHT RECEIPT PANEL */
+.receipt-viewer {
+  flex: 2 1 500px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viewer-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.receipt-img, .receipt-viewer iframe {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* ---------------- Dialog Footer ---------------- */
+.mat-dialog-actions {
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .dialog-body {
+    flex-direction: column;
+    max-height: 70vh;
+  }
+
+  .payment-info, .receipt-viewer {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .receipt-img, .receipt-viewer iframe {
+    max-height: 300px;
+  }
+}
+
+/* ---------------- Right RECEIPT PANEL ---------------- */
+.receipt-viewer {
+  flex: 2 1 400px; /* Reduce width */
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Toolbar buttons */
+.viewer-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Image styling */
+.receipt-img, .receipt-viewer iframe {
+  width: 100%;
+  max-width: 350px; /* smaller width */
+  max-height: 300px; /* smaller height */
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .receipt-img, .receipt-viewer iframe {
+    max-width: 100%;
+    max-height: 250px;
+  }
+}

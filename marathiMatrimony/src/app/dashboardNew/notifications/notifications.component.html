@@ -1,0 +1,9 @@
+<mat-card class="glass-card">
+  <h3>Notifications</h3>
+  <ul class="notif-list">
+    <li *ngFor="let n of notifications$ | async" [class.new]="n.isNew" [@fadeIn]>
+      <mat-icon color="warn">circle</mat-icon>
+      {{n.text}}
+    </li>
+  </ul>
+</mat-card>

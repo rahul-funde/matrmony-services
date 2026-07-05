@@ -1,0 +1,25 @@
+.spacer {
+    flex: 1;
+  }
+  
+
+  .dashboard-container {
+    height: 100vh;
+  }
+  .dashboard-sidenav {
+    width: 220px;
+  }
+  .dashboard-content {
+    padding: 16px;
+  }
+  .spacer {
+    flex: 1 1 auto;
+  }
+  .quick-actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+  }
+  mat-card {
+    text-align: center;
+  }

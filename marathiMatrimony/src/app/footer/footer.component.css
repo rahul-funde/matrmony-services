@@ -1,0 +1,22 @@
+.sticky-footer {
+  position: fixed;       /* Always visible at bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;           /* Full width */
+  background: #333;      /* Dark background */
+  color: #fff;           /* White text */
+  text-align: center;
+  padding: 5px 10px;     /* Small height */
+  font-size: 0.8rem;     /* Small font */
+  z-index: 1000;         /* On top of other elements */
+}
+
+.sticky-footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.sticky-footer a:hover {
+  color: #ddd;
+}

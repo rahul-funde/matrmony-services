@@ -1,0 +1,25 @@
+[1:31 pm, 4/4/2026] Maratha Matrimony: *Generated Token 05042026*
+[1:31 pm, 4/4/2026] Maratha Matrimony: EAAMsDRFSon0BRGjzSBu5kjwTyaZA6RRRyfUXDIXmrkPTC0NJ1LveplSgtf2XaHU6ha0OtDqqcTQvT8ZAGSthZBZAxgXvFF5tBxTZAWtOZBRs4wMc4OZBiVr8ptZAw5qZBZCht87l2ieOOT3Mq1x1qABvRB7Wm9B1B8ykZBCo10cc8iPFEHn43ZAtzjEeAUGqRBCBVF5I8wZDZD
+[1:31 pm, 4/4/2026] Maratha Matrimony: EAAMsDRFSon0BRGjzSBu5kjwTyaZA6RRRyfUXDIXmrkPTC0NJ1LveplSgtf2XaHU6ha0OtDqqcTQvT8ZAGSthZBZAxgXvFF5tBxTZAWtOZBRs4wMc4OZBiVr8ptZAw5qZBZCht87l2ieOOT3Mq1x1qABvRB7Wm9B1B8ykZBCo10cc8iPFEHn43ZAtzjEeAUGqRBCBVF5I8wZDZD
+[1:34 pm, 4/4/2026] Maratha Matrimony: https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started#1--acquire-an-access-token-using-a-system-user-or-facebook-login
+[1:35 pm, 4/4/2026] Maratha Matrimony: SushilMaratha
+ID: 892859566957181
+[1:40 pm, 4/4/2026] Maratha Matrimony: curl 'https://graph.facebook.com/v23.0/<TEST_BUSINESS_PHONE_NUMBER_ID>/messages' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer <SYSTEM_USER_ACCESS_TOKEN>' \
+-d '
+{
+  "messaging_product": "whatsapp",
+  "recipient_type": "individual",
+  "to": "<WHATSAPP_USER_PHONE_NUMBER>",
+  "type": "text",
+  "text": {
+    "body": "Hello!"
+  }
+}'
+[1:47 pm, 4/4/2026] Maratha Matrimony: Phone profile
+ID: 978399312032681
+[1:47 pm, 4/4/2026] Maratha Matrimony: Test Number
++1 555-159-8776
+[1:50 pm, 4/4/2026] Maratha Matrimony: Phone profile
+ID: 829266816936470

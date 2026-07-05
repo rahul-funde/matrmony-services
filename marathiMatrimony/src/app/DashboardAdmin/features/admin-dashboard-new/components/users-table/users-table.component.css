@@ -1,0 +1,45 @@
+table {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* =========================================================
+   Theme Upgrade
+========================================================= */
+:host {
+  display: block;
+  color: var(--app-color-text);
+}
+
+table {
+  background: var(--app-color-surface);
+  border: 1px solid var(--app-color-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-sm);
+}
+
+th {
+  color: var(--app-color-primary-strong);
+  background: color-mix(in srgb, var(--app-color-primary) 8%, var(--app-color-surface));
+  font-weight: 700;
+}
+
+td {
+  color: var(--app-color-text);
+}
+
+th,
+td {
+  border-bottom-color: var(--app-color-border);
+}
+
+tr:hover td {
+  background: color-mix(in srgb, var(--app-color-primary) 5%, var(--app-color-surface));
+}

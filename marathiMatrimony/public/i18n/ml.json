@@ -1,0 +1,11 @@
+{
+  "app": { "name": "സുശീൽ മറാത്ത", "language": "ഭാഷ" },
+  "auth": {
+    "login": { "title": "ലോഗിൻ", "failed": "ലോഗിൻ പരാജയപ്പെട്ടു." },
+    "passwordReset": { "success": "പാസ്‌വേഡ് വിജയകരമായി റീസെറ്റ് ചെയ്തു!", "failed": "പാസ്‌വേഡ് റീസെറ്റ് പരാജയപ്പെട്ടു." }
+  },
+  "common": { "close": "അടയ്ക്കുക", "save": "സേവ് ചെയ്യുക", "cancel": "റദ്ദാക്കുക", "search": "തിരയുക", "loading": "ലോഡ് ചെയ്യുന്നു..." },
+  "profile": { "basicDetails": "അടിസ്ഥാന വിവരങ്ങൾ", "photos": "ഫോട്ടോകൾ", "contactDetails": "ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ" },
+  "membership": { "upgradePlan": "പ്ലാൻ അപ്‌ഗ്രേഡ് ചെയ്യുക", "currentPlan": "നിലവിലെ പ്ലാൻ", "contactsRemaining": "ശേഷിക്കുന്ന കോൺടാക്റ്റുകൾ" },
+  "admin": { "dashboard": "ഡാഷ്ബോർഡ്", "users": "ഉപയോക്താക്കൾ", "plans": "പ്ലാനുകൾ", "payments": "പേയ്മെന്റുകൾ" }
+}

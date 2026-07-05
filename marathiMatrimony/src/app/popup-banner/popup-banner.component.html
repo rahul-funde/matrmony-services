@@ -1,0 +1,50 @@
+<div class="popup-overlay" *ngIf="visible && banners.length">
+
+  <!-- Current banner safely aliased -->
+  <ng-container *ngIf="banners[currentIndex] as banner">
+
+    <div class="popup-card">
+
+      <!-- Close -->
+      <button class="close-btn" (click)="close()">✕</button>
+
+      <!-- Banner Image -->
+      <img
+        *ngIf="banner.image"
+        [src]="apiUrl + banner.image"
+        class="banner-img"
+        alt="Popup Banner"
+      />
+
+      <!-- Title -->
+      <h3 class="banner-title" *ngIf="banner.title">
+        {{ banner.title }}
+      </h3>
+
+      <!-- Description -->
+      <p class="banner-desc" *ngIf="banner.description">
+        {{ banner.description }}
+      </p>
+
+      <!-- CTA -->
+      <button
+        *ngIf="banner.ctaText"
+        class="btn btn-primary banner-cta"
+        (click)="onCtaClick(banner.ctaAction || '')"
+      >
+        {{ banner.ctaText }}
+      </button>
+
+      <!-- Pagination dots -->
+      <div class="dots" *ngIf="banners.length > 1">
+        <span
+          *ngFor="let _ of banners; let i = index"
+          [class.active]="i === currentIndex"
+        ></span>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>
